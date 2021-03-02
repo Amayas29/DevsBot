@@ -1,7 +1,4 @@
 import os
-import discord
-from discord.ext.commands.core import command
-
 from utils import default
 from bot import Bot
 

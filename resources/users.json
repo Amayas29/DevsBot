@@ -1,7 +1,7 @@
 {
     "640319226061520908" : {
-        "level" : "inf",
-        "exp" : "inf",
+        "level" : "NaN",
+        "exp" : 0,
         "warns" : 0,
         "birth_date" : "2001-05-29"
     }

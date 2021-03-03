@@ -1,11 +1,20 @@
 import os
-from utils import default
-from bot import Bot
 
-config = default.config()
+import discord
+from bot import Bot
+from settings import load_settings
+import settings
+
+import dotenv
+
+
+dotenv.load_dotenv()
+TOKEN = os.getenv("TOKEN")
+
+load_settings()
 
 bot = Bot(
-    command_prefix=config["prefix"], prefix=config["prefix"],
+    command_prefix=settings.prefix, prefix=settings.prefix,
 )
 
 bot.remove_command("help")
@@ -16,6 +25,6 @@ for file in os.listdir("cogs"):
         bot.load_extension(f"cogs.{name}")
 
 try:
-    bot.run(config["token"])
+    bot.run(TOKEN)
 except Exception as e:
     print(f'Error when logging in: {e}')

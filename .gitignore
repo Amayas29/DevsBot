@@ -1,5 +1,5 @@
 .git
 __pycache__
 *.pyc
-config.json
 main.py
+__cache.json

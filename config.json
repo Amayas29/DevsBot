@@ -1,0 +1,17 @@
+{
+    "name" : "DevsBot",
+    "version" : "0.1",
+    "description" : "",
+
+    "join_message" : "",
+    "status_type" : "online|idle|dnd",
+
+    "author" : {
+        "name" : "Amayas",
+        "username_git" : "Amayas29",
+        "github" : "https://github.com/Amayas29"
+    },
+
+    "licence" : "",
+    "private" : true
+}

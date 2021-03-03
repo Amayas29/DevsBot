@@ -49,7 +49,7 @@ class Informations(commands.Cog):
 
     
     @commands.command(name="source")
-    async def source(self, ctx):
+    async def source(self, context):
         """
         Get the link to source code of the bot
         """

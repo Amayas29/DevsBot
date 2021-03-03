@@ -3,7 +3,7 @@
 import asyncio
 import discord
 from   discord.ext import commands
-
+import json
 
 class Events(commands.Cog):
 
@@ -14,10 +14,15 @@ class Events(commands.Cog):
             exit(1)
 
         self.bot = bot
+        try:
+            with open(f"resources/channels.json", encoding='utf8') as data:
+                self.channels = json.load(data)
+        except FileNotFoundError :
+            self.channels = {}
 
     
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, err):
+    async def on_command_error(self, context, error):
         """
         Treatment for commands errors
         """
@@ -31,9 +36,28 @@ class Events(commands.Cog):
         """
         print("Join ... TODO")
 
-    
     @commands.Cog.listener()
-    async def on_command(self, ctx):
+    async def on_member_join(self, member):
+        channel_welcome = member.guild.get_channel(int(self.channels["welcome"]))
+        await channel_welcome.send(f"Bienvenu mon bro {member.mention}")
+
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+        channel_good_bye = member.guild.get_channel(int(self.channels["good_bye"]))
+        await channel_good_bye.send(f"A dieu mon enfant {member.mention}")
+
+
+    # @commands.Cog.listener()
+    # async def on_reaction_add(self, reaction, user):
+    #     await reaction.message.add_reaction(reaction.emoji)
+
+
+    # @commands.Cog.listener()
+    # async def on_typing(self, channel, user, when):
+    #     await channel.send(f"{user.name} a commence a écrire dans ce channel le {when}")
+
+    @commands.Cog.listener()
+    async def on_command(self, context):
         """
         When a command is sent
         """

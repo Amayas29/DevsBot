@@ -49,7 +49,7 @@ class General(commands.Cog):
             await context.send("Not found try with : \n" + str(choices))
             return
 
-        new_msg = []
+        new_message = []
         for word in args:
             for char in word:
 
@@ -67,13 +67,13 @@ class General(commands.Cog):
                         return
 
                     transformed = self.styles[choice][maj_min][index]
-                    new_msg.append(transformed)
+                    new_message.append(transformed)
                 else:
-                    new_msg.append(char)
-            new_msg.append(" ") 
+                    new_message.append(char)
+            new_message.append(" ") 
 
-        new_msg = "".join(new_msg)
-        await context.send(new_msg)
+        new_message = "".join(new_message)
+        await context.send(new_message)
 
     
 def setup(bot):

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import asyncio
-from main import kick
 import discord
 from   discord.ext import commands
 

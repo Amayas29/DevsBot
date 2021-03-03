@@ -5,7 +5,7 @@ from bot import Bot
 config = default.config()
 
 bot = Bot(
-    command_prefix=config["prefix"], prefix=config["prefix"]
+    command_prefix=config["prefix"], prefix=config["prefix"],
 )
 
 bot.remove_command("help")

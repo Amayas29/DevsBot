@@ -27,7 +27,7 @@ class Owner(commands.Cog):
 
     @commands.command(name="setgame")
     @commands.is_owner()
-    async def set_game(self, ctx, game : str):
+    async def set_game(self, context, game : str):
         """
         Change the game of the bot
         """

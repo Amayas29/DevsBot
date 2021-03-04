@@ -2,8 +2,8 @@
 
 import asyncio
 import discord
-from   settings            import Settings
-from   discord.ext         import commands
+from   discord.ext   import commands
+from   init.settings import Settings
 
 
 class Owner(commands.Cog):
@@ -21,6 +21,13 @@ class Owner(commands.Cog):
     async def cog_check(self, context):
         return context.author.id in self.settings.owners
 
+
+    @commands.command(name="ping", aliases=["test"])
+    async def ping(self, context):
+        """
+        Check if the bot is alive
+        """
+        await context.send("Pong ... Bot fonctionnel")
 
     @commands.command(name="shutdown")
     async def shutdown(self, context):

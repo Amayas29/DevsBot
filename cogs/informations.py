@@ -2,8 +2,8 @@
 
 import asyncio
 import discord
-from   discord.ext import commands
-from   settings    import Settings
+from   discord.ext   import commands
+from   init.settings import Settings
 
 
 class Informations(commands.Cog):
@@ -33,14 +33,6 @@ class Informations(commands.Cog):
         """
         print("Info serveur ... TODO")
 
-
-    @commands.command(name="ping")
-    async def ping(self, context):
-        """
-        Check if the bot is alive
-        """
-        print("Pong ... TODO")
-    
 
     @commands.command(name="invite")
     async def invite(self, context):

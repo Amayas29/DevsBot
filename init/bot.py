@@ -3,19 +3,19 @@
 import random
 import discord
 from   discord.ext       import commands, tasks
-from   settings          import Settings
+from   init.settings          import Settings
 
 
 class Bot(commands.Bot):
 
     def __init__(self, *args, prefix=None, **kwargs):
+        self.settings = Settings()
         intents = discord.Intents.default()
-        self.prefix = prefix
+        prefix = self.settings.prefix
         intents.members = True
         intents.presences = True
-        super().__init__(*args, intents=intents, **kwargs)
-        self.settings = Settings()
-
+        super().__init__(*args, command_prefix=prefix, prefix=prefix, intents=intents, **kwargs)
+    
 
     async def on_message(self, message):
         print("message ... TODO")

@@ -2,8 +2,8 @@
 
 import asyncio
 import discord
-from   discord.ext import commands
-from   settings    import Settings
+from   discord.ext   import commands
+from   init.settings import Settings
 
 
 class Moderation(commands.Cog):

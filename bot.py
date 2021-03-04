@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import asyncio
+import random
 import discord
-from   discord.ext import commands
-import json
+from   discord.ext       import commands, tasks
+from   settings          import Settings
+
 
 class Bot(commands.Bot):
 
@@ -13,12 +14,7 @@ class Bot(commands.Bot):
         intents.members = True
         intents.presences = True
         super().__init__(*args, intents=intents, **kwargs)
-
-        try:
-            with open(f"resources/forbidden.json", encoding='utf8') as data:
-                self.forbidden = json.load(data)
-        except FileNotFoundError :
-                self.forbidden = {}
+        self.settings = Settings()
 
 
     async def on_message(self, message):
@@ -26,29 +22,22 @@ class Bot(commands.Bot):
         if not self.is_ready():
             return
 
-        forbidden_word = self.forbidden["words"]
-        message_content = message.content.lower()
-        for word in forbidden_word:
-            if word in message_content:
-                await message.channel.send("Attention mot interdit", delete_after = 5)
-                await message.delete()
-                return
-
         await self.process_commands(message)
 
 
     async def on_message_edit(self, after, befor):
+        return
 
-        forbidden_word = self.forbidden["words"]
-        message_content = befor.content.lower()
-        for word in forbidden_word:
-            if word in message_content:
-                await after.channel.send("Attention mot interdit", delete_after=5)
-                await after.delete()
-                return
+
+    @tasks.loop(hours=5)
+    async def status(self):
+        game = discord.Game(random.choice(self.settings.game_status))
+        await self.change_presence(status = discord.Status.online, activity = game)
+
 
     async def on_ready(self):
         """
         When the bot is activated
         """
         print("Ready ... TODO")
+        self.status.start()

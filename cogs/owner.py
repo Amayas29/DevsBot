@@ -2,7 +2,8 @@
 
 import asyncio
 import discord
-from   discord.ext import commands
+from   settings            import Settings
+from   discord.ext         import commands
 
 
 class Owner(commands.Cog):
@@ -14,10 +15,14 @@ class Owner(commands.Cog):
             exit(1)
 
         self.bot = bot
+        self.settings = Settings()
+
+
+    async def cog_check(self, context):
+        return context.author.id in self.settings.owners
 
 
     @commands.command(name="shutdown")
-    @commands.is_owner()
     async def shutdown(self, context):
         """
         Make the bot shutdown
@@ -26,7 +31,6 @@ class Owner(commands.Cog):
 
 
     @commands.command(name="setgame")
-    @commands.is_owner()
     async def set_game(self, context, game : str):
         """
         Change the game of the bot

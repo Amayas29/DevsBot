@@ -3,7 +3,7 @@
 import asyncio
 import discord
 from   discord.ext import commands
-
+from   settings    import Settings
 
 class Help(commands.Cog):
 
@@ -14,6 +14,7 @@ class Help(commands.Cog):
             exit(1)
 
         self.bot = bot
+        self.settings = Settings()
 
     
     @commands.command(name="help", aliases=["aide"])

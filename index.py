@@ -1,20 +1,18 @@
 import os
-
 import discord
-from bot import Bot
-from settings import load_settings
-import settings
-
+from   bot      import Bot
+from   settings import Settings
 import dotenv
 
 
 dotenv.load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
-load_settings()
+settings = Settings()
+prefix = settings.prefix
 
 bot = Bot(
-    command_prefix=settings.prefix, prefix=settings.prefix,
+    command_prefix=prefix, prefix=prefix,
 )
 
 bot.remove_command("help")

@@ -85,37 +85,31 @@
         
         "good_bye" : {
     
-            "author" : {
-                "name" : "",
-                "url" : "",
-                "icon_url" : ""
-            },
+            "author" : null,
     
-            "title" : "",
+            "title" : "Au revoir",
     
-            "color" : "", 
+            "color" : "cfbb0b", 
     
-            "description" : "",
+            "description" : "{user} nous a quitté",
     
             "fields" : [
                 {
-                    "name" : "",
-                    "value" : "",
+                    "name" : "Total Membres",
+                    "value" : "{member_count}",
                     "inline" : true
                 }
             ],
     
             "footer" : {
-                "text" : "",
-                "icon_url" : ""
+                "text" : null,
+                "icon_url" : "https://i.goopics.net/m0VZm.jpg"
             },
     
-            "image" : {
-                "url" : ""
-            },
+            "image" : null,
     
             "thumbnail" : {
-                "url" : ""
+                "url" : "https://i.pinimg.com/564x/4f/f1/74/4ff174fab798f2296b56093d2bd47c31.jpg"
             }
         },
     

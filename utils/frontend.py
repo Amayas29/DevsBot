@@ -32,7 +32,7 @@ def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discor
         return None
 
 
-def get_welcome_embed(dict: dict, user: discord.User, server: str, member_count: int):
+def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str, member_count: int):
 
     try:
 

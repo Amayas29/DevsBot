@@ -2,9 +2,11 @@
 
 import asyncio
 import discord
+import json
+from discord import user
 from   discord.ext    import commands
 from   init.settings  import Settings
-from   utils.frontend import get_welcome_embed, get_file_welcome
+from   utils.frontend import get_welcome_goodbye_embed, get_file_welcome
 
 class Events(commands.Cog):
 
@@ -38,12 +40,32 @@ class Events(commands.Cog):
 
 
     @commands.Cog.listener()
-    async def on_member_join(self, member):
-        print("Yes")
+    async def on_member_join(self, member: discord.User):
+
+        try:
+            with open("resources/users.json") as data:
+                users : dict = json.load(data)
+        except:
+            pass
+
+        users[str(member.id)] = {
+            "level" : "0",
+            "exp" : 0,
+            "warns" : 0,
+            "birth_date" : "NaN"
+        }
+
+        try:
+            with open("resources/users.json", "w") as file:
+                json.dump(users, file ,indent=4)
+        except:
+            pass
+        
+
         server : discord.Guild = member.guild
 
         try:
-            embed = get_welcome_embed(self.settings.embeds["welcome"], member, server.name, server.member_count)
+            embed = get_welcome_goodbye_embed(self.settings.embeds["welcome"], member, server.name, server.member_count)
         except:
             embed = None
 
@@ -56,28 +78,44 @@ class Events(commands.Cog):
                pass  
 
 
-    # @commands.Cog.listener()
-    # async def on_member_remove(self, member):
-    #     channel_good_bye = member.guild.get_channel(int(self.channels["good_bye"]))
-    #     await channel_good_bye.send(f"A dieu mon enfant {member.mention}")
-
-
-    # @commands.Cog.listener()
-    # async def on_reaction_add(self, reaction, user):
-    #     await reaction.message.add_reaction(reaction.emoji)
-
-
-    # @commands.Cog.listener()
-    # async def on_typing(self, channel, user, when):
-    #     await channel.send(f"{user.name} a commence a écrire dans ce channel le {when}")
-
-
     @commands.Cog.listener()
-    async def on_command(self, context):
-        """
-        When a command is sent
-        """
-        print("Commande ... TODO")
+    async def on_member_remove(self, member: discord.Member):
+        try:
+            with open("resources/users.json") as data:
+                users : dict = json.load(data)
+        except:
+            pass
+
+        users.pop(str(member.id))
+
+        try:
+            with open("resources/users.json", "w") as file:
+                json.dump(users, file ,indent=4)
+        except:
+            pass
+        
+
+        server : discord.Guild = member.guild
+
+        try:
+            embed = get_welcome_goodbye_embed(self.settings.embeds["good_bye"], member, server.name, server.member_count)
+        except:
+            embed = None
+
+        if embed != None:
+            try:
+                welcome_channel = self.bot.get_channel(self.settings.channels["good_bye"]) 
+                await welcome_channel.send(embed = embed)
+            except:   
+               pass 
+
+
+    # @commands.Cog.listener()
+    # async def on_command(self, context):
+    #     """
+    #     When a command is sent
+    #     """
+    #     print("Commande ... TODO")
 
 
 def setup(bot):

@@ -40,7 +40,7 @@ class Events(commands.Cog):
 
 
     @commands.Cog.listener()
-    async def on_member_join(self, member: discord.User):
+    async def on_member_join(self, member: discord.Member):
 
         try:
             with open("resources/users.json") as data:
@@ -61,7 +61,6 @@ class Events(commands.Cog):
         except:
             pass
         
-
         server : discord.Guild = member.guild
 
         try:

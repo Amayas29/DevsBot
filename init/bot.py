@@ -2,8 +2,8 @@
 
 import random
 import discord
-from   discord.ext       import commands, tasks
-from   init.settings          import Settings
+from   discord.ext   import commands, tasks
+from   init.settings import Settings
 
 
 class Bot(commands.Bot):
@@ -17,10 +17,16 @@ class Bot(commands.Bot):
         super().__init__(*args, command_prefix=prefix, prefix=prefix, intents=intents, **kwargs)
     
 
-    async def on_message(self, message):
+    async def on_message(self, message: discord.Message):
         print("message ... TODO")
-        if not self.is_ready():
-            return
+    
+        message_lower = message.content.lower()
+        for word in self.settings.forbidden_words:
+            if word in message_lower:
+                # TODO WARN
+                await message.channel.send("No bro ad qar ara aken", delete_after = 10)
+                await message.delete()
+                return
 
         await self.process_commands(message)
 

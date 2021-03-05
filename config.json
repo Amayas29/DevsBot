@@ -1,10 +1,13 @@
 {
     "name" : "DevsBot",
+    "icon_url" : "https://i.goopics.net/m0VZm.jpg",
     "version" : "0.1",
-    "description" : "",
+    "description" : "DevsBot est un bot créé et maintenue par Amayas, il est programmé en python",
 
-    "join_message" : "",
+    "join_message" : "Salut je suis DevBot, votre ami robot",
     "status_type" : "online|idle|dnd",
+    
+    "footer" : "DevsBot est un bot créé et maintenue par Amayas",
 
     "author" : {
         "name" : "Amayas",

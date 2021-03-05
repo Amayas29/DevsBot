@@ -1,5 +1,4 @@
 import os
-import discord
 import dotenv
 from   init.bot import Bot
 

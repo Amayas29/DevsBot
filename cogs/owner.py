@@ -2,7 +2,7 @@
 
 import asyncio
 import discord
-from   discord.ext   import commands
+from   discord.ext   import commands, tasks
 from   init.settings import Settings
 
 
@@ -28,6 +28,7 @@ class Owner(commands.Cog):
         Check if the bot is alive
         """
         await context.send("Pong ... Bot fonctionnel")
+
 
     @commands.command(name="shutdown")
     async def shutdown(self, context):

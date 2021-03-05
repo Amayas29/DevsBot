@@ -2,9 +2,10 @@
 
 import asyncio
 import discord
-from   discord.ext   import commands
-from   init.settings import Settings
-
+from discord import embeds
+from   discord.ext    import commands
+from   init.settings  import Settings
+from   utils.frontend import get_ban_unban_embed
 
 class Moderation(commands.Cog):
 
@@ -38,20 +39,62 @@ class Moderation(commands.Cog):
 
     @commands.command(name="ban")
     @commands.has_permissions(ban_members=True)
-    async def ban(self, context, member: discord.Member, *args):
+    async def ban(self, context: commands.Context, member: discord.User, *reason):
         """
         Bans a user from the server.
         """
-        print("ban ... TODO")
+        reason = "".join(reason)
+
+        await context.guild.ban(member, reason = reason)
+
+        try:
+            embed = get_ban_unban_embed(self.settings.embeds["ban"], member, context.author, reason)
+        except:
+            embed = None
+            
+        if embed != None:
+            try:
+                ban_channel = self.bot.get_channel(self.settings.channels["ban_warn"]) 
+                await ban_channel.send(embed = embed)
+            
+            except:   
+                await context.send(embed = embed)        
+
+    @ban.error
+    async def ban_error(self, context, error):
+        print(type(error))
+        await context.send("Error ... in progress")
 
 
     @commands.command(name="unban")
     @commands.has_permissions(ban_members=True)
-    async def unban(self, context, member_id, *args):
+    async def unban(self, context: commands.Context, member_id: int, *reason):
         """
         Unbans a user from the server.
         """
-        print("Unban ... TODO")
+        print("Yes unban ...")
+        reason = "".join(reason)
+
+        banned_users = await context.guild.bans()
+        find = False
+        for ban in banned_users:
+            if ban.user.id == member_id:
+                find = True
+                break
+        
+        if not find:
+            return
+        
+        await context.guild.unban(ban.user, reason = reason)
+
+        embed = get_ban_unban_embed(self.settings.embeds["unban"], ban.user, context.author, reason)
+        if embed != None:
+            try:
+                ban_channel = self.bot.get_channel(self.settings.channels["ban_warn"]) 
+                await ban_channel.send(embed = embed)
+            
+            except:   
+                await context.send(embed = embed)
     
 
     @commands.command(name="warn")

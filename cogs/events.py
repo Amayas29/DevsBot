@@ -2,9 +2,9 @@
 
 import asyncio
 import discord
-from   discord.ext   import commands
-from   init.settings import Settings
-
+from   discord.ext    import commands
+from   init.settings  import Settings
+from   utils.frontend import get_welcome_embed, get_file_welcome
 
 class Events(commands.Cog):
 
@@ -19,31 +19,47 @@ class Events(commands.Cog):
     
 
     @commands.Cog.listener()
-    async def on_command_error(self, context, error):
+    async def on_command_error(self, context: commands.Context, error):
         """
         Treatment for commands errors
         """
+        if context.command != None and hasattr(context.command, "on_error"):
+            return
+
         print("Erreur ... TODO", error)
 
     
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
         """
-        When the bor join a guild
+        When the bot join a guild
         """
         print("Join ... TODO")
 
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        channel_welcome = member.guild.get_channel(int(self.channels["welcome"]))
-        await channel_welcome.send(f"Bienvenu mon bro {member.mention}")
+        print("Yes")
+        server : discord.Guild = member.guild
+
+        try:
+            embed = get_welcome_embed(self.settings.embeds["welcome"], member, server.name, server.member_count)
+        except:
+            embed = None
+
+        if embed != None:
+            try:
+                welcome_channel = self.bot.get_channel(self.settings.channels["welcome"]) 
+                file = await get_file_welcome(member)
+                await welcome_channel.send(embed = embed, file=file)
+            except:   
+               pass  
 
 
-    @commands.Cog.listener()
-    async def on_member_remove(self, member):
-        channel_good_bye = member.guild.get_channel(int(self.channels["good_bye"]))
-        await channel_good_bye.send(f"A dieu mon enfant {member.mention}")
+    # @commands.Cog.listener()
+    # async def on_member_remove(self, member):
+    #     channel_good_bye = member.guild.get_channel(int(self.channels["good_bye"]))
+    #     await channel_good_bye.send(f"A dieu mon enfant {member.mention}")
 
 
     # @commands.Cog.listener()

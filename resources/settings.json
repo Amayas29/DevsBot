@@ -1,11 +1,12 @@
 {
-    "prefix" : "?",
+    "prefix" : "!",
 
     "owners" : [
         640319226061520908
     ],
 
     "muted_role" : 815250977341964288,
+
     "verified_role" : 815246225334075422,
 
     "ignored_roles_levels" : [
@@ -16,7 +17,7 @@
     ],
 
     "forbidden_words" : [
-        "test"
+        "pute"
     ],
 
     "channels" : {
@@ -30,7 +31,7 @@
         "levels" : 815245040490119229,
         "birthdays" : null,
         "bot_commands" : 815244585667395615,
-        "ban_warn" : null
+        "ban_warn" : 817123375826075678
     },
 
     "logs_settings" : {
@@ -77,6 +78,234 @@
             "maj" : "𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕",
             "min" : "𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯",
             "hello" : "𝙃𝙚𝙡𝙡𝙤"
+        }
+    },
+
+    "embeds" : {
+        
+        "good_bye" : {
+    
+            "author" : {
+                "name" : "",
+                "url" : "",
+                "icon_url" : ""
+            },
+    
+            "title" : "",
+    
+            "color" : "", 
+    
+            "description" : "",
+    
+            "fields" : [
+                {
+                    "name" : "",
+                    "value" : "",
+                    "inline" : true
+                }
+            ],
+    
+            "footer" : {
+                "text" : "",
+                "icon_url" : ""
+            },
+    
+            "image" : {
+                "url" : ""
+            },
+    
+            "thumbnail" : {
+                "url" : ""
+            }
+        },
+    
+        "welcome" : {
+    
+            "author" : null,
+    
+            "title" : "Bienvenu",
+    
+            "color" : "3dcf0b", 
+    
+            "description" : "Bienvenu {user} dans {server}",
+    
+            "fields" : [
+                {
+                    "name" : "Total Membres",
+                    "value" : "{member_count}",
+                    "inline" : true
+                }
+            ],
+    
+            "footer" : {
+                "text" : null,
+                "icon_url" : "https://i.goopics.net/m0VZm.jpg"
+            },
+    
+            "image" : null,
+    
+            "thumbnail" : null
+        },
+    
+        "warn" : {
+    
+            "author" : {
+                "name" : "",
+                "url" : "",
+                "icon_url" : ""
+            },
+    
+            "title" : "",
+    
+            "color" : "", 
+    
+            "description" : "",
+    
+            "fields" : [
+                {
+                    "name" : "",
+                    "value" : "",
+                    "inline" : true
+                }
+            ],
+    
+            "footer" : {
+                "text" : null,
+                "icon_url" : "https://i.goopics.net/m0VZm.jpg"
+            },
+    
+            "image" : {
+                "url" : ""
+            },
+    
+            "thumbnail" : {
+                "url" : ""
+            }
+        },
+    
+        "ban" : {
+            "author" : null,
+        
+            "title" : "Ban",
+        
+            "color" : "dd3713", 
+        
+            "description" : "{banned_user} a été banni",
+        
+            "fields" : [
+                {
+                    "name" : "Moderateur",
+                    "value" : "{moderator}",
+                    "inline" : true
+                },
+        
+                {
+                    "name" : "Raison",
+                    "value" : "{reason}",
+                    "inline" : true
+                }  
+            ],
+        
+            "footer" : {
+                "text" : null,
+                "icon_url" : "https://i.goopics.net/m0VZm.jpg"
+            },
+        
+            "image" : null,
+        
+            "thumbnail" : {
+                "url" : "https://discordemoji.com/assets/emoji/BanneHammer.png"
+            }
+        },
+    
+        "unban" : {
+    
+            "author" : null,
+    
+            "title" : "Unban",
+    
+            "color" : "13c5dd", 
+    
+            "description" : "{banned_user} a été pardonné",
+    
+            "fields" : [
+                {
+                    "name" : "Moderateur",
+                    "value" : "{moderator}",
+                    "inline" : true
+                },
+        
+                {
+                    "name" : "Raison",
+                    "value" : "{reason}",
+                    "inline" : true
+                }  
+            ],
+    
+            "footer" : {
+                "text" : null,
+                "icon_url" : "https://i.goopics.net/m0VZm.jpg"
+            },
+    
+            "image" : null, 
+            
+            "thumbnail" : {
+                "url" : "https://emoji.gg/assets/emoji/7191_unban_hammer.png"
+            }
+        },
+    
+        "help" : {
+    
+            "author" : {
+                "name" : "",
+                "url" : "",
+                "icon_url" : ""
+            },
+    
+            "title" : "",
+    
+            "color" : "", 
+    
+            "description" : "",
+    
+            "fields" : [
+                {
+                    "name" : "",
+                    "value" : "",
+                    "inline" : true
+                }
+            ],
+    
+            "footer" : {
+                "text" : "",
+                "icon_url" : ""
+            },
+    
+            "image" : {
+                "url" : ""
+            },
+    
+            "thumbnail" : {
+                "url" : ""
+            }
+        }
+    },
+
+    "images_generator" : {
+
+        "welcome" : {
+        
+            "path" : "resources/images/welcome.png",
+
+            "size": 128, 
+
+            "width" : 390,
+
+            "height" : 390,
+
+            "x" : 540,
+
+            "y" : 176
         }
     }
 }

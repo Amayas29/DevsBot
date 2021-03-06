@@ -19,8 +19,3 @@ try:
     bot.run(TOKEN)
 except Exception as e:
     print(f'Error when logging in: {e}')
-
-# Verified !
-# for role in self.settings.initial_roles:
-#     role_discord = member.guild.get_role(role)
-#     await member.add_roles(role_discord)

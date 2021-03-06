@@ -1,5 +1,7 @@
 import json
-                                                     
+from os import sep
+from sys import prefix
+
 
 class Settings():
     
@@ -23,12 +25,16 @@ class Settings():
             exit(1)
 
         try:
+            cls.__instance.file_settings = file_settings
+            cls.__instance.file_config = file_config
             cls.__instance._prefix = data["prefix"]
             cls.__instance._owners = data["owners"]
             cls.__instance._muted_role = data["muted_role"]
             cls.__instance._verified_role = data["verified_role"]
             cls.__instance._ignored_roles_levels = data["ignored_roles_levels"]
             cls.__instance._forbidden_words = data["forbidden_words"]
+            cls.__instance._verification_message = data["verification_message"]
+            cls.__instance._verification_emoji = data["verification_emoji"]      
             cls.__instance._channels = data["channels"]
             cls.__instance._logs_settings = data["logs_settings"]
             cls.__instance._initial_roles = data["initial_roles"]
@@ -46,9 +52,44 @@ class Settings():
 
         return cls.__instance
 
+
+    def refresh_data(self):
+        try:
+            with open(self.file_settings) as st:
+                data = json.load(st)
+
+            data["prefix"] = self.prefix
+            data["owners"] = self.owners
+            data["muted_role"] = self.muted_role
+            data["verified_role"] = self.verified_role
+            data["ignored_roles_levels"] = self.ignored_roles_levels
+            data["forbidden_words"] = self.forbidden_words
+            data["verification_message"] = self.verification_message
+            data["verification_emoji"] = self.verification_emoji      
+            data["channels"] = self.channels
+            data["logs_settings"] = self.logs_settings
+            data["initial_roles"] = self.initial_roles
+            data["ranks"] = self.ranks
+            data["game_status"] = self.game_status
+            data["styles"] = self.styles
+            data["embeds"] = self.embeds
+            data["images_generator"] = self.images_generator
+            
+            with open(self.file_settings, "w") as file:
+                json.dump(data, file ,indent=4)
+
+        except:
+            pass
+
+
     @property
     def prefix(self):
         return self._prefix
+
+    @prefix.setter
+    def prefix(self, value):
+        if value != None and value != "":
+            self._prefix = value
 
     @property
     def owners(self):
@@ -69,6 +110,22 @@ class Settings():
     @property
     def forbidden_words(self):
         return self._forbidden_words
+
+    @property
+    def verification_message(self):
+        return self._verification_message
+
+    @verification_message.setter
+    def verification_message(self, value):
+        self._verification_message = value
+
+    @property
+    def verification_emoji(self):
+        return self._verification_emoji
+
+    @verification_emoji.setter
+    def verification_emoji(self, value):
+        self._verification_emoji = value
 
     @property
     def channels(self):

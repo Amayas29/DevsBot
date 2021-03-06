@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import asyncio
+import re
 import discord
-from discord import embeds
+import json
+from   discord import embeds
 from   discord.ext    import commands
 from   init.settings  import Settings
-from   utils.frontend import get_ban_unban_embed
+from   utils.frontend import get_ban_unban_embed, get_warn_embed
+
 
 class Moderation(commands.Cog):
 
@@ -43,7 +45,7 @@ class Moderation(commands.Cog):
         """
         Bans a user from the server.
         """
-        reason = "".join(reason)
+        reason = " ".join(reason)
 
         await context.guild.ban(member, reason = reason)
 
@@ -73,7 +75,7 @@ class Moderation(commands.Cog):
         Unbans a user from the server.
         """
         print("Yes unban ...")
-        reason = "".join(reason)
+        reason = " ".join(reason)
 
         banned_users = await context.guild.bans()
         find = False
@@ -99,11 +101,37 @@ class Moderation(commands.Cog):
 
     @commands.command(name="warn")
     @commands.has_permissions(manage_roles=True, ban_members=True)
-    async def warn(self, context, member: discord.Member, *args):
+    async def warn(self, context, member: discord.Member, *reason):
         """
         Warns a user in his private messages.
         """
         print("Warn ... TODO")
+        reason = " ".join(reason)
+ 
+        try:
+            with open("resources/users.json") as data:
+                users : dict = json.load(data)
+
+            warn_user = users[str(member.id)]
+            warn_user["warns"] += 1
+
+            with open("resources/users.json", "w") as file:
+                json.dump(users, file ,indent=4)
+        except:
+            pass
+
+        try:
+            embed = get_warn_embed(self.settings.embeds["warn"], member, context.author, reason)
+        except:
+            embed = None
+            
+        if embed != None:
+            try:
+                ban_channel = self.bot.get_channel(self.settings.channels["ban_warn"]) 
+                await ban_channel.send(embed = embed)
+            
+            except:   
+                await context.send(embed = embed)    
 
     
     @commands.command(name="warns")
@@ -115,15 +143,16 @@ class Moderation(commands.Cog):
         print("Warns ... TODO")
 
 
-    @commands.command(name="purge")
+    @commands.command(name="purge", aliases=["clean", "clear"])
     @commands.has_permissions(manage_messages=True)
-    async def purge(self, context, number):
+    async def purge(self, context, number: int):
         """
         Delete a number of messages.
         """
         print("purge ... TODO")
+        deleted = await context.channel.purge(limit = number + 1)
+        await context.send(f"Deleted {len(deleted) - 1} message(s)", delete_after = 5)
 
-    
     @commands.command()
     @commands.has_permissions(mute_members = True)
     async def mute(self, context, user:discord.Member):

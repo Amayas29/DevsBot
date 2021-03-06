@@ -3,6 +3,7 @@ import discord
 from   init.settings import Settings
 from   PIL           import Image, ImageDraw, ImageOps
 from   io            import BytesIO
+from  copy           import deepcopy as dp
 
 
 settings = Settings()
@@ -10,6 +11,8 @@ settings = Settings()
 
 def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discord.User, reason: str) -> discord.Embed :
     try:
+        dict = dp(dict)
+
         if reason == "" or reason is None:
             reason = "NaN"
 
@@ -35,7 +38,8 @@ def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discor
 def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str, member_count: int):
 
     try:
-
+        dict = dp(dict)
+        
         if type(dict["color"]) != int:
             dict["color"] = int(dict["color"], 16)
         
@@ -50,6 +54,32 @@ def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str, membe
 
         return discord.Embed.from_dict(dict)
         
+    except:
+        return None
+
+
+def get_warn_embed(dict: dict, warn_user: discord.User, moderator: discord.User, reason: str) -> discord.Embed :
+    try:
+        dict = dp(dict)
+
+        if reason == "" or reason is None:
+            reason = "NaN"
+
+        if type(dict["color"]) != int:
+            dict["color"] = int(dict["color"], 16)
+
+        dict["description"] = dict["description"].replace("{warn_user}", warn_user.mention)
+
+        fields = dict["fields"]
+        for field in fields:
+            field["value"] = field["value"].replace("{reason}", reason)
+            field["value"] = field["value"].replace("{moderator}", moderator.mention)
+        
+        dict["fields"] = fields
+        dict["footer"]["text"] = settings.config["footer"]
+
+        return discord.Embed.from_dict(dict)
+
     except:
         return None
 

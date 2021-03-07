@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from sys import exec_prefix
 import discord
 import random
 from   discord.ext   import commands
@@ -466,4 +467,28 @@ def get_help_cmd_embed(dict, cmd, bot_icon):
         return discord.Embed.from_dict(dict)
 
     except Exception as e:
+        return None
+
+
+def get_birthday_embed(dict, user, age, bot_icon):
+    try:
+        dict = dp(dict)
+
+        dict["author"]["name"] = user.name
+        dict["author"]["icon_url"] = str(user.avatar_url)
+
+        if type(dict["color"]) != int:
+            dict["color"] = int(dict["color"], 16)
+
+        dict["description"] = dict["description"].replace("{user}", user.mention)
+
+        for field in dict["fields"]:
+            field["value"] = field["value"].replace("{age}", str(age))
+
+        dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
+
+        return discord.Embed.from_dict(dict)
+
+    except:
         return None

@@ -20,15 +20,15 @@ class Events(commands.Cog):
         self.settings = Settings()
     
 
-    @commands.Cog.listener()
-    async def on_command_error(self, context: commands.Context, error):
-        """
-        Treatment for commands errors
-        """
-        if context.command != None and hasattr(context.command, "on_error"):
-            return
+    # @commands.Cog.listener()
+    # async def on_command_error(self, context: commands.Context, error):
+    #     """
+    #     Treatment for commands errors
+    #     """
+    #     if context.command != None and hasattr(context.command, "on_error"):
+    #         return
 
-        print("Erreur ... TODO", error)
+    #     print("Erreur ... TODO", error)
 
     
     @commands.Cog.listener()

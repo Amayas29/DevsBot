@@ -76,7 +76,7 @@ class Moderation(commands.Cog):
 
     @commands.command(
         name="unban",
-        help="<member> : Le membre a pardonné.\n[reason] : La raison du unban",
+        help="<member_id> : L'identifiant du membre a pardonné.\n[reason] : La raison du unban",
         description="Pardonner à un membre"
     )
     @commands.has_permissions(ban_members=True)
@@ -177,17 +177,17 @@ class Moderation(commands.Cog):
 
 
     @commands.command(
-        name="purge",
-        aliases=["clean", "clear"],
+        name="clear",
+        aliases=["clean", "purge"],
         help="<number> : Le nombre de message à supprimer",
-        description="Supprimer un nombre de message dans un salon"
+        description="Supprimer un nombre de messages dans un salon"
     )
     @commands.has_permissions(manage_messages=True)
-    async def purge(self, context, number: int):
+    async def clear(self, context, number: int):
         """
         Delete a number of messages.
         """
-        print("purge ... TODO")
+        print("clear ... TODO")
         deleted = await context.channel.purge(limit = number + 1)
         await context.send(f"Deleted {len(deleted) - 1} message(s)", delete_after = 5)
 
@@ -195,7 +195,7 @@ class Moderation(commands.Cog):
     @commands.command(
         name="mute",
         help="<member> : Le membre cible",
-        description="Mettre un membre en Muet"
+        description="Mettre un membre Muet"
     )
     @commands.has_permissions(mute_members = True)
     async def mute(self, context, member: discord.Member):
@@ -208,7 +208,7 @@ class Moderation(commands.Cog):
     @commands.command(
         name="unmute",
         help="<member> : Le membre cible",
-        description="Enleve le Muet d'un membre"
+        description="Enleve le Muet pour un membre"
     )
     @commands.has_permissions(mute_members = True)
     async def unmute(self, context, member: discord.Member):

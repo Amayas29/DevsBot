@@ -25,7 +25,7 @@ class Owner(commands.Cog):
         name="ping",
         aliases=["test"],
         help="",
-        description="Test si le bot marche"
+        description="Test si le bot est fonctionnel"
     )
     async def ping(self, context):
         """

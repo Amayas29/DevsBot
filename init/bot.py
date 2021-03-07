@@ -2,11 +2,11 @@
 
 import random
 import discord
-from   discord.ext   import commands, tasks
-from   init.settings import Settings
-from   copy          import deepcopy as dp
-from   utils.levels  import update_users, set_exp, level_up
-
+from   discord.ext    import commands, tasks
+from   init.settings  import Settings
+from   copy           import deepcopy as dp
+from   utils.levels   import update_users, set_exp, level_up, get_users_birthday
+from   utils.frontend import get_birthday_embed
 
 class Bot(commands.Bot):
 
@@ -70,12 +70,29 @@ class Bot(commands.Bot):
         await self.change_presence(status = discord.Status.online, activity = game)
 
 
+    @tasks.loop(hours=24)
+    async def birthdays(self):
+
+        try:
+            birthday_channel = await self.fetch_channel(self.settings.channels["birthdays"])
+            users = get_users_birthday()
+            for id_age in users:
+                try:
+                    user = await self.fetch_user(int(id_age[0]))
+                    embed = get_birthday_embed(self.settings.embeds["birthday"], user, id_age[1], self.user.avatar_url)
+                    await birthday_channel.send(embed = embed)
+                except:
+                    continue
+        except:
+            pass
+
     async def on_ready(self):
         """
         When the bot is activated
         """
         print("Ready ... TODO")
         self.status.start()
+        self.birthdays.start()
 
         liste = []
         for member in self.get_all_members():

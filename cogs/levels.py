@@ -21,7 +21,7 @@ class LevelSystem(commands.Cog):
     @commands.command(
         name="rank",
         help="",
-        description="Affiche la carte niveau de l'utilisateur de la commande"
+        description="Affiche la carte niveau de l'utilisateur"
     )
     async def rank(self, context):
         try:
@@ -39,7 +39,7 @@ class LevelSystem(commands.Cog):
     @commands.command(
         name="top",
         help="",
-        description="Affiche le haut du classement des membres selon leurs niveaux"
+        description="Affiche le TOP 10 des membres selon leurs niveaux"
     )
     async def top(self, context):
         try:

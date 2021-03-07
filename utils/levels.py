@@ -2,7 +2,7 @@
 
 import json
 from   init.settings import Settings
-from   datetime      import datetime
+from   datetime      import date, datetime
 from   math          import floor
 
 
@@ -99,7 +99,6 @@ def level_up(user):
             with open("resources/users.json") as data:
                 all_users = json.load(data)
 
-
         if str(user.id) not in all_users:
             return False
 
@@ -130,6 +129,8 @@ def level_up(user):
 
 def get_top_users():
 
+    global all_users
+    
     try:
 
         with open("resources/users.json") as data:
@@ -148,4 +149,51 @@ def get_top_users():
         
     except Exception as e:
         print(e)
+        return []
+
+def get_price(user):
+    
+    global all_users
+
+    try:
+        if all_users == {} or str(user.id) not in all_users:
+            with open("resources/users.json") as data:
+                all_users = json.load(data)
+
+        if str(user.id) not in all_users:
+            return 0
+
+        level = all_users[str(user.id)]["level"]
+
+        if level == None:
+            return 5564800000
+
+        return 50000 * level
+    except:
+        pass
+
+
+def get_users_birthday():
+
+    global all_users
+
+    liste = []
+    try:
+        with open("resources/users.json") as data:
+            all_users = json.load(data)
+
+        now = datetime.strftime(datetime.now(), "%d-%m-%Y")
+        now = datetime.strptime(now, "%d-%m-%Y")
+        for user, values in all_users.items():
+            try:
+                birthdate = datetime.strptime(values["birth_date"], "%d-%m-%Y")
+               
+                if birthdate.month == now.month and birthdate.day == now.day:
+                    age = floor((now - birthdate).total_seconds() / 31536000)
+                    liste.append((user, age))
+            except:
+                continue
+
+        return liste
+    except:
         return []

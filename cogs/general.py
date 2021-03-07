@@ -51,6 +51,6 @@ class General(commands.Cog):
         except Exception as e:
             print(e)
 
-    
+
 def setup(bot):
     bot.add_cog(General(bot))

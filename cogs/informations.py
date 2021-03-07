@@ -35,7 +35,7 @@ class Informations(commands.Cog):
     @commands.command(
         name="info",
         help="<user> : Le membre cible",
-        description="Affiche les informations sur un membre du serveur"
+        description="Affiche les informations d'un membre du serveur"
     )
     async def info(self, context, user : discord.Member):
         """
@@ -58,7 +58,7 @@ class Informations(commands.Cog):
     @commands.command(
         name="serverinfo",
         help="",
-        description="Affiche les informations du le serveur"
+        description="Affiche les informations du serveur"
     )
     async def server_info(self, context):
         """

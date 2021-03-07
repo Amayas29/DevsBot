@@ -30,11 +30,10 @@ class Bot(commands.Bot):
             return
             
         print("message ... TODO")
-    
+
         message_lower = message.content.lower()
         for word in self.settings.forbidden_words:
             if word in message_lower:
-                # TODO WARN
                 await message.channel.send("No bro .. TODO", delete_after = 10)
                 await message.delete()
                 return
@@ -49,7 +48,6 @@ class Bot(commands.Bot):
                 message_up = message_up.replace("{level}", str(level))
                 await levels_channel.send(message_up)
         except Exception as e:
-            print("Yes", e)
             pass
 
         await self.process_commands(message)

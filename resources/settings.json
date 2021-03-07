@@ -36,7 +36,7 @@
         "ban_warn": 817123375826075678
     },
     "level_up_message" : "Félicitation {user} ! Tu as atteint le niveau **{level}** 🥳",
-
+    "min_time" : 1,
     "logs_settings": {
         "add_role": true,
         "remove_role": true,
@@ -125,7 +125,7 @@
             ],
             "footer": {
                 "text": null,
-                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+                "icon_url": null
             },
             "image": null,
             "thumbnail": {
@@ -166,7 +166,7 @@
             ],
             "footer": {
                 "text": null,
-                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+                "icon_url": null
             },
             "image": null,
             "thumbnail": {
@@ -187,7 +187,7 @@
             ],
             "footer": {
                 "text": null,
-                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+                "icon_url": null
             },
             "image": null,
             "thumbnail": {
@@ -208,7 +208,7 @@
             ],
             "footer": {
                 "text": null,
-                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+                "icon_url": null
             },
             "image": null,
             "thumbnail": null
@@ -232,7 +232,7 @@
             ],
             "footer": {
                 "text": null,
-                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+                "icon_url": null
             },
             "image": null,
             "thumbnail": {
@@ -258,7 +258,7 @@
             ],
             "footer": {
                 "text": null,
-                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+                "icon_url": null
             },
             "image": null,
             "thumbnail": {
@@ -284,7 +284,7 @@
             ],
             "footer": {
                 "text": null,
-                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+                "icon_url": null
             },
             "image": null,
             "thumbnail": {
@@ -317,6 +317,36 @@
             "thumbnail": {
                 "url": ""
             }
+        },
+        "rank" : {
+            "author": {
+                "name": "{name}",
+                "url" : null,
+                "icon_url" : "{icon_url}"
+            },
+            "title": "Niveau de l'utilsateur",
+            "color": "79c046",
+            "description": "{user} voici tes statistiques",
+            "fields": [
+                {
+                    "name": "Niveau",
+                    "value": "{level}",
+                    "inline": true
+                },
+                {
+                    "name": "Exp",
+                    "value": "{exp}",
+                    "inline": true
+                }
+            ],
+            "footer": {
+                "text": null,
+                "icon_url": null
+            },
+            "image": null,
+            "thumbnail": {
+                "url": "https://cdn2.iconfinder.com/data/icons/flat-seo-web-ikooni/128/flat_seo-27-512.png"
+            }
         }
     },
     "images_generator": {
@@ -331,7 +361,13 @@
 
         "rank" : {
             "path" : "resources/images/background_level.png",
-            "color" : "35, 145, 212"
+            "color" : [
+                "35, 145, 212",
+                "70, 192, 173",
+                "153, 93, 177",
+                "201, 165, 13",
+                "28, 149, 228"
+            ]
         }
     }
 }

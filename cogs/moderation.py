@@ -50,7 +50,7 @@ class Moderation(commands.Cog):
         await context.guild.ban(member, reason = reason)
 
         try:
-            embed = get_ban_unban_embed(self.settings.embeds["ban"], member, context.author, reason)
+            embed = get_ban_unban_embed(self.settings.embeds["ban"], member, context.author, reason, self.bot.user.avatar_url)
         except:
             embed = None
             
@@ -90,7 +90,7 @@ class Moderation(commands.Cog):
         
         await context.guild.unban(ban.user, reason = reason)
 
-        embed = get_ban_unban_embed(self.settings.embeds["unban"], ban.user, context.author, reason)
+        embed = get_ban_unban_embed(self.settings.embeds["unban"], ban.user, context.author, reason, self.bot.user.avatar_url)
         if embed != None:
             try:
                 ban_channel = self.bot.get_channel(self.settings.channels["ban_warn"]) 
@@ -122,7 +122,7 @@ class Moderation(commands.Cog):
             pass
 
         try:
-            embed = get_warn_embed(self.settings.embeds["warn"], member, context.author, reason)
+            embed = get_warn_embed(self.settings.embeds["warn"], member, context.author, reason, self.bot.user.avatar_url)
         except:
             embed = None
             

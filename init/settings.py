@@ -46,6 +46,7 @@ class Settings():
             cls.__instance._images_generator = data["images_generator"]
             cls.__instance._ignored_roles_display = data["ignored_roles_display"]
             cls.__instance._level_up_message = data["level_up_message"]
+            cls.__instance._min_time = data["min_time"]
             cls._config = config
         except:
             exit(1)
@@ -79,6 +80,7 @@ class Settings():
             data["images_generator"] = self._images_generator
             data["ignored_roles_display"] = self._ignored_roles_display
             data["level_up_message"] = self._level_up_message
+            data["min_time"] = self._min_time
             
             with open(self.file_settings, "w") as file:
                 json.dump(data, file ,indent=4)
@@ -172,6 +174,10 @@ class Settings():
     def level_up_message(self):
         return self._level_up_message
 
+    @property
+    def min_time(self):
+        return self._min_time
+        
     @property
     def config(self):
         return self._config

@@ -55,7 +55,7 @@ class Events(commands.Cog):
         server : discord.Guild = member.guild
 
         try:
-            embed = get_welcome_goodbye_embed(self.settings.embeds["welcome"], member, server.name, server.member_count)
+            embed = get_welcome_goodbye_embed(self.settings.embeds["welcome"], member, server.name, server.member_count, self.bot.user.avatar_url)
         except:
             embed = None
 
@@ -82,7 +82,7 @@ class Events(commands.Cog):
         await delete_reactions(member)
 
         try:
-            embed = get_welcome_goodbye_embed(self.settings.embeds["good_bye"], member, server.name, server.member_count)
+            embed = get_welcome_goodbye_embed(self.settings.embeds["good_bye"], member, server.name, server.member_count, self.bot.user.avatar_url)
         except:
             embed = None
 

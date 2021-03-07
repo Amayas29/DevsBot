@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import asyncio
-from re import I
-import discord
-from discord import file
 from   discord.ext      import commands
 from   init.settings    import Settings
-from   utils.frontend import get_file_rank
+from   utils.frontend import get_file_rank, get_level_embed
 
 class LevelSystem(commands.Cog):
 
@@ -22,8 +18,16 @@ class LevelSystem(commands.Cog):
 
     @commands.command(name="rank")
     async def rank(self, context):
-        file = get_file_rank(context.author)
-        await context.send(file=file)
+        try:
+            file = get_file_rank(context.author)
+            embed = get_level_embed(self.settings.embeds["rank"], context.author, self.bot.user.avatar_url)
+
+            if file == None or embed == None:
+                return
+
+            await context.send(embed = embed, file=file)
+        except:
+            pass
 
 
 def setup(bot):

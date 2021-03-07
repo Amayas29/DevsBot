@@ -2,6 +2,7 @@
 
 import json
 import discord
+import random
 from   init.settings import Settings
 from   PIL           import Image, ImageDraw
 from   io            import BytesIO
@@ -11,7 +12,7 @@ from   copy          import deepcopy as dp
 settings = Settings()
 
 
-def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discord.User, reason: str) -> discord.Embed :
+def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discord.User, reason: str, bot_icon) -> discord.Embed :
     try:
         dict = dp(dict)
 
@@ -30,6 +31,7 @@ def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discor
         dict["fields"] = fields
 
         dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
 
         return discord.Embed.from_dict(dict)
 
@@ -37,7 +39,7 @@ def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discor
         return None
 
 
-def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str, member_count: int):
+def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str, member_count: int, bot_icon):
 
     try:
         dict = dp(dict)
@@ -53,6 +55,7 @@ def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str, membe
             field["value"] = field["value"].replace("{member_count}", str(member_count))
 
         dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
 
         return discord.Embed.from_dict(dict)
         
@@ -60,7 +63,7 @@ def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str, membe
         return None
 
 
-def get_warn_embed(dict: dict, warn_user: discord.User, moderator: discord.User, reason: str) -> discord.Embed :
+def get_warn_embed(dict: dict, warn_user: discord.User, moderator: discord.User, reason: str, bot_icon) -> discord.Embed :
     try:
         dict = dp(dict)
 
@@ -79,6 +82,7 @@ def get_warn_embed(dict: dict, warn_user: discord.User, moderator: discord.User,
         
         dict["fields"] = fields
         dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
 
         return discord.Embed.from_dict(dict)
 
@@ -86,7 +90,7 @@ def get_warn_embed(dict: dict, warn_user: discord.User, moderator: discord.User,
         return None
 
 
-def get_server_info_embed(dict: dict, server, description: str) -> discord.Embed :
+def get_server_info_embed(dict: dict, server, description: str, bot_icon) -> discord.Embed :
     try:
         number_txt_channels = len(server.text_channels)
         number_voc_channels = len(server.voice_channels)
@@ -111,6 +115,7 @@ def get_server_info_embed(dict: dict, server, description: str) -> discord.Embed
             
         dict["fields"] = fields
         dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
 
         return discord.Embed.from_dict(dict)
 
@@ -118,7 +123,7 @@ def get_server_info_embed(dict: dict, server, description: str) -> discord.Embed
         return None
 
 
-def get_user_info_embed(dict, user, user_dict):
+def get_user_info_embed(dict, user, user_dict, bot_icon):
     try:
         dict = dp(dict)
         joined = user.joined_at.strftime("%d-%m-%Y") 
@@ -164,6 +169,7 @@ def get_user_info_embed(dict, user, user_dict):
 
         dict["fields"] = fields
         dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
 
         return discord.Embed.from_dict(dict)
 
@@ -201,6 +207,51 @@ async def get_file_welcome(user: discord.User):
     except:
         return None
 
+def get_level_embed(dict, user, bot_icon):
+    try:
+        dict = dp(dict)
+
+        with open("resources/users.json") as data:
+            users = json.load(data)
+
+        user_dict = users[str(user.id)]
+
+        if type(dict["color"]) != int:
+            dict["color"] = int(dict["color"], 16)
+
+        dict["description"] = dict["description"].replace("{user}", user.mention)
+
+        icon_url = user.avatar_url
+        author = dict["author"]
+        author["name"] = author["name"].replace("{name}", user.name)
+        author["icon_url"] = author["icon_url"].replace("{icon_url}", str(icon_url))
+        dict["author"] = author
+
+        level = user_dict["level"]
+        exp = user_dict["exp"]
+
+        if level == None or exp == None:
+            level = "Max"
+            exp = "Max"
+            max_exp = ""
+        
+        else:
+            max_exp = 50 * level ** 2 - 50 * level + 200
+            max_exp = " / " + str(max_exp)
+
+        fields = dict["fields"]
+        for field in fields:
+            field["value"] = field["value"].replace("{level}", str(level))
+            field["value"] = field["value"].replace("{exp}", str(exp) + str(max_exp))
+        
+        dict["fields"] = fields
+        dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
+
+        return discord.Embed.from_dict(dict)
+
+    except:
+        return None
 
 def get_file_rank(user):
 
@@ -231,7 +282,11 @@ def get_file_rank(user):
 
         exp = max * exp / 100
 
-        color = tuple(map(int, rank["color"].split(",")))
+        if rank["color"] == []:
+            rank["color"] = ["28, 149, 228"]
+
+        color = random.choice(rank["color"])
+        color = tuple(map(int, color.split(",")))
         draw.rectangle(((0, 0), (exp, background.size[1])), fill=color, width=background.size[1])
 
         background.save("__rank__.png")

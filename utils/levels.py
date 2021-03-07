@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from io import SEEK_CUR
+from os import EX_CANTCREAT
 import discord
 import json
 from   discord.ext   import commands
 from   init.settings import Settings
+from   datetime      import datetime
+from   math          import floor
 
 
 setting = Settings()
@@ -28,7 +30,8 @@ def update_users(remove, *users):
                     "level" : 1,
                     "exp" : 0,
                     "warns" : 0,
-                    "birth_date" : "NaN"
+                    "birth_date" : "NaN",
+                    "old_message": None
                 }
 
         all_users = users_dict
@@ -43,7 +46,7 @@ def update_users(remove, *users):
 def set_exp(user, exp):
 
     for role in user.roles:
-        if role in setting.ignored_roles_levels or role.is_integration() or role.is_bot_managed():
+        if role.id in setting.ignored_roles_levels or role.is_integration() or role.is_bot_managed():
             return
 
     global all_users
@@ -56,25 +59,39 @@ def set_exp(user, exp):
         if str(user.id) not in all_users:
             all_users[str(user.id)] = {
                 "level" : 1,
-                "exp" : 0,
+                "exp" : exp,
                 "warns" : 0,
-                "birth_date" : "NaN"
+                "birth_date" : "NaN",
+                "old_message" : datetime.now()
             }
 
         else:
-            all_users[str(user.id)]["exp"] += exp
+            old_message = all_users[str(user.id)]["old_message"]
+            now = datetime.now()
 
-            with open("resources/users.json", "w") as file:
-                json.dump(all_users, file ,indent=4)
+            if old_message == None:
+                old_message = now
+            else:
+                old_message = datetime.strptime(old_message, "%d-%m-%Y %H:%M:%S")
 
-    except:
+            diff = floor(((now - old_message).total_seconds() / 60))
+
+            if diff >= setting.min_time:
+                all_users[str(user.id)]["exp"] += exp
+
+            all_users[str(user.id)]["old_message"] = now.strftime("%d-%m-%Y %H:%M:%S")
+
+        with open("resources/users.json", "w") as file:
+            json.dump(all_users, file ,indent=4)
+
+    except Exception as e:
         pass
 
 
 def level_up(user):
 
     for role in user.roles:
-        if role in setting.ignored_roles_levels or role.is_integration() or role.is_bot_managed():
+        if role.id in setting.ignored_roles_levels or role.is_integration() or role.is_bot_managed():
             return False, -1
 
     global all_users

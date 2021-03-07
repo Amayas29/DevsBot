@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import json
 import discord
 from   init.settings import Settings
-from   PIL           import Image, ImageDraw, ImageOps
+from   PIL           import Image, ImageDraw
 from   io            import BytesIO
 from   copy          import deepcopy as dp
 
@@ -198,4 +199,44 @@ async def get_file_welcome(user: discord.User):
         return discord.File("__image_generator__.png")
 
     except:
+        return None
+
+
+def get_file_rank(user):
+
+    try:
+
+        with open("resources/users.json") as data:
+            users = json.load(data)
+
+        user_info = users[str(user.id)]
+
+        level = user_info["level"]
+        exp = user_info["exp"]
+
+        rank = settings.images_generator["rank"]
+
+        background = Image.open(rank["path"])
+
+        draw = ImageDraw.Draw(background)
+
+        max = background.size[0]
+
+        if exp == None:
+            exp = background.size[0]
+        
+        else:
+            max_exp = 50 * level ** 2 - 50 * level + 200
+            exp = 100 * (exp / max_exp)
+
+        exp = max * exp / 100
+
+        color = tuple(map(int, rank["color"].split(",")))
+        draw.rectangle(((0, 0), (exp, background.size[1])), fill=color, width=background.size[1])
+
+        background.save("__rank__.png")
+
+        return discord.File("__rank__.png")
+
+    except Exception as e:
         return None

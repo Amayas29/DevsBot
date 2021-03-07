@@ -45,6 +45,7 @@ class Settings():
             cls.__instance._embeds = data["embeds"]
             cls.__instance._images_generator = data["images_generator"]
             cls.__instance._ignored_roles_display = data["ignored_roles_display"]
+            cls.__instance._level_up_message = data["level_up_message"]
             cls._config = config
         except:
             exit(1)
@@ -77,6 +78,7 @@ class Settings():
             data["embeds"] = self._embeds
             data["images_generator"] = self._images_generator
             data["ignored_roles_display"] = self._ignored_roles_display
+            data["level_up_message"] = self._level_up_message
             
             with open(self.file_settings, "w") as file:
                 json.dump(data, file ,indent=4)
@@ -166,6 +168,10 @@ class Settings():
     def ignored_roles_display(self):
         return self._ignored_roles_display
     
+    @property
+    def level_up_message(self):
+        return self._level_up_message
+
     @property
     def config(self):
         return self._config

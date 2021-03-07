@@ -6,20 +6,20 @@
         "birth_date": "2001-05-29"
     },
     "758215269767315457": {
-        "level": 0,
+        "level": 1,
         "exp": 0,
         "warns": 0,
         "birth_date": "NaN"
     },
     "775839890620284928": {
-        "level": 0,
+        "level": 1,
         "exp": 0,
         "warns": 0,
         "birth_date": "NaN"
     },
     "775168200807546880": {
-        "level": 0,
-        "exp": 0,
+        "level": 2,
+        "exp": 205,
         "warns": 0,
         "birth_date": "NaN"
     }

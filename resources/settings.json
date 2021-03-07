@@ -35,6 +35,8 @@
         "bot_commands": 815244585667395615,
         "ban_warn": 817123375826075678
     },
+    "level_up_message" : "Félicitation {user} ! Tu as atteint le niveau **{level}** 🥳",
+
     "logs_settings": {
         "add_role": true,
         "remove_role": true,
@@ -325,6 +327,11 @@
             "height": 390,
             "x": 540,
             "y": 176
+        },
+
+        "rank" : {
+            "path" : "resources/images/background_level.png",
+            "color" : "35, 145, 212"
         }
     }
 }

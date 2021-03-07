@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import asyncio
+from re import I
 import discord
-from   discord.ext   import commands
-from   init.settings import Settings
-
+from discord import file
+from   discord.ext      import commands
+from   init.settings    import Settings
+from   utils.frontend import get_file_rank
 
 class LevelSystem(commands.Cog):
 
@@ -16,6 +18,12 @@ class LevelSystem(commands.Cog):
 
         self.bot = bot
         self.settings = Settings()
+
+
+    @commands.command(name="rank")
+    async def rank(self, context):
+        file = get_file_rank(context.author)
+        await context.send(file=file)
 
 
 def setup(bot):

@@ -8,7 +8,7 @@ import json
 from   discord.ext   import commands, tasks
 from   init.settings import Settings
 from   copy          import deepcopy as dp
-from   utils.levels  import update_users
+from   utils.levels  import update_users, set_exp, level_up
 
 
 class Bot(commands.Bot):
@@ -38,6 +38,19 @@ class Bot(commands.Bot):
                 await message.channel.send("No bro .. TODO", delete_after = 10)
                 await message.delete()
                 return
+
+        try:
+            set_exp(message.author, 5)
+            lvup, level = level_up(message.author)
+            if lvup:
+                levels_channel = self.get_channel(self.settings.channels["levels"])
+                message_up = dp(self.settings.level_up_message)
+                message_up = message_up.replace("{user}", message.author.mention)
+                message_up = message_up.replace("{level}", str(level))
+                await levels_channel.send(message_up)
+        except Exception as e:
+            print("Yes", e)
+            pass
 
         await self.process_commands(message)
 

@@ -347,6 +347,28 @@
             "thumbnail": {
                 "url": "https://cdn2.iconfinder.com/data/icons/flat-seo-web-ikooni/128/flat_seo-27-512.png"
             }
+        },
+        "top" : {
+            "author": null,
+
+            "title": "Classement des membres",
+            "color": "e4951c",
+            "description": "Voici le classement des membres selon leurs niveaux \n\n *(Les modérateurs et le fondateur ne sont pas pris en compte dans le classement)*\n",
+            "fields": [
+                {
+                    "name" : "{rank} - {user}",
+                    "value" : "Niveau {level}, Exp {exp}",
+                    "inline" : false
+                }          
+            ],
+            "footer": {
+                "text": null,
+                "icon_url": null
+            },
+            "image": null,
+            "thumbnail": {
+                "url": "https://cdn2.iconfinder.com/data/icons/2-s-e-o-line-filled/614/114_-_Rankings-512.png"
+            }
         }
     },
     "images_generator": {

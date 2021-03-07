@@ -128,3 +128,26 @@ def level_up(user):
 
     except:
         return False, -1
+
+
+def get_top_users():
+
+    try:
+
+        with open("resources/users.json") as data:
+            all_users = json.load(data)
+
+        tops = {}
+        for user, values in all_users.items():
+
+            if values["level"] == None or values["exp"] == None:
+                continue
+        
+            tops[user] = [values["level"], values["exp"]]
+
+        tops = list(sorted(tops.items(), key=lambda item: item[1], reverse=True))
+        return tops
+        
+    except Exception as e:
+        print(e)
+        return []

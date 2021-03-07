@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import json
+from attr import field
 import discord
 import random
+
+from discord import embeds
+from discord.ext import commands
 from   init.settings import Settings
 from   PIL           import Image, ImageDraw
 from   io            import BytesIO
-from   copy          import deepcopy as dp
-
+from   copy          import copy, deepcopy as dp
+from   utils.levels  import get_top_users, level_up
 
 settings = Settings()
 
@@ -294,4 +298,47 @@ def get_file_rank(user):
         return discord.File("__rank__.png")
 
     except Exception as e:
+        return None
+
+
+async def get_top_embed(dict, bot: commands.Bot):
+    try:
+        tops = get_top_users()
+        dict = dp(dict)
+
+        if type(dict["color"]) != int:
+            dict["color"] = int(dict["color"], 16)
+
+        field = dict["fields"][0]
+
+        dict["fields"] = []
+
+        nb = 0
+        for elem in tops:
+            nb += 1
+
+            if nb > 10:
+                break
+
+            user = await bot.fetch_user(elem[0])
+            new = dp(field)
+            new ["name"] = new["name"].replace("{rank}", str(nb))
+            new ["name"] = new["name"].replace("{user}", user.name)
+
+            level = elem[1][0]
+            exp = elem[1][1]
+
+            max_exp = 50 * level ** 2 - 50 * level + 200
+
+            new ["value"] = new["value"].replace("{level}", str(level))
+            new ["value"] = new["value"].replace("{exp}", str(exp) + " / " + str(max_exp))
+
+            dict["fields"].append(new)
+
+        dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot.user.avatar_url)
+
+        return discord.Embed.from_dict(dict)
+    except Exception as e:
+        print(e)
         return None

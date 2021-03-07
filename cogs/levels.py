@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from discord import embeds
 from   discord.ext      import commands
 from   init.settings    import Settings
-from   utils.frontend import get_file_rank, get_level_embed
+from   utils.frontend   import get_file_rank, get_level_embed, get_top_embed
+
 
 class LevelSystem(commands.Cog):
 
@@ -29,6 +31,18 @@ class LevelSystem(commands.Cog):
         except:
             pass
 
+    @commands.command(name="top")
+    async def top(self, context):
+        try:
+
+            embed = await get_top_embed(self.settings.embeds["top"], self.bot)
+            if embed == None:
+                return
+            
+            await context.send(embed = embed)
+        except:
+            pass
+    
 
 def setup(bot):
     bot.add_cog(LevelSystem(bot))

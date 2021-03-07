@@ -62,6 +62,7 @@ class Moderation(commands.Cog):
             except:   
                 await context.send(embed = embed)        
 
+
     @ban.error
     async def ban_error(self, context, error):
         print(type(error))
@@ -152,6 +153,7 @@ class Moderation(commands.Cog):
         print("purge ... TODO")
         deleted = await context.channel.purge(limit = number + 1)
         await context.send(f"Deleted {len(deleted) - 1} message(s)", delete_after = 5)
+
 
     @commands.command()
     @commands.has_permissions(mute_members = True)

@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from operator import index
 import random
+import re
 import discord
 import json
 from   discord.ext   import commands, tasks
 from   init.settings import Settings
+from   copy          import deepcopy as dp
+from   utils.levels  import update_users
 
 
 class Bot(commands.Bot):
@@ -15,10 +19,16 @@ class Bot(commands.Bot):
         prefix = self.settings.prefix
         intents.members = True
         intents.presences = True
+        self.game = None
         super().__init__(*args, command_prefix=prefix, prefix=prefix, intents=intents, **kwargs)
     
 
     async def on_message(self, message: discord.Message):
+
+        if message.author != self.user and isinstance(message.channel, discord.DMChannel):
+            await message.channel.send("Hi ! I am a bot created by Amayas")
+            return
+            
         print("message ... TODO")
     
         message_lower = message.content.lower()
@@ -38,7 +48,17 @@ class Bot(commands.Bot):
 
     @tasks.loop(hours=5)
     async def status(self):
-        game = discord.Game(random.choice(self.settings.game_status))
+
+        games = dp(self.settings.game_status)
+
+        if self.game == None:
+            self.game = games[0]
+
+        elif len(games) > 1:
+            games.remove(self.game)
+            self.game = random.choice(games)
+        
+        game = discord.Game(self.game)
         await self.change_presence(status = discord.Status.online, activity = game)
 
 
@@ -49,33 +69,16 @@ class Bot(commands.Bot):
         print("Ready ... TODO")
         self.status.start()
 
-        try:
-            with open("resources/users.json") as data:
-                users : dict = json.load(data)
-        except:
-            users = {}
-
+        liste = []
         for member in self.get_all_members():
-            if str(member.id) not in users:
 
-                add = True
-                for role in member.roles:
-                    if role.is_integration() or role.is_bot_managed():
-                        add = False
-                        break
+            add = True
+            for role in member.roles:
+                if role.is_integration() or role.is_bot_managed():
+                    add = False
+                    break
                 
-                if not add:
-                    continue
+            if add:
+                liste.append(member)
 
-                users[str(member.id)] = {
-                    "level" : "0",
-                    "exp" : 0,
-                    "warns" : 0,
-                    "birth_date" : "NaN"
-                }
-
-        try:
-            with open("resources/users.json", "w") as file:
-                json.dump(users, file ,indent=4)
-        except:
-            pass
+        update_users(False, liste)

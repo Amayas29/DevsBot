@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import asyncio
+from os import remove
 from sys import platform
 import discord
 import json
@@ -9,7 +10,7 @@ from   discord.ext    import commands
 from   init.settings  import Settings
 from   utils.frontend import get_welcome_goodbye_embed, get_file_welcome
 from   utils.rolemenu import add_reaction_verification, delete_reactions
-
+from   utils.levels   import update_users
 
 class Events(commands.Cog):
 
@@ -49,24 +50,7 @@ class Events(commands.Cog):
             if role.is_integration() or role.is_bot_managed():
                 return
 
-        try:
-            with open("resources/users.json") as data:
-                users : dict = json.load(data)
-        except:
-            pass
-
-        users[str(member.id)] = {
-            "level" : "0",
-            "exp" : 0,
-            "warns" : 0,
-            "birth_date" : "NaN"
-        }
-
-        try:
-            with open("resources/users.json", "w") as file:
-                json.dump(users, file ,indent=4)
-        except:
-            pass
+        update_users(False, member)
         
         server : discord.Guild = member.guild
 
@@ -91,16 +75,7 @@ class Events(commands.Cog):
             if role.is_integration() or role.is_bot_managed():
                 return
 
-        try:
-            with open("resources/users.json") as data:
-                users : dict = json.load(data)
-
-            users.pop(str(member.id))
-
-            with open("resources/users.json", "w") as file:
-                json.dump(users, file ,indent=4)
-        except:
-            pass
+        update_users(True, member)
 
         server : discord.Guild = member.guild
 
@@ -129,7 +104,6 @@ class Events(commands.Cog):
     async def on_raw_reaction_remove(self, payload: discord.RawReactionActionEvent):
         pass
         
-    
 
     # @commands.Cog.listener()
     # async def on_command(self, context):

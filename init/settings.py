@@ -1,5 +1,6 @@
 import json
 from os import sep
+import re
 from sys import prefix
 
 
@@ -43,6 +44,7 @@ class Settings():
             cls.__instance._styles = data["styles"]
             cls.__instance._embeds = data["embeds"]
             cls.__instance._images_generator = data["images_generator"]
+            cls.__instance._ignored_roles_display = data["ignored_roles_display"]
             cls._config = config
         except:
             exit(1)
@@ -58,22 +60,23 @@ class Settings():
             with open(self.file_settings) as st:
                 data = json.load(st)
 
-            data["prefix"] = self.prefix
-            data["owners"] = self.owners
-            data["muted_role"] = self.muted_role
-            data["verified_role"] = self.verified_role
-            data["ignored_roles_levels"] = self.ignored_roles_levels
-            data["forbidden_words"] = self.forbidden_words
-            data["verification_message"] = self.verification_message
-            data["verification_emoji"] = self.verification_emoji      
-            data["channels"] = self.channels
-            data["logs_settings"] = self.logs_settings
-            data["initial_roles"] = self.initial_roles
-            data["ranks"] = self.ranks
-            data["game_status"] = self.game_status
-            data["styles"] = self.styles
-            data["embeds"] = self.embeds
-            data["images_generator"] = self.images_generator
+            data["prefix"] = self._prefix
+            data["owners"] = self._owners
+            data["muted_role"] = self._muted_role
+            data["verified_role"] = self._verified_role
+            data["ignored_roles_levels"] = self._ignored_roles_levels
+            data["forbidden_words"] = self._forbidden_words
+            data["verification_message"] = self._verification_message
+            data["verification_emoji"] = self._verification_emoji      
+            data["channels"] = self._channels
+            data["logs_settings"] = self._logs_settings
+            data["initial_roles"] = self._initial_roles
+            data["ranks"] = self._ranks
+            data["game_status"] = self._game_status
+            data["styles"] = self._styles
+            data["embeds"] = self._embeds
+            data["images_generator"] = self._images_generator
+            data["ignored_roles_display"] = self._ignored_roles_display
             
             with open(self.file_settings, "w") as file:
                 json.dump(data, file ,indent=4)
@@ -159,6 +162,10 @@ class Settings():
     def images_generator(self):
         return self._images_generator
         
+    @property
+    def ignored_roles_display(self):
+        return self._ignored_roles_display
+    
     @property
     def config(self):
         return self._config

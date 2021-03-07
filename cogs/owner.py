@@ -29,7 +29,8 @@ class Owner(commands.Cog):
         """
         Check if the bot is alive
         """
-        await context.send("Pong ... Bot fonctionnel")
+        await context.message.delete()
+        await context.send("Pong ... Bot fonctionnel", delete_after=5)
 
 
     @commands.command(name="shutdown")
@@ -46,6 +47,7 @@ class Owner(commands.Cog):
         Change the game of the bot
         """
         print("Change game ... TODO")
+
 
     @commands.command(name="verif")
     async def verif(self, context, message_id : int):
@@ -75,6 +77,7 @@ class Owner(commands.Cog):
             print(e)
         finally:
             await context.message.delete()
+
 
 def setup(bot):
     bot.add_cog(Owner(bot))

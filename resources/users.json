@@ -1,26 +1,26 @@
 {
     "640319226061520908": {
-        "level": "NaN",
-        "exp": 0,
+        "level": null,
+        "exp": null,
         "warns": 0,
         "birth_date": "2001-05-29"
     },
     "758215269767315457": {
-        "level": "NaN",
+        "level": 0,
         "exp": 0,
         "warns": 0,
         "birth_date": "NaN"
     },
     "775839890620284928": {
-        "level": "0",
+        "level": 0,
         "exp": 0,
         "warns": 0,
         "birth_date": "NaN"
     },
     "775168200807546880": {
-        "level": "0",
+        "level": 0,
         "exp": 0,
-        "warns": 15,
+        "warns": 0,
         "birth_date": "NaN"
     }
 }

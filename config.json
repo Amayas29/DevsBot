@@ -2,7 +2,8 @@
     "name" : "DevsBot",
     "icon_url" : "https://i.goopics.net/m0VZm.jpg",
     "version" : "0.1",
-    "description" : "DevsBot est un bot créé et maintenue par Amayas, il est programmé en python",
+    "bot_description" : "DevsBot est un bot créé et maintenue par Amayas, il est programmé en python",
+    "server_description" : "Ce serveur est un lieu de partage entre de superbe personnes sur plusieurs thématiques principalement l'informatique",
 
     "join_message" : "Salut je suis DevBot, votre ami robot",
     "status_type" : "online|idle|dnd",

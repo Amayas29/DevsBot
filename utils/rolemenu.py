@@ -1,4 +1,5 @@
-import discord
+# -*- coding: utf-8 -*-
+
 from   discord.ext   import commands
 from   init.settings import Settings
 
@@ -13,6 +14,10 @@ async def add_reaction_verification(bot, payload):
             if payload.message_id == settings.verification_message and payload.emoji.name == settings.verification_emoji:
                 verified_role = guild.get_role(settings.verified_role)
                 if verified_role in payload.member.roles:
+                    return
+
+            for role in payload.member.roles:
+                if role.is_integration() or role.is_bot_managed():
                     return
 
             for role in settings.initial_roles:

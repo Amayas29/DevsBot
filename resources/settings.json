@@ -11,6 +11,12 @@
         814991349316976650,
         815014593008107521
     ],
+    "ignored_roles_display" : [
+        814991917465075742,
+        815025615240822784,
+        815270511977431062,
+        815343122862964767
+    ],
     "forbidden_words": [
         "pute"
     ],
@@ -49,7 +55,7 @@
         "70": 4
     },
     "game_status": [
-        "Yes"
+        "Loup garou"
     ],
     "styles": {
         "0": {
@@ -69,6 +75,102 @@
         }
     },
     "embeds": {
+        "user_info": {
+            "author": {
+                "name": "{name}",
+                "url" : null,
+                "icon_url" : "{icon_url}"
+            },
+            "title": "Informations de l'utilisateur",
+            "color": "8a23d4",
+            "description": "{user} voici tes informations",
+            "fields": [
+                {
+                    "name": "Arrivé(e) au serveur le",
+                    "value": "{joined}",
+                    "inline": true
+                },
+                {
+                    "name": "A créer son compte le",
+                    "value": "{created}",
+                    "inline": true
+                },
+                {
+                    "name": "Rôle le plus élevé",
+                    "value": "{roles}",
+                    "inline": true
+                },
+                {
+                    "name": "Nombre de warnings",
+                    "value": "{warns}",
+                    "inline": true
+                },
+                {
+                    "name": "Niveau",
+                    "value": "{level}",
+                    "inline": true
+                },
+                {
+                    "name": "Exp",
+                    "value": "{exp}",
+                    "inline": true
+                },
+                {
+                    "name": "Date de naissance",
+                    "value": "{birth_date}",
+                    "inline": true
+                }
+            ],
+            "footer": {
+                "text": null,
+                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+            },
+            "image": null,
+            "thumbnail": {
+                "url": "https://cdn4.iconfinder.com/data/icons/technical-support/256/97-512.png"
+            }
+        },
+        "server_info": {
+            "author": null,
+            "title": "Informations du serveur",
+            "color": "1d4851",
+            "description": "Les informations du serveur {server}. \n\n\t{description}",
+            "fields": [
+                {
+                    "name": "Total Membres",
+                    "value": "{member_count}",
+                    "inline": true
+                },
+                {
+                    "name": "Nombre salons textuels",
+                    "value": "{number_txt_channels}",
+                    "inline": true
+                },
+                {
+                    "name": "Nombre salons vocaux",
+                    "value": "{number_voc_channels}",
+                    "inline": true
+                },
+                {
+                    "name": "Créer le",
+                    "value": "{created_at}",
+                    "inline": true
+                },
+                {
+                    "name": "Propriétaire",
+                    "value": "{owner}",
+                    "inline": true
+                }
+            ],
+            "footer": {
+                "text": null,
+                "icon_url": "https://i.goopics.net/m0VZm.jpg"
+            },
+            "image": null,
+            "thumbnail": {
+                "url": "https://cdn1.iconfinder.com/data/icons/shopping-and-ecommerce-2/64/E-commerce_and_Shopping-81-512.png"
+            }
+        },
         "good_bye": {
             "author": null,
             "title": "Au revoir",

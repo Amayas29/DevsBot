@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import asyncio
-import discord
-from   discord.ext   import commands
-from   init.settings import Settings
+from   discord.ext    import commands
+from   init.settings  import Settings
+from   utils.frontend import get_poll_embed
 
 
 class General(commands.Cog):
@@ -14,53 +13,43 @@ class General(commands.Cog):
             print("Bot is not a discord Bot")
             exit(1)
 
+        self.description = "Les commandes générales"
         self.bot = bot
         self.settings = Settings()
+        self.numbers = ("1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣", "🔟")
         
 
-    @commands.command(name="poll")
-    async def poll(self, context, *args):
+    @commands.command(
+        name="poll",
+        help="<question> : La question du sondage.\n<options> : La liste des options pour le sondage"\
+                " (limitation à 10 options).\n\n *Si un des éléments est une phrase il faut mettre des \" \" autour*",
+        description="Crée un sondage avec plusieurs options"
+    )
+    async def poll(self, context, question: str, *options):
         """
         Create a poll where members can vote
         """
         print("Poll ... TODO")
+        try:
+            if question == "" or question is None:
+                return
 
-    
-    @commands.command(name="art")
-    async def art(self, context, choice : str, *args):
-        """
-        Show a text in a defined style
-        """
-        if choice not in self.settings.styles:
-            choices = "\t" + "\n\t".join( (str(k) + " : Hello -> " + v["hello"] ) for k, v in self.settings.styles.items())
-            await context.send("Not found try with : \n" + str(choices))
-            return
+            if len(options) < 1 or len(options) > 10:
+                return
+            
+            liste = "\n".join([f"{self.numbers[i]} - {option}" for i, option in enumerate(options)])
+            
+            embed = get_poll_embed(self.settings.embeds["poll"], context.author, question, liste, self.bot.user.avatar_url)
+            
+            message_poll = await context.send(embed = embed)
 
-        new_message = []
-        for word in args:
-            for char in word:
+            for emoji in self.numbers[:len(options)]:
+                await message_poll.add_reaction(emoji)
+            
+            await message_poll.add_reaction("🤷")
 
-                if char.isalpha():
-                    
-                    if char. isupper():
-                        index = ord(char) - ord("A")
-                        maj_min = "maj"
-                    else:
-                        index = ord(char) - ord("a")
-                        maj_min = "min"
-
-                    if index < 0 or index > 25:
-                        await context.send("Les caractères avec accents ne sont pas pris en comptes")
-                        return
-
-                    transformed = self.settings.styles[choice][maj_min][index]
-                    new_message.append(transformed)
-                else:
-                    new_message.append(char)
-            new_message.append(" ") 
-
-        new_message = "".join(new_message)
-        await context.send(new_message)
+        except Exception as e:
+            print(e)
 
     
 def setup(bot):

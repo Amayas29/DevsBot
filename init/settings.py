@@ -1,7 +1,5 @@
+# -*- coding: utf-8 -*-
 import json
-from os import sep
-import re
-from sys import prefix
 
 
 class Settings():
@@ -41,11 +39,10 @@ class Settings():
             cls.__instance._initial_roles = data["initial_roles"]
             cls.__instance._ranks = data["ranks"]
             cls.__instance._game_status = data["game_status"]
-            cls.__instance._styles = data["styles"]
             cls.__instance._embeds = data["embeds"]
             cls.__instance._images_generator = data["images_generator"]
             cls.__instance._ignored_roles_display = data["ignored_roles_display"]
-            cls.__instance._level_up_message = data["level_up_message"]
+            cls.__instance._messages = data["messages"]
             cls.__instance._min_time = data["min_time"]
             cls._config = config
         except:
@@ -75,11 +72,10 @@ class Settings():
             data["initial_roles"] = self._initial_roles
             data["ranks"] = self._ranks
             data["game_status"] = self._game_status
-            data["styles"] = self._styles
             data["embeds"] = self._embeds
             data["images_generator"] = self._images_generator
             data["ignored_roles_display"] = self._ignored_roles_display
-            data["level_up_message"] = self._level_up_message
+            data["messages"] = self._messages
             data["min_time"] = self._min_time
             
             with open(self.file_settings, "w") as file:
@@ -155,10 +151,6 @@ class Settings():
         return self._game_status
 
     @property
-    def styles(self):
-        return self._styles
-
-    @property
     def embeds(self):
         return self._embeds
 
@@ -171,8 +163,8 @@ class Settings():
         return self._ignored_roles_display
     
     @property
-    def level_up_message(self):
-        return self._level_up_message
+    def messages(self):
+        return self._messages
 
     @property
     def min_time(self):

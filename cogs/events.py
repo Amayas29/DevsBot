@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import asyncio
-from os import remove
-from sys import platform
 import discord
-import json
-from discord import user
 from   discord.ext    import commands
 from   init.settings  import Settings
 from   utils.frontend import get_welcome_goodbye_embed, get_file_welcome
 from   utils.rolemenu import add_reaction_verification, delete_reactions
 from   utils.levels   import update_users
+
 
 class Events(commands.Cog):
 

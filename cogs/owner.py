@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import asyncio
-from datetime import time
-from logging import error
-import discord
-from   discord.ext   import commands, tasks
+from   discord.ext   import commands
 from   init.settings import Settings
 
 
@@ -16,6 +12,7 @@ class Owner(commands.Cog):
             print("Bot is not a discord Bot")
             exit(1)
 
+        self.description = "Les commandes du propriétaire, elles sont dédiées qu'au propriétaire"
         self.bot = bot
         self.settings = Settings()
 
@@ -24,7 +21,12 @@ class Owner(commands.Cog):
         return context.author.id in self.settings.owners
 
 
-    @commands.command(name="ping", aliases=["test"])
+    @commands.command(
+        name="ping",
+        aliases=["test"],
+        help="",
+        description="Test si le bot marche"
+    )
     async def ping(self, context):
         """
         Check if the bot is alive
@@ -33,7 +35,11 @@ class Owner(commands.Cog):
         await context.send("Pong ... Bot fonctionnel", delete_after=5)
 
 
-    @commands.command(name="shutdown")
+    @commands.command(
+        name="shutdown",
+        help="",
+        description="Éteindre le bot"
+    )
     async def shutdown(self, context):
         """
         Make the bot shutdown
@@ -41,7 +47,11 @@ class Owner(commands.Cog):
         print("Shutdown ... TODO")
 
 
-    @commands.command(name="setgame")
+    @commands.command(
+        name="setgame",
+        help="<game> : La nouvelle activité",
+        description="Change l'activité du bot"
+    )
     async def set_game(self, context, game : str):
         """
         Change the game of the bot
@@ -49,7 +59,11 @@ class Owner(commands.Cog):
         print("Change game ... TODO")
 
 
-    @commands.command(name="verif")
+    @commands.command(
+        name="verif",
+        help="<message_id> : L'identifiant du message",
+        description="Crée le message de vérificarion du serveur"
+    )
     async def verif(self, context, message_id : int):
 
         try:

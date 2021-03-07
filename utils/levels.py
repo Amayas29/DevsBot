@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os import EX_CANTCREAT
-import discord
 import json
-from   discord.ext   import commands
 from   init.settings import Settings
 from   datetime      import datetime
 from   math          import floor
@@ -11,6 +8,7 @@ from   math          import floor
 
 setting = Settings()
 all_users = {}
+
 
 def update_users(remove, *users):
     try:

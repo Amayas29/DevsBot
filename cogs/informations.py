@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import asyncio
 import discord
 import json
 from   discord.ext    import commands
@@ -16,19 +15,28 @@ class Informations(commands.Cog):
             print("Bot is not a discord Bot")
             exit(1)
 
+        self.description = "Les commandes d'informations"
         self.bot = bot
         self.settings = Settings()
 
     
-    @commands.command(name="info", aliases=["botinfo"])
-    async def info(self, context):
+    @commands.command(
+        name="botinfo",
+        help="",
+        description="Affiche les informations et les détails sur bot"
+    )
+    async def info_bot(self, context):
         """
         Get informations about the bot
         """
         print("Info ... TODO")
 
 
-    @commands.command(name="info")
+    @commands.command(
+        name="info",
+        help="<user> : Le membre cible",
+        description="Affiche les informations sur un membre du serveur"
+    )
     async def info(self, context, user : discord.Member):
         """
         Get the user info
@@ -38,23 +46,29 @@ class Informations(commands.Cog):
             with open("resources/users.json") as data:
                 users : dict = json.load(data)
 
-            embed = get_user_info_embed(self.settings.embeds["user_info"], user, users[str(user.id)])
-        except:
+            embed = get_user_info_embed(self.settings.embeds["user_info"], user, users[str(user.id)], self.bot.user.avatar_url)
+        except Exception as e:
+            print(e)
             embed = None
 
         if embed != None:
             await context.send(embed = embed)
     
 
-    @commands.command(name="serverinfo", aliases=["serveurInfo"])
+    @commands.command(
+        name="serverinfo",
+        help="",
+        description="Affiche les informations du le serveur"
+    )
     async def server_info(self, context):
         """
         Get informations about the server
         """
+        print("Info serveur ... TODO")
         try:
             server = context.guild
             description = self.settings.config["server_description"]
-            embed = get_server_info_embed(self.settings.embeds["server_info"], server, description)
+            embed = get_server_info_embed(self.settings.embeds["server_info"], server, description,  self.bot.user.avatar_url)
 
         except:
             embed = None
@@ -62,10 +76,12 @@ class Informations(commands.Cog):
         if embed != None:
             await context.send(embed = embed)
 
-        print("Info serveur ... TODO")
 
-
-    @commands.command(name="invite")
+    @commands.command(
+        name="invite",
+        help="",
+        description="Donne le lien d'invitation pour rejoindre le serveur"
+    )
     async def invite(self, context):
         """
         Get the invite link of the discord server
@@ -73,7 +89,11 @@ class Informations(commands.Cog):
         print("Invite ... TODO")
 
     
-    @commands.command(name="source")
+    @commands.command(
+        name="source", 
+        help="", 
+        description="Donne le lien pour accéder au code source du bot"
+    )
     async def source(self, context):
         """
         Get the link to source code of the bot

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from discord import embeds
-from   discord.ext      import commands
-from   init.settings    import Settings
-from   utils.frontend   import get_file_rank, get_level_embed, get_top_embed
+from   discord.ext    import commands
+from   init.settings  import Settings
+from   utils.frontend import get_file_rank, get_level_embed, get_top_embed
 
 
 class LevelSystem(commands.Cog):
@@ -14,11 +13,16 @@ class LevelSystem(commands.Cog):
             print("Bot is not a discord Bot")
             exit(1)
 
+        self.description = "Les commandes de niveaux"
         self.bot = bot
         self.settings = Settings()
 
 
-    @commands.command(name="rank")
+    @commands.command(
+        name="rank",
+        help="",
+        description="Affiche la carte niveau de l'utilisateur de la commande"
+    )
     async def rank(self, context):
         try:
             file = get_file_rank(context.author)
@@ -31,7 +35,12 @@ class LevelSystem(commands.Cog):
         except:
             pass
 
-    @commands.command(name="top")
+
+    @commands.command(
+        name="top",
+        help="",
+        description="Affiche le haut du classement des membres selon leurs niveaux"
+    )
     async def top(self, context):
         try:
 

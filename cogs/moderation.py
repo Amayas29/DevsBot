@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import re
 import discord
 import json
-from   discord import embeds
 from   discord.ext    import commands
 from   init.settings  import Settings
 from   utils.frontend import get_ban_unban_embed, get_warn_embed
@@ -17,31 +15,44 @@ class Moderation(commands.Cog):
             print("Bot is not a discord Bot")
             exit(1)
 
+        self.description = "Les commandes de modération, elles fonctionnent si seulement si vous êtes modérateur"
         self.bot = bot
         self.settings = Settings()
 
 
-    @commands.command(name='kick')
+    @commands.command(
+        name='kick',
+        help="<member> : Le membre a expulsé.\n[reason] : La raison du kick",
+        description="Expulser un membre du serveur"
+    )
     @commands.has_permissions(kick_members=True)
-    async def kick(self, context, member: discord.Member, *args):
+    async def kick(self, context, member: discord.Member, *, reason = None):
         """
         Kick a user out of the server.
         """
         print("kick ... TODO")
 
     
-    @commands.command(name="nick")
+    @commands.command(
+        name="nick",
+        help="<member> : Le membre cible.\n<name> : Le nouveau surnom",
+        description="Changer le surnom d'un membre dans le serveur"
+    )
     @commands.has_permissions(manage_nicknames=True)
-    async def nick(self, context, member: discord.Member, *, name: str):
+    async def nick(self, context, member: discord.Member, *name):
         """
         Change the nickname of a user on a server.
         """
         print("nick ... TODO")
 
 
-    @commands.command(name="ban")
+    @commands.command(
+        name="ban",
+        help="<member> : Le membre a bannir.\n[reason] : La raison du ban",
+        description="Bannir un membre du serveur"
+    )
     @commands.has_permissions(ban_members=True)
-    async def ban(self, context: commands.Context, member: discord.User, *reason):
+    async def ban(self, context, member: discord.Member, *, reason = None):
         """
         Bans a user from the server.
         """
@@ -63,15 +74,13 @@ class Moderation(commands.Cog):
                 await context.send(embed = embed)        
 
 
-    @ban.error
-    async def ban_error(self, context, error):
-        print(type(error))
-        await context.send("Error ... in progress")
-
-
-    @commands.command(name="unban")
+    @commands.command(
+        name="unban",
+        help="<member> : Le membre a pardonné.\n[reason] : La raison du unban",
+        description="Pardonner à un membre"
+    )
     @commands.has_permissions(ban_members=True)
-    async def unban(self, context: commands.Context, member_id: int, *reason):
+    async def unban(self, context, member_id: int, *, reason = None):
         """
         Unbans a user from the server.
         """
@@ -100,9 +109,13 @@ class Moderation(commands.Cog):
                 await context.send(embed = embed)
     
 
-    @commands.command(name="warn")
+    @commands.command(
+        name="warn",
+        help="<member> : Le membre a avertir.\n[reason] : La raison du warn",
+        description="Avertir un membre du serveur"
+    )
     @commands.has_permissions(manage_roles=True, ban_members=True)
-    async def warn(self, context, member: discord.Member, *reason):
+    async def warn(self, context, member: discord.Member, *, reason = None):
         """
         Warns a user in his private messages.
         """
@@ -135,16 +148,40 @@ class Moderation(commands.Cog):
                 await context.send(embed = embed)    
 
     
-    @commands.command(name="warns")
+    @commands.command(
+        name="warns",
+        help="<member> : Le membre cible",
+        description="Affiche le nombre cumulé d'avertissement d'un membre"
+    )
     @commands.has_permissions(manage_roles=True, ban_members=True)
-    async def warns(self, context, member: discord.Member, *args):
+    async def warns(self, context, member: discord.Member):
         """
         Shows the number of warns a user has
         """
         print("Warns ... TODO")
+        try:
+
+            with open("resources/users.json") as data:
+                users : dict = json.load(data)
+            
+            user = users[str(member.id)]
+
+            warns_message = self.settings.messages["warns_message"]
+
+            warns_message = warns_message.replace("{user}", member.name)
+            warns_message = warns_message.replace("{warns}", str(user["warns"]))
+            await context.send(warns_message)
+
+        except:
+            pass
 
 
-    @commands.command(name="purge", aliases=["clean", "clear"])
+    @commands.command(
+        name="purge",
+        aliases=["clean", "clear"],
+        help="<number> : Le nombre de message à supprimer",
+        description="Supprimer un nombre de message dans un salon"
+    )
     @commands.has_permissions(manage_messages=True)
     async def purge(self, context, number: int):
         """
@@ -155,27 +192,39 @@ class Moderation(commands.Cog):
         await context.send(f"Deleted {len(deleted) - 1} message(s)", delete_after = 5)
 
 
-    @commands.command()
+    @commands.command(
+        name="mute",
+        help="<member> : Le membre cible",
+        description="Mettre un membre en Muet"
+    )
     @commands.has_permissions(mute_members = True)
-    async def mute(self, context, user:discord.Member):
+    async def mute(self, context, member: discord.Member):
         """
         Mutes a user from the current server
         """
         print("Mute ... TODO")
 
     
-    @commands.command()
+    @commands.command(
+        name="unmute",
+        help="<member> : Le membre cible",
+        description="Enleve le Muet d'un membre"
+    )
     @commands.has_permissions(mute_members = True)
-    async def unmute(self, context, user:discord.Member):
+    async def unmute(self, context, member: discord.Member):
         """
         Unmutes a user from the current server
         """
         print("Unmute ... TODO")
 
 
-    @commands.command(name="rules")
+    @commands.command(
+        name="rules",
+        help="[user] : Si il existe les régles lui seront envoyés en MP sinon dans le salon courrant",
+        description="Affiche dans le salon ou envoie en MP à un membre les régles du serveur"
+    )
     @commands.has_permissions(manage_channels=True)
-    async def rules(self, context, user:discord.Member=None):
+    async def rules(self, context, user = None):
         """
         Send the rules
         """

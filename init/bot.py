@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from operator import index
 import random
-import re
 import discord
-import json
 from   discord.ext   import commands, tasks
 from   init.settings import Settings
 from   copy          import deepcopy as dp
@@ -43,7 +40,7 @@ class Bot(commands.Bot):
             lvup, level = level_up(message.author)
             if lvup:
                 levels_channel = self.get_channel(self.settings.channels["levels"])
-                message_up = dp(self.settings.level_up_message)
+                message_up = dp(self.settings.messages["level_up_message"])
                 message_up = message_up.replace("{user}", message.author.mention)
                 message_up = message_up.replace("{level}", str(level))
                 await levels_channel.send(message_up)

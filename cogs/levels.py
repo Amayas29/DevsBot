@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from   discord.ext    import commands
-from   init.settings  import Settings
-from   utils.frontend import get_file_rank, get_level_embed, get_top_embed
+from init.bot       import Bot
+from discord.ext    import commands
+from init.settings  import Settings
+from utils.frontend import get_file_rank, get_level_embed, get_top_embed
 
 
 class LevelSystem(commands.Cog):
 
     def __init__(self, bot):
 
-        if not isinstance(bot, commands.Bot):
+        if not isinstance(bot, Bot):
             print("Bot is not a discord Bot")
             exit(1)
 

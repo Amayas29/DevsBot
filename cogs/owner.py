@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import discord
+from   init.bot      import Bot
 from   discord.ext   import commands
 from   init.settings import Settings
 
@@ -8,7 +10,7 @@ class Owner(commands.Cog):
 
     def __init__(self, bot):
 
-        if not isinstance(bot, commands.Bot):
+        if not isinstance(bot, Bot):
             print("Bot is not a discord Bot")
             exit(1)
 
@@ -56,11 +58,20 @@ class Owner(commands.Cog):
         help="<game> : La nouvelle activité",
         description="Change l'activité du bot"
     )
-    async def set_game(self, context, game : str):
+    async def set_game(self, context, *, game):
         """
         Change the game of the bot
         """
         print("Change game ... TODO")
+        try:
+            game = "".join(game)
+            self.settings.game_status.append(game)
+            self.settings.refresh_data()
+            self.bot.game = game
+            game = discord.Game(self.bot.game)
+            await self.bot.change_presence(status = discord.Status.online, activity = game)
+        except:
+            pass
 
 
     @commands.command(

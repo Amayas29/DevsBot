@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from   discord.ext    import commands
-from   init.settings  import Settings
-from   utils.frontend import get_poll_embed
+from init.bot       import Bot
+from discord.ext    import commands
+from init.settings  import Settings
+from utils.frontend import get_poll_embed
 
 
 class General(commands.Cog):
     
     def __init__(self, bot):
 
-        if not isinstance(bot, commands.Bot):
+        if not isinstance(bot, Bot):
             print("Bot is not a discord Bot")
             exit(1)
 

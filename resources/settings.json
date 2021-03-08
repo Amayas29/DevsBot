@@ -35,7 +35,7 @@
         "birthdays": 818217129617784892,
         "bot_commands": 815244585667395615,
         "ban_warn": 817123375826075678,
-        "kick" : 817123375826075678
+        "kick": 817123375826075678
     },
     "min_time": 1,
     "logs_settings": {
@@ -58,7 +58,11 @@
         "70": 4
     },
     "game_status": [
-        "Loup garou"
+        "Loup garou",
+        "Yes",
+        "Y e s   t a w a 3 n a",
+        "A   k h a l i   s l i m a n e",
+        "Algo a cousin"
     ],
     "embeds": {
         "poll": {
@@ -94,7 +98,7 @@
             },
             "title": "Invitation au serveur",
             "color": "56da59",
-            "description": "Vous pouvez inviter une personne à rejoindre {server} qu'avec ce lien.\n\n*N'hésitez pas à inviter vos amis qui sont intéressés* 😁\n",
+            "description": "Vous pouvez inviter une personne \u00e0 rejoindre {server} qu'avec ce lien.\n\n*N'h\u00e9sitez pas \u00e0 inviter vos amis qui sont int\u00e9ress\u00e9s* \ud83d\ude01\n",
             "fields": [
                 {
                     "name": "Lien",
@@ -111,7 +115,6 @@
                 "url": "https://cdn2.iconfinder.com/data/icons/scenarium-vol-2-1/128/043_add_new_plus_create-512.png"
             }
         },
-        
         "user_info": {
             "author": {
                 "name": "{name}",
@@ -215,7 +218,7 @@
             "description": "{bot_description}",
             "fields": [
                 {
-                    "name": "Programmé en",
+                    "name": "Programm\u00e9 en",
                     "value": "{langages}",
                     "inline": true
                 },
@@ -327,7 +330,7 @@
             "author": null,
             "title": "Expulsion",
             "color": "dd3713",
-            "description": "{kicked_user} a \u00e9t\u00e9 expulsé",
+            "description": "{kicked_user} a \u00e9t\u00e9 expuls\u00e9",
             "fields": [
                 {
                     "name": "Moderateur",
@@ -526,6 +529,8 @@
     },
     "messages": {
         "level_up_message": "F\u00e9licitation {user} ! Tu as atteint le niveau **{level}** \ud83e\udd73",
-        "warns_message": "**>> {user}** a *{warns}* warns"
+        "warns_message": "**>> {user}** a *{warns}* warns",
+        "muted_message": "**>> {user}** a \u00e9t\u00e9 mute",
+        "unmuted_message": "**>> {user}** a \u00e9t\u00e9 unmute"
     }
 }

@@ -2,6 +2,7 @@
 
 import discord
 import json
+from   init.bot       import Bot
 from   discord.ext    import commands
 from   init.settings  import Settings
 from   utils.frontend import get_server_info_embed, get_user_info_embed, get_invite_embed, get_bot_info_embed
@@ -11,7 +12,7 @@ class Informations(commands.Cog):
     
     def __init__(self, bot):
 
-        if not isinstance(bot, commands.Bot):
+        if not isinstance(bot, Bot):
             print("Bot is not a discord Bot")
             exit(1)
 
@@ -105,16 +106,16 @@ class Informations(commands.Cog):
             await context.send(embed = embed)
 
     
-    @commands.command(
-        name="source", 
-        help="", 
-        description="Donne le lien pour accéder au code source du bot"
-    )
-    async def source(self, context):
-        """
-        Get the link to source code of the bot
-        """
-        print("Source ... TODO")
+    # @commands.command(
+    #     name="source", 
+    #     help="", 
+    #     description="Donne le lien pour accéder au code source du bot"
+    # )
+    # async def source(self, context):
+    #     """
+    #     Get the link to source code of the bot
+    #     """
+    #     print("Source ... TODO")
 
 
 def setup(bot):

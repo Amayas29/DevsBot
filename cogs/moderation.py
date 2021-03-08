@@ -2,6 +2,7 @@
 
 import discord
 import json
+from   init.bot       import Bot
 from   discord.ext    import commands
 from   init.settings  import Settings
 from   utils.frontend import get_ban_unban_embed, get_warn_embed, get_kick_embed
@@ -11,7 +12,7 @@ class Moderation(commands.Cog):
 
     def __init__(self, bot):
 
-        if not isinstance(bot, commands.Bot):
+        if not isinstance(bot, Bot):
             print("Bot is not a discord Bot")
             exit(1)
 
@@ -215,25 +216,40 @@ class Moderation(commands.Cog):
         help="<member> : Le membre cible",
         description="Mettre un membre Muet"
     )
-    @commands.has_permissions(mute_members = True)
+    @commands.has_permissions(manage_roles = True)
     async def mute(self, context, member: discord.Member):
         """
         Mutes a user from the current server
         """
         print("Mute ... TODO")
-
+        try:
+            muted_role = context.guild.get_role(self.settings.muted_role)
+            await member.add_roles(muted_role)
+            muted_message = self.settings.messages["muted_message"]
+            muted_message = muted_message.replace("{user}", member.mention)
+            await context.send(muted_message)
+        except:
+            pass
     
     @commands.command(
         name="unmute",
         help="<member> : Le membre cible",
         description="Enleve le Muet pour un membre"
     )
-    @commands.has_permissions(mute_members = True)
+    @commands.has_permissions(manage_roles = True)
     async def unmute(self, context, member: discord.Member):
         """
         Unmutes a user from the current server
         """
         print("Unmute ... TODO")
+        try:
+            muted_role = context.guild.get_role(self.settings.muted_role)
+            await member.remove_roles(muted_role)
+            muted_message = self.settings.messages["unmuted_message"]
+            muted_message = muted_message.replace("{user}", member.mention)
+            await context.send(muted_message)
+        except:
+            pass
 
 
     @commands.command(

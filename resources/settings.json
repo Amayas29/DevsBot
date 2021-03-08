@@ -3,6 +3,11 @@
     "owners": [
         640319226061520908
     ],
+    "moderators_roles" : [
+        814991349316976650,
+        814990646062088242,
+        814990276640243752
+    ],
     "muted_role": 815250977341964288,
     "verified_role": 815246225334075422,
     "ignored_roles_levels": [
@@ -171,7 +176,11 @@
             }
         },
         "server_info": {
-            "author": null,
+            "author": {
+                "name": null,
+                "url": null,
+                "icon_url": null
+            },
             "title": "Informations du serveur",
             "color": "1d4851",
             "description": "Les informations du serveur {server}. \n\n\t{description}",
@@ -206,7 +215,7 @@
                 "text": null,
                 "icon_url": null
             },
-            "image": null,
+            "image" : null,
             "thumbnail": {
                 "url": "https://cdn1.iconfinder.com/data/icons/shopping-and-ecommerce-2/64/E-commerce_and_Shopping-81-512.png"
             }
@@ -505,6 +514,31 @@
             "thumbnail": {
                 "url": "https://cdn4.iconfinder.com/data/icons/happy-new-year-2028/64/Confetti-party-happy-new-year-birthday-celebrate-512.png"
             }
+        },
+        "rules": {
+            "author": {
+                "name": null,
+                "url": null,
+                "icon_url": null
+            },
+            "title": "Règlement",
+            "color": "5670da",
+            "description": null,
+            "fields": [
+                {
+                    "name": "Le règlement ci-dessous a été conçu dans le but d'entretenir une bonne ambiance\n \n*Toute personne qui ne respecte pas les règles sera sanctionné par l’équipe de modération*\n",
+                    "value": "{rules}",
+                    "inline": false
+                }
+            ],
+            "footer": {
+                "text": null,
+                "icon_url": null
+            },
+            "image": null,
+            "thumbnail": {
+                "url" : "https://cdn4.iconfinder.com/data/icons/game-rounded-2-set/512/scroll-512.png"
+            }
         }
     },
     "images_generator": {
@@ -531,6 +565,7 @@
         "level_up_message": "F\u00e9licitation {user} ! Tu as atteint le niveau **{level}** \ud83e\udd73",
         "warns_message": "**>> {user}** a *{warns}* warns",
         "muted_message": "**>> {user}** a \u00e9t\u00e9 mute",
-        "unmuted_message": "**>> {user}** a \u00e9t\u00e9 unmute"
+        "unmuted_message": "**>> {user}** a \u00e9t\u00e9 unmute",
+        "nickname" : "**>>** le surnom de **{user}** a été changé"
     }
 }

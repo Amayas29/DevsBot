@@ -5,7 +5,7 @@ import json
 from   init.bot       import Bot
 from   discord.ext    import commands
 from   init.settings  import Settings
-from   utils.frontend import get_ban_unban_embed, get_warn_embed, get_kick_embed
+from   utils.frontend import get_ban_unban_embed, get_warn_embed, get_kick_embed, get_rules_embed
 
 
 class Moderation(commands.Cog):
@@ -19,6 +19,13 @@ class Moderation(commands.Cog):
         self.description = "Les commandes de modération, elles fonctionnent si seulement si vous êtes modérateur"
         self.bot = bot
         self.settings = Settings()
+
+
+    async def cog_check(self, context):
+        for role in context.author.roles:
+            if role.id in self.settings.moderators_roles:
+                return True
+        return False
 
 
     @commands.command(
@@ -57,11 +64,19 @@ class Moderation(commands.Cog):
         description="Changer le surnom d'un membre dans le serveur"
     )
     @commands.has_permissions(manage_nicknames=True)
-    async def nick(self, context, member: discord.Member, *name):
+    async def nick(self, context, member: discord.Member, *, name):
         """
         Change the nickname of a user on a server.
         """
         print("nick ... TODO")
+        try:
+            name = "".join(name)
+            await member.edit(nick=name)
+            muted_message = self.settings.messages["nickname"]
+            muted_message = muted_message.replace("{user}", member.mention)
+            await context.send(muted_message)
+        except:
+            pass
 
 
     @commands.command(
@@ -231,6 +246,7 @@ class Moderation(commands.Cog):
         except:
             pass
     
+
     @commands.command(
         name="unmute",
         help="<member> : Le membre cible",
@@ -254,16 +270,30 @@ class Moderation(commands.Cog):
 
     @commands.command(
         name="rules",
-        help="[user] : Si il existe les régles lui seront envoyés en MP sinon dans le salon courrant",
-        description="Affiche dans le salon ou envoie en MP à un membre les régles du serveur"
+        help="",
+        description="Affiche dans le salon les régles du serveur"
     )
     @commands.has_permissions(manage_channels=True)
-    async def rules(self, context, user = None):
+    async def rules(self, context):
         """
         Send the rules
         """
         print("Rules ... TODO")
-    
+        try:
+            try:
+                with open("rules.txt") as file:
+                    rules = file.read()
+            except:
+                rules = "NaN"
+                
+            embed = get_rules_embed(self.settings.embeds["rules"], rules, context.guild.name, context.guild.icon_url, self.bot.user.avatar_url)
+        except Exception as e:
+            print(e)
+            embed = None
 
+        if embed != None:
+            await context.send(embed = embed)
+
+  
 def setup(bot):
     bot.add_cog(Moderation(bot))

@@ -41,6 +41,27 @@ def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discor
         return None
 
 
+def get_rules_embed(dict, rules, server, server_icon, bot_icon):
+    try:
+        dict = dp(dict)
+
+        dict["author"]["name"] = server
+        dict["author"]["icon_url"] = str(server_icon)
+
+        if type(dict["color"]) != int:
+            dict["color"] = int(dict["color"], 16)
+
+        dict["fields"][0]["value"] = rules
+
+        dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
+
+        return discord.Embed.from_dict(dict)
+
+    except:
+        return None
+
+
 def get_invite_embed(dict: dict, server, server_icon, link, bot_icon) -> discord.Embed :
     try:
         dict = dp(dict)
@@ -166,12 +187,17 @@ def get_warn_embed(dict: dict, warn_user: discord.User, moderator: discord.User,
 
 def get_server_info_embed(dict: dict, server, description: str, bot_icon) -> discord.Embed :
     try:
+
+        dict = dp(dict)
+
+        dict["author"]["name"] = server.name
+        dict["author"]["icon_url"] = str(server.icon_url)
+
         number_txt_channels = len(server.text_channels)
         number_voc_channels = len(server.voice_channels)
         member_count = server.member_count
         owner = server.owner.name
         created_at = server.created_at.strftime("%d-%m-%Y") 
-        dict = dp(dict)
 
         if type(dict["color"]) != int:
             dict["color"] = int(dict["color"], 16)
@@ -188,6 +214,7 @@ def get_server_info_embed(dict: dict, server, description: str, bot_icon) -> dis
             field["value"] = field["value"].replace("{owner}", owner)
             
         dict["fields"] = fields
+        
         dict["footer"]["text"] = settings.config["footer"]
         dict["footer"]["icon_url"] = str(bot_icon)
 

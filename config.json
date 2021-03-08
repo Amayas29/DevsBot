@@ -3,8 +3,6 @@
     "version" : "0.1",
     "bot_description" : "DevsBot est un bot créé et maintenue par Amayas",
     "langages" : "Python",
-    "server_description" : "Ce serveur est un lieu de partage entre de superbe personnes sur plusieurs thématiques principalement l'informatique",
-
     "join_message" : "Salut je suis DevBot, votre ami robot",
     "status_type" : "online|idle|dnd",
     

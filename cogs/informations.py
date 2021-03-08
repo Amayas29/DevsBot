@@ -76,7 +76,13 @@ class Informations(commands.Cog):
         print("Info serveur ... TODO")
         try:
             server = context.guild
-            description = self.settings.config["server_description"]
+
+            try:
+                with open("description.txt") as file:
+                    description = file.read()
+            except:
+                description = "NaN"
+
             embed = get_server_info_embed(self.settings.embeds["server_info"], server, description,  self.bot.user.avatar_url)
 
         except:

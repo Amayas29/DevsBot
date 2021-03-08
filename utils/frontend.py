@@ -99,6 +99,7 @@ def get_bot_info_embed(dict: dict, description, langages, version, bot_icon) -> 
         fields = dict["fields"]
         for field in fields:
             field["value"] = field["value"].replace("{langages}", langages)
+            field["value"] = field["value"].replace("{prefix}", settings.prefix)
             field["value"] = field["value"].replace("{version}", version)
         dict["fields"] = fields
 

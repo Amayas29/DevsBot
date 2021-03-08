@@ -64,10 +64,7 @@
     },
     "game_status": [
         "Loup garou",
-        "Yes",
-        "Y e s   t a w a 3 n a",
-        "A   k h a l i   s l i m a n e",
-        "Algo a cousin"
+        "Yes"
     ],
     "embeds": {
         "poll": {
@@ -229,6 +226,11 @@
                 {
                     "name": "Programm\u00e9 en",
                     "value": "{langages}",
+                    "inline": true
+                },
+                {
+                    "name": "Prefix",
+                    "value": "{prefix}",
                     "inline": true
                 },
                 {

@@ -33,7 +33,8 @@
         "levels": 815245040490119229,
         "birthdays": 818217129617784892,
         "bot_commands": 815244585667395615,
-        "ban_warn": 817123375826075678
+        "ban_warn": 817123375826075678,
+        "kick" : 817123375826075678
     },
     "min_time": 1,
     "logs_settings": {
@@ -270,6 +271,32 @@
             "image": null,
             "thumbnail": {
                 "url": "https://discordemoji.com/assets/emoji/BanneHammer.png"
+            }
+        },
+        "kick": {
+            "author": null,
+            "title": "Expulsion",
+            "color": "dd3713",
+            "description": "{kicked_user} a \u00e9t\u00e9 expulsé",
+            "fields": [
+                {
+                    "name": "Moderateur",
+                    "value": "{moderator}",
+                    "inline": true
+                },
+                {
+                    "name": "Raison",
+                    "value": "{reason}",
+                    "inline": true
+                }
+            ],
+            "footer": {
+                "text": null,
+                "icon_url": null
+            },
+            "image": null,
+            "thumbnail": {
+                "url": "https://cdn1.iconfinder.com/data/icons/soccer-flat/64/soccer-33-256.png"
             }
         },
         "unban": {

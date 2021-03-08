@@ -55,12 +55,13 @@ def set_exp(user, exp):
                 all_users = json.load(data)
 
         if str(user.id) not in all_users:
+            now = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             all_users[str(user.id)] = {
                 "level" : 1,
                 "exp" : exp,
                 "warns" : 0,
                 "birth_date" : "NaN",
-                "old_message" : datetime.now()
+                "old_message" : now
             }
 
         else:

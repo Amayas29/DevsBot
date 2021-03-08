@@ -42,6 +42,33 @@ def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discor
         return None
 
 
+def get_kick_embed(dict: dict, kicked_user: discord.User, moderator: discord.User, reason: str, bot_icon) -> discord.Embed :
+    try:
+        dict = dp(dict)
+
+        if reason == "" or reason is None:
+            reason = "NaN"
+
+        if type(dict["color"]) != int:
+            dict["color"] = int(dict["color"], 16)
+
+        dict["description"] = dict["description"].replace("{kicked_user}", kicked_user.mention)
+
+        fields = dict["fields"]
+        for field in fields:
+            field["value"] = field["value"].replace("{reason}", reason)
+            field["value"] = field["value"].replace("{moderator}", moderator.mention)
+        dict["fields"] = fields
+
+        dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
+
+        return discord.Embed.from_dict(dict)
+
+    except:
+        return None
+
+
 def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str, member_count: int, bot_icon):
 
     try:

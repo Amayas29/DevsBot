@@ -4,7 +4,7 @@ import discord
 import json
 from   discord.ext    import commands
 from   init.settings  import Settings
-from   utils.frontend import get_ban_unban_embed, get_warn_embed
+from   utils.frontend import get_ban_unban_embed, get_warn_embed, get_kick_embed
 
 
 class Moderation(commands.Cog):
@@ -31,6 +31,23 @@ class Moderation(commands.Cog):
         Kick a user out of the server.
         """
         print("kick ... TODO")
+        if reason != None:
+            reason = " ".join(reason)
+
+        await context.guild.kick(member, reason = reason)
+
+        try:
+            embed = get_kick_embed(self.settings.embeds["kick"], member, context.author, reason, self.bot.user.avatar_url)
+        except:
+            embed = None
+            
+        if embed != None:
+            try:
+                ban_channel = self.bot.get_channel(self.settings.channels["kick"]) 
+                await ban_channel.send(embed = embed)
+            
+            except:   
+                await context.send(embed = embed)    
 
     
     @commands.command(
@@ -56,7 +73,8 @@ class Moderation(commands.Cog):
         """
         Bans a user from the server.
         """
-        reason = " ".join(reason)
+        if reason != None:
+            reason = " ".join(reason)
 
         await context.guild.ban(member, reason = reason)
 

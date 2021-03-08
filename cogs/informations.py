@@ -3,8 +3,10 @@
 import discord
 import json
 from   discord.ext    import commands
+from discord.ext.commands.core import Command
+from discord.guild import Guild
 from   init.settings  import Settings
-from   utils.frontend import get_server_info_embed, get_user_info_embed
+from   utils.frontend import get_server_info_embed, get_user_info_embed, get_invite_embed, get_bot_info_embed
 
 
 class Informations(commands.Cog):
@@ -30,6 +32,14 @@ class Informations(commands.Cog):
         Get informations about the bot
         """
         print("Info ... TODO")
+        try:
+            embed = get_bot_info_embed(self.settings.embeds["bot_info"], self.settings.config["bot_description"], self.settings.config["langages"], self.settings.config["version"], self.bot.user.avatar_url)
+        except Exception as e:
+            print(e)
+            embed = None
+
+        if embed != None:
+            await context.send(embed = embed)
 
 
     @commands.command(
@@ -87,6 +97,14 @@ class Informations(commands.Cog):
         Get the invite link of the discord server
         """
         print("Invite ... TODO")
+        try:
+            embed = get_invite_embed(self.settings.embeds["invite"], context.guild.name, context.guild.icon_url, self.settings.invite_link, self.bot.user.avatar_url)
+        except Exception as e:
+            print(e)
+            embed = None
+
+        if embed != None:
+            await context.send(embed = embed)
 
     
     @commands.command(

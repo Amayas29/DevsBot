@@ -42,6 +42,51 @@ def get_ban_unban_embed(dict: dict, banned_user: discord.User, moderator: discor
         return None
 
 
+def get_invite_embed(dict: dict, server, server_icon, link, bot_icon) -> discord.Embed :
+    try:
+        dict = dp(dict)
+
+        dict["author"]["name"] = server
+        dict["author"]["url"] = link
+        dict["author"]["icon_url"] = str(server_icon)
+
+        if type(dict["color"]) != int:
+            dict["color"] = int(dict["color"], 16)
+
+        dict["description"] = dict["description"].replace("{server}", server)
+
+        dict["fields"][0]["value"] = link
+
+        dict["footer"]["text"] = settings.config["footer"]
+        dict["footer"]["icon_url"] = str(bot_icon)
+
+        return discord.Embed.from_dict(dict)
+
+    except:
+        return None
+
+def get_bot_info_embed(dict: dict, description, langages, version, bot_icon) -> discord.Embed :
+    try:
+        dict = dp(dict)
+
+        if type(dict["color"]) != int:
+            dict["color"] = int(dict["color"], 16)
+
+        dict["description"] = dict["description"].replace("{bot_description}", description)
+
+        dict["thumbnail"]["url"] = str(bot_icon)
+
+        fields = dict["fields"]
+        for field in fields:
+            field["value"] = field["value"].replace("{langages}", langages)
+            field["value"] = field["value"].replace("{version}", version)
+        dict["fields"] = fields
+
+        return discord.Embed.from_dict(dict)
+
+    except:
+        return None
+
 def get_kick_embed(dict: dict, kicked_user: discord.User, moderator: discord.User, reason: str, bot_icon) -> discord.Embed :
     try:
         dict = dp(dict)

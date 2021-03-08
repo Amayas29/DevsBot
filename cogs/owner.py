@@ -37,6 +37,7 @@ class Owner(commands.Cog):
 
     @commands.command(
         name="shutdown",
+        aliases=["quit", "exit", "logout"],
         help="",
         description="Éteindre le bot"
     )
@@ -45,6 +46,9 @@ class Owner(commands.Cog):
         Make the bot shutdown
         """
         print("Shutdown ... TODO")
+        await context.message.add_reaction("👋")
+        await context.send("Good bye !")
+        await self.bot.close()
 
 
     @commands.command(

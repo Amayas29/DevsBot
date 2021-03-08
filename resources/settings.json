@@ -20,6 +20,7 @@
     "forbidden_words": [
         "pute"
     ],
+    "invite_link": "https://discord.gg/gmawqfcMet",
     "verification_message": 817804760311922699,
     "verification_emoji": "\u2705",
     "channels": {
@@ -85,6 +86,32 @@
                 "url": "https://cdn2.iconfinder.com/data/icons/elections-two-color-line/128/polling_finger_poll_survey_vote_voting-512.png"
             }
         },
+        "invite": {
+            "author": {
+                "name": null,
+                "url": null,
+                "icon_url": null
+            },
+            "title": "Invitation au serveur",
+            "color": "56da59",
+            "description": "Vous pouvez inviter une personne à rejoindre {server} qu'avec ce lien.\n\n*N'hésitez pas à inviter vos amis qui sont intéressés* 😁\n",
+            "fields": [
+                {
+                    "name": "Lien",
+                    "value": null,
+                    "inline": true
+                }
+            ],
+            "footer": {
+                "text": null,
+                "icon_url": null
+            },
+            "image": null,
+            "thumbnail": {
+                "url": "https://cdn2.iconfinder.com/data/icons/scenarium-vol-2-1/128/043_add_new_plus_create-512.png"
+            }
+        },
+        
         "user_info": {
             "author": {
                 "name": "{name}",
@@ -179,6 +206,29 @@
             "image": null,
             "thumbnail": {
                 "url": "https://cdn1.iconfinder.com/data/icons/shopping-and-ecommerce-2/64/E-commerce_and_Shopping-81-512.png"
+            }
+        },
+        "bot_info": {
+            "author": null,
+            "title": "Informations sur le bot",
+            "color": "1d4851",
+            "description": "{bot_description}",
+            "fields": [
+                {
+                    "name": "Programmé en",
+                    "value": "{langages}",
+                    "inline": true
+                },
+                {
+                    "name": "Version",
+                    "value": "{version}",
+                    "inline": true
+                }
+            ],
+            "footer": null,
+            "image": null,
+            "thumbnail": {
+                "url": null
             }
         },
         "good_bye": {

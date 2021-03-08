@@ -44,6 +44,7 @@ class Settings():
             cls.__instance._ignored_roles_display = data["ignored_roles_display"]
             cls.__instance._messages = data["messages"]
             cls.__instance._min_time = data["min_time"]
+            cls.__instance._invite_link = data["invite_link"]
             cls._config = config
         except:
             exit(1)
@@ -77,6 +78,7 @@ class Settings():
             data["ignored_roles_display"] = self._ignored_roles_display
             data["messages"] = self._messages
             data["min_time"] = self._min_time
+            data["invite_link"] = self._invite_link 
             
             with open(self.file_settings, "w") as file:
                 json.dump(data, file ,indent=4)
@@ -169,6 +171,10 @@ class Settings():
     @property
     def min_time(self):
         return self._min_time
+        
+    @property
+    def invite_link(self):
+        return self._invite_link 
         
     @property
     def config(self):

@@ -2,7 +2,7 @@
 
 import json
 from   init.settings import Settings
-from   datetime      import date, datetime
+from   datetime      import datetime
 from   math          import floor
 
 

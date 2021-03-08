@@ -3,8 +3,6 @@
 import discord
 import json
 from   discord.ext    import commands
-from discord.ext.commands.core import Command
-from discord.guild import Guild
 from   init.settings  import Settings
 from   utils.frontend import get_server_info_embed, get_user_info_embed, get_invite_embed, get_bot_info_embed
 

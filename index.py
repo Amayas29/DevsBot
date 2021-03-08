@@ -17,3 +17,6 @@ try:
     bot.run(TOKEN)
 except Exception as e:
     print(f'Error when logging in: {e}')
+
+
+print("End")

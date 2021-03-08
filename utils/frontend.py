@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-from sys import exec_prefix
 import discord
 import random
 from   discord.ext   import commands

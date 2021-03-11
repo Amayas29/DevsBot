@@ -119,7 +119,8 @@ class Moderation(commands.Cog):
         Unbans a user from the server.
         """
         print("Yes unban ...")
-        reason = " ".join(reason)
+        if reason != None:
+            reason = " ".join(reason)
 
         banned_users = await context.guild.bans()
         find = False
@@ -154,7 +155,8 @@ class Moderation(commands.Cog):
         Warns a user in his private messages.
         """
         print("Warn ... TODO")
-        reason = "".join(reason)
+        if reason != None:
+            reason = " ".join(reason)
  
         try:
             with open("resources/users.json") as data:

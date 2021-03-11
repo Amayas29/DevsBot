@@ -8,10 +8,10 @@
     },
     "758215269767315457": {
         "level": 1,
-        "exp": 0,
+        "exp": 20,
         "warns": 0,
         "birth_date": "NaN",
-        "old_message": null
+        "old_message": "09-03-2021 02:27:47"
     },
     "775839890620284928": {
         "level": 1,
@@ -23,7 +23,7 @@
     "775168200807546880": {
         "level": 1,
         "exp": 0,
-        "warns": 0,
+        "warns": 1,
         "birth_date": "NaN",
         "old_message": null
     }

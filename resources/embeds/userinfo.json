@@ -1,0 +1,62 @@
+{
+    "author": {
+        "name": "{name}",
+        "url": null,
+        "icon_url": "{icon_url}"
+    },
+    
+    "title": "Informations de l'utilisateur",
+    
+    "color": "8a23d4",
+    
+    "description": "{user} voici tes informations",
+    
+    "fields": [
+        {
+            "name": "Arriv\u00e9(e) au serveur le",
+            "value": "{joined}",
+            "inline": true
+        },
+        {
+            "name": "A cr\u00e9er son compte le",
+            "value": "{created}",
+            "inline": true
+        },
+        {
+            "name": "R\u00f4le le plus \u00e9lev\u00e9",
+            "value": "{roles}",
+            "inline": true
+        },
+        {
+            "name": "Nombre de warnings",
+            "value": "{warns}",
+            "inline": true
+        },
+        {
+            "name": "Niveau",
+            "value": "{level}",
+            "inline": true
+        },
+        {
+            "name": "Exp",
+            "value": "{exp}",
+            "inline": true
+        },
+        {
+            "name": "Date de naissance",
+            "value": "{birth_date}",
+            "inline": true
+        }
+    ],
+    
+    "footer": {
+        "text": null,
+        "icon_url": null
+    },
+    
+    "image": null,
+    
+    "thumbnail": {
+        "url": "https://cdn4.iconfinder.com/data/icons/technical-support/256/97-512.png"
+    }
+}

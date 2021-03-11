@@ -1,0 +1,28 @@
+{
+    "author": null,
+    
+    "title": "Au revoir",
+    
+    "color": "cfbb0b",
+    
+    "description": "{user} nous a quitt\u00e9",
+    
+    "fields": [
+        {
+            "name": "Total Membres",
+            "value": "{member_count}",
+            "inline": true
+        }
+    ],
+    
+    "footer": {
+        "text": null,
+        "icon_url": null
+    },
+    
+    "image": null,
+    
+    "thumbnail": {
+        "url": "https://i.pinimg.com/564x/4f/f1/74/4ff174fab798f2296b56093d2bd47c31.jpg"
+    }
+}

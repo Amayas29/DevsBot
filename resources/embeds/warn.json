@@ -1,0 +1,33 @@
+{
+    "author": null,
+    
+    "title": "Warn",
+    
+    "color": "ebda08",
+    
+    "description": "{warn_user} a re\u00e7u un avertissement !",
+    
+    "fields": [
+        {
+            "name": "Moderateur",
+            "value": "{moderator}",
+            "inline": true
+        },
+        {
+            "name": "Raison",
+            "value": "{reason}",
+            "inline": true
+        }
+    ],
+    
+    "footer": {
+        "text": null,
+        "icon_url": null
+    },
+    
+    "image": null,
+    
+    "thumbnail": {
+        "url": "https://emoji.gg/assets/emoji/1626_warning_1.png"
+    }
+}

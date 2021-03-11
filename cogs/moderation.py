@@ -154,7 +154,7 @@ class Moderation(commands.Cog):
         Warns a user in his private messages.
         """
         print("Warn ... TODO")
-        reason = " ".join(reason)
+        reason = "".join(reason)
  
         try:
             with open("resources/users.json") as data:

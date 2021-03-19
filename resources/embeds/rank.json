@@ -1,37 +1,37 @@
 {
-    "author": {
-        "name": "{name}",
-        "url": null,
-        "icon_url": "{icon_url}"
+  "author": {
+    "name": "{name}",
+    "url": null,
+    "icon_url": "{icon_url}"
+  },
+
+  "title": "Niveau de l'utilsateur",
+
+  "color": "79c046",
+
+  "description": "{user} voici tes statistiques",
+
+  "fields": [
+    {
+      "name": "Niveau",
+      "value": "{level}",
+      "inline": true
     },
-    
-    "title": "Niveau de l'utilsateur",
-    
-    "color": "79c046",
-    
-    "description": "{user} voici tes statistiques",
-    
-    "fields": [
-        {
-            "name": "Niveau",
-            "value": "{level}",
-            "inline": true
-        },
-        {
-            "name": "Exp",
-            "value": "{exp}",
-            "inline": true
-        }
-    ],
-    
-    "footer": {
-        "text": null,
-        "icon_url": null
-    },
-    
-    "image": null,
-    
-    "thumbnail": {
-        "url": "https://cdn2.iconfinder.com/data/icons/flat-seo-web-ikooni/128/flat_seo-27-512.png"
+    {
+      "name": "Exp",
+      "value": "{exp}",
+      "inline": true
     }
+  ],
+
+  "footer": {
+    "text": null,
+    "icon_url": null
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": "https://cdn2.iconfinder.com/data/icons/flat-seo-web-ikooni/128/flat_seo-27-512.png"
+  }
 }

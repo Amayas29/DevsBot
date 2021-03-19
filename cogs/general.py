@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from init.bot       import Bot
-from discord.ext    import commands
-from init.settings  import Settings
+from init.bot import Bot
+from discord.ext import commands
+from init.settings import Settings
 from utils.frontend import get_poll_embed
 
 
 class General(commands.Cog):
-    
     def __init__(self, bot):
 
         if not isinstance(bot, Bot):
@@ -17,8 +16,9 @@ class General(commands.Cog):
         self.description = "Les commandes générales"
         self.bot = bot
         self.settings = Settings()
-        self.numbers = ("1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣", "🔟")
-        
+        self.numbers = ("1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣",
+                        "🔟")
+
 
     @commands.command(
         name="poll",
@@ -37,16 +37,21 @@ class General(commands.Cog):
 
             if len(options) < 1 or len(options) > 10:
                 return
-            
-            liste = "\n".join([f"{self.numbers[i]} - {option}" for i, option in enumerate(options)])
-            
-            embed = get_poll_embed(self.settings.embeds["poll"], context.author, question, liste, self.bot.user.avatar_url)
-            
-            message_poll = await context.send(embed = embed)
+
+            liste = "\n".join([
+                f"{self.numbers[i]} - {option}"
+                for i, option in enumerate(options)
+            ])
+
+            embed = get_poll_embed(self.settings.embeds["poll"],
+                                   context.author, question, liste,
+                                   self.bot.user.avatar_url)
+
+            message_poll = await context.send(embed=embed)
 
             for emoji in self.numbers[:len(options)]:
                 await message_poll.add_reaction(emoji)
-            
+
             await message_poll.add_reaction("🤷")
 
         except Exception as e:

@@ -1,7 +1,6 @@
 import os
 import dotenv
-from   init.bot import Bot
-
+from init.bot import Bot
 
 dotenv.load_dotenv()
 TOKEN = os.getenv("TOKEN")
@@ -17,6 +16,5 @@ try:
     bot.run(TOKEN)
 except Exception as e:
     print(f'Error when logging in: {e}')
-
 
 print("End")

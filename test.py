@@ -7,6 +7,7 @@ BUILD_PATH = "database/build.sql"
 cnx = connect(DB_PATH, check_same_thread=False)
 cur = cnx.cursor()
 
+
 def with_commit(func):
     def inner(*args, **kwargs):
         func(*args, **kwargs)
@@ -66,5 +67,6 @@ def scriptexec(path):
 
 
 build()
-print(column("SELECT XPLock FROM RANK"))
+execute("DELETE FROM RANK")
+print(records("SELECT * FROM RANK"))
 close()

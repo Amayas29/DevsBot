@@ -3,12 +3,14 @@ import json
 
 
 class Settings():
-    
+
     __instance = None
 
-    def __new__(cls, file_settings="resources/settings.json", file_config="config.json") :
+    def __new__(cls,
+                file_settings="resources/settings.json",
+                file_config="config.json"):
 
-        if not cls.__instance is None :
+        if not cls.__instance is None:
             return cls.__instance
 
         cls.__instance = object.__new__(cls)
@@ -16,7 +18,7 @@ class Settings():
         try:
             with open(file_settings) as st:
                 data = json.load(st)
-            
+
             with open(file_config) as ct:
                 config = json.load(ct)
         except:
@@ -33,7 +35,7 @@ class Settings():
             cls.__instance._ignored_roles_levels = data["ignored_roles_levels"]
             cls.__instance._forbidden_words = data["forbidden_words"]
             cls.__instance._verification_message = data["verification_message"]
-            cls.__instance._verification_emoji = data["verification_emoji"]      
+            cls.__instance._verification_emoji = data["verification_emoji"]
             cls.__instance._channels = data["channels"]
             cls.__instance._logs_settings = data["logs_settings"]
             cls.__instance._initial_roles = data["initial_roles"]
@@ -41,7 +43,8 @@ class Settings():
             cls.__instance._game_status = data["game_status"]
             cls.__instance._embeds = data["embeds"]
             cls.__instance._images_generator = data["images_generator"]
-            cls.__instance._ignored_roles_display = data["ignored_roles_display"]
+            cls.__instance._ignored_roles_display = data[
+                "ignored_roles_display"]
             cls.__instance._messages = data["messages"]
             cls.__instance._min_time = data["min_time"]
             cls.__instance._invite_link = data["invite_link"]
@@ -55,7 +58,6 @@ class Settings():
 
         return cls.__instance
 
-
     def refresh_data(self):
         try:
             with open(self.file_settings) as st:
@@ -68,7 +70,7 @@ class Settings():
             data["ignored_roles_levels"] = self._ignored_roles_levels
             data["forbidden_words"] = self._forbidden_words
             data["verification_message"] = self._verification_message
-            data["verification_emoji"] = self._verification_emoji      
+            data["verification_emoji"] = self._verification_emoji
             data["channels"] = self._channels
             data["logs_settings"] = self._logs_settings
             data["initial_roles"] = self._initial_roles
@@ -81,12 +83,11 @@ class Settings():
             data["min_time"] = self._min_time
             data["invite_link"] = self._invite_link
             data["moderators_roles"] = self._moderators_roles
-            
+
             with open(self.file_settings, "w") as file:
-                json.dump(data, file ,indent=4)
+                json.dump(data, file, indent=4)
         except:
             pass
-
 
     @property
     def prefix(self):
@@ -160,11 +161,11 @@ class Settings():
     @property
     def images_generator(self):
         return self._images_generator
-        
+
     @property
     def ignored_roles_display(self):
         return self._ignored_roles_display
-    
+
     @property
     def messages(self):
         return self._messages
@@ -172,15 +173,15 @@ class Settings():
     @property
     def min_time(self):
         return self._min_time
-        
+
     @property
     def invite_link(self):
-        return self._invite_link 
-        
+        return self._invite_link
+
     @property
     def moderators_roles(self):
         return self._moderators_roles
-        
+
     @property
     def config(self):
         return self._config

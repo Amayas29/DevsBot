@@ -21,15 +21,17 @@ class Events(commands.Cog):
         self.settings = Settings()
     
 
-    # @commands.Cog.listener()
-    # async def on_command_error(self, context: commands.Context, error):
-    #     """
-    #     Treatment for commands errors
-    #     """
-    #     if context.command != None and hasattr(context.command, "on_error"):
-    #         return
+    @commands.Cog.listener()
+    async def on_command_error(self, context: commands.Context, error):
+        """
+        Treatment for commands errors
+        """
+        if context.command == None:
+            return
 
-    #     print("Erreur ... TODO", error)
+        help = self.bot.get_command("help")
+        await help(context, context.command.name)
+        print("Erreur ... TODO", error)
 
     
     @commands.Cog.listener()

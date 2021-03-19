@@ -1,52 +1,52 @@
 {
-    "author": {
-        "name": null,
-        "url": null,
-        "icon_url": null
+  "author": {
+    "name": null,
+    "url": null,
+    "icon_url": null
+  },
+
+  "title": "Informations du serveur",
+
+  "color": "1d4851",
+
+  "description": "Les informations du serveur {server}. \n\n\t{description}",
+
+  "fields": [
+    {
+      "name": "Total Membres",
+      "value": "{member_count}",
+      "inline": true
     },
-    
-    "title": "Informations du serveur",
-    
-    "color": "1d4851",
-    
-    "description": "Les informations du serveur {server}. \n\n\t{description}",
-    
-    "fields": [
-        {
-            "name": "Total Membres",
-            "value": "{member_count}",
-            "inline": true
-        },
-        {
-            "name": "Nombre de salons textuels",
-            "value": "{number_txt_channels}",
-            "inline": true
-        },
-        {
-            "name": "Nombre de salons vocaux",
-            "value": "{number_voc_channels}",
-            "inline": true
-        },
-        {
-            "name": "Cr\u00e9er le",
-            "value": "{created_at}",
-            "inline": true
-        },
-        {
-            "name": "Propri\u00e9taire",
-            "value": "{owner}",
-            "inline": true
-        }
-    ],
-    
-    "footer": {
-        "text": null,
-        "icon_url": null
+    {
+      "name": "Nombre de salons textuels",
+      "value": "{number_txt_channels}",
+      "inline": true
     },
-    
-    "image" : null,
-    
-    "thumbnail": {
-        "url": "https://cdn1.iconfinder.com/data/icons/shopping-and-ecommerce-2/64/E-commerce_and_Shopping-81-512.png"
+    {
+      "name": "Nombre de salons vocaux",
+      "value": "{number_voc_channels}",
+      "inline": true
+    },
+    {
+      "name": "Cr\u00e9er le",
+      "value": "{created_at}",
+      "inline": true
+    },
+    {
+      "name": "Propri\u00e9taire",
+      "value": "{owner}",
+      "inline": true
     }
+  ],
+
+  "footer": {
+    "text": null,
+    "icon_url": null
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": "https://cdn1.iconfinder.com/data/icons/shopping-and-ecommerce-2/64/E-commerce_and_Shopping-81-512.png"
+  }
 }

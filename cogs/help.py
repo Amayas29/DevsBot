@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from init.bot       import Bot
-from discord.ext    import commands
-from init.settings  import Settings
+from init.bot import Bot
+from discord.ext import commands
+from init.settings import Settings
 from utils.frontend import get_help_all_embed, get_help_cmd_embed
 
 
 class Help(commands.Cog):
-
     def __init__(self, bot):
 
         if not isinstance(bot, Bot):
@@ -19,21 +18,21 @@ class Help(commands.Cog):
         self.bot.remove_command("help")
         self.settings = Settings()
 
-
     @commands.command(
         name="help",
-        help="[command] : Si elle est donnée c'est que l'aide de la commande qui serait afficher sinon le catalogue de toutes les commandes",
-        description="Affiche l'aide des commandes"
-    )
-    async def help(self, context, command = None):
+        help=
+        "[command] : Si elle est donnée c'est que l'aide de la commande qui serait afficher sinon le catalogue de toutes les commandes",
+        description="Affiche l'aide des commandes")
+    async def help(self, context, command=None):
         """Shows this message."""
         if command is None:
             try:
-                embed = get_help_all_embed(self.settings.embeds["help"], self.bot)
-                await context.send(embed = embed)
+                embed = get_help_all_embed(self.settings.embeds["help"],
+                                           self.bot)
+                await context.send(embed=embed)
             except:
                 pass
-            
+
             return
 
         get_commande = None
@@ -45,11 +44,12 @@ class Help(commands.Cog):
         command = get_commande
         if not command is None:
             try:
-                embed = get_help_cmd_embed(self.settings.embeds["help_cmd"], command, self.bot.user.avatar_url)
-                await context.send(embed = embed)
+                embed = get_help_cmd_embed(self.settings.embeds["help_cmd"],
+                                           command, self.bot.user.avatar_url)
+                await context.send(embed=embed)
             except:
                 pass
-                
+
             return
 
         await context.send("Cette commande n'existe pas")

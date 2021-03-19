@@ -1,38 +1,38 @@
 {
-    "author": null,
-    
-    "title": "Help de {cmd}",
-    
-    "color": "59b133",
-    
-    "description": "**Bienvenue dans la page d'aide de {bot_name}**\n\n *NB : les <...> Pour les param\u00e8tres obligatoires, [...] pour les optionnels*\n",
-    
-    "fields": [
-        {
-            "name": "Nom et alias de la commandes",
-            "value": "{name_aliases}",
-            "inline": false
-        },
-        {
-            "name": "Syntaxe",
-            "value": "{syntaxe}",
-            "inline": false
-        },
-        {
-            "name": "Description",
-            "value": "{help}",
-            "inline": false
-        }
-    ],
-    
-    "footer": {
-        "text": null,
-        "icon_url": null
+  "author": null,
+
+  "title": "Help de {cmd}",
+
+  "color": "59b133",
+
+  "description": "**Bienvenue dans la page d'aide de {bot_name}**\n\n *NB : les <...> Pour les param\u00e8tres obligatoires, [...] pour les optionnels*\n",
+
+  "fields": [
+    {
+      "name": "Nom et alias de la commandes",
+      "value": "{name_aliases}",
+      "inline": false
     },
-    
-    "image": null,
-    
-    "thumbnail": {
-        "url": null
+    {
+      "name": "Syntaxe",
+      "value": "{syntaxe}",
+      "inline": false
+    },
+    {
+      "name": "Description",
+      "value": "{help}",
+      "inline": false
     }
+  ],
+
+  "footer": {
+    "text": null,
+    "icon_url": null
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": null
+  }
 }

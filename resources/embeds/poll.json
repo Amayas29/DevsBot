@@ -1,32 +1,32 @@
 {
-    "author": {
-      "name": "{name}",
-      "url": null,
-      "icon_url": "{icon_url}"
-    },
-  
-    "title": "Sondage",
-  
-    "color": "1cdee4",
-  
-    "description": "{question} \n\n *Veuillez r\u00e9agir avec les \u00e9mojis correspondant \u00e0 vos choix* \n",
-    
-    "fields": [
-      {
+  "author": {
+    "name": "{name}",
+    "url": null,
+    "icon_url": "{icon_url}"
+  },
+
+  "title": "Sondage",
+
+  "color": "1cdee4",
+
+  "description": "{question} \n\n *Veuillez r\u00e9agir avec les \u00e9mojis correspondant \u00e0 vos choix* \n",
+
+  "fields": [
+    {
       "name": "Options",
       "value": null,
       "inline": true
-      }
-    ],
-  
-    "footer": {
-      "text": null,
-      "icon_url": null
-    },
-  
-    "image": null,
-  
-    "thumbnail": {
-      "url": "https://cdn2.iconfinder.com/data/icons/elections-two-color-line/128/polling_finger_poll_survey_vote_voting-512.png"
     }
+  ],
+
+  "footer": {
+    "text": null,
+    "icon_url": null
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": "https://cdn2.iconfinder.com/data/icons/elections-two-color-line/128/polling_finger_poll_survey_vote_voting-512.png"
+  }
 }

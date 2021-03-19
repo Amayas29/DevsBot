@@ -1,26 +1,26 @@
 {
-    "author": null,
-    
-    "title": "Bienvenu",
-    
-    "color": "3dcf0b",
-    
-    "description": "Bienvenu {user} dans {server}",
-    
-    "fields": [
-        {
-            "name": "Total Membres",
-            "value": "{member_count}",
-            "inline": true
-        }
-    ],
-    
-    "footer": {
-        "text": null,
-        "icon_url": null
-    },
-    
-    "image": null,
-    
-    "thumbnail": null
+  "author": null,
+
+  "title": "Bienvenu",
+
+  "color": "3dcf0b",
+
+  "description": "Bienvenu {user} dans {server}",
+
+  "fields": [
+    {
+      "name": "Total Membres",
+      "value": "{member_count}",
+      "inline": true
+    }
+  ],
+
+  "footer": {
+    "text": null,
+    "icon_url": null
+  },
+
+  "image": null,
+
+  "thumbnail": null
 }

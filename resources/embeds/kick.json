@@ -1,33 +1,33 @@
 {
-    "author": null,
-    
-    "title": "Expulsion",
-    
-    "color": "dd3713",
-    
-    "description": "{kicked_user} a \u00e9t\u00e9 expuls\u00e9",
-    
-    "fields": [
-        {
-            "name": "Moderateur",
-            "value": "{moderator}",
-            "inline": true
-        },
-        {
-            "name": "Raison",
-            "value": "{reason}",
-            "inline": true
-        }
-    ],
-    
-    "footer": {
-        "text": null,
-        "icon_url": null
+  "author": null,
+
+  "title": "Expulsion",
+
+  "color": "dd3713",
+
+  "description": "{kicked_user} a \u00e9t\u00e9 expuls\u00e9",
+
+  "fields": [
+    {
+      "name": "Moderateur",
+      "value": "{moderator}",
+      "inline": true
     },
-    
-    "image": null,
-    
-    "thumbnail": {
-        "url": "https://cdn1.iconfinder.com/data/icons/soccer-flat/64/soccer-33-256.png"
+    {
+      "name": "Raison",
+      "value": "{reason}",
+      "inline": true
     }
+  ],
+
+  "footer": {
+    "text": null,
+    "icon_url": null
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": "https://cdn1.iconfinder.com/data/icons/soccer-flat/64/soccer-33-256.png"
+  }
 }

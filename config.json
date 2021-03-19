@@ -1,19 +1,19 @@
 {
-    "name" : "DevsBot",
-    "version" : "0.1",
-    "bot_description" : "DevsBot est un bot créé et maintenue par Amayas",
-    "langages" : "Python",
-    "join_message" : "Salut je suis DevBot, votre ami robot",
-    "status_type" : "online|idle|dnd",
-    
-    "footer" : "DevsBot est un bot créé et maintenue par Amayas",
+  "name": "DevsBot",
+  "version": "0.1",
+  "bot_description": "DevsBot est un bot créé et maintenue par Amayas",
+  "langages": "Python",
+  "join_message": "Salut je suis DevBot, votre ami robot",
+  "status_type": "online|idle|dnd",
 
-    "author" : {
-        "name" : "Amayas",
-        "username_git" : "Amayas29",
-        "github" : "https://github.com/Amayas29"
-    },
+  "footer": "DevsBot est un bot créé et maintenue par Amayas",
 
-    "licence" : "MIT License",
-    "private" : true
+  "author": {
+    "name": "Amayas",
+    "username_git": "Amayas29",
+    "github": "https://github.com/Amayas29"
+  },
+
+  "licence": "MIT License",
+  "private": true
 }

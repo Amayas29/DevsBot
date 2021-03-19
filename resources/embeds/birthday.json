@@ -1,32 +1,32 @@
 {
-    "author": {
-        "name": null,
-        "url": null,
-        "icon_url": null
-    },
-    
-    "title": "Anniversaire",
-    
-    "color": "c71575",
-    
-    "description": "**Joyeux anniversaire {user} !** \ud83e\udd73\ud83c\udf82\n",
-    
-    "fields": [
-        {
-            "name": "Age",
-            "value": "{age} ans",
-            "inline": false
-        }
-    ],
-    
-    "footer": {
-        "text": null,
-        "icon_url": null
-    },
-    
-    "image": null,
-    
-    "thumbnail": {
-        "url": "https://cdn4.iconfinder.com/data/icons/happy-new-year-2028/64/Confetti-party-happy-new-year-birthday-celebrate-512.png"
+  "author": {
+    "name": null,
+    "url": null,
+    "icon_url": null
+  },
+
+  "title": "Anniversaire",
+
+  "color": "c71575",
+
+  "description": "**Joyeux anniversaire {user} !** \ud83e\udd73\ud83c\udf82\n",
+
+  "fields": [
+    {
+      "name": "Age",
+      "value": "{age} ans",
+      "inline": false
     }
+  ],
+
+  "footer": {
+    "text": null,
+    "icon_url": null
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": "https://cdn4.iconfinder.com/data/icons/happy-new-year-2028/64/Confetti-party-happy-new-year-birthday-celebrate-512.png"
+  }
 }

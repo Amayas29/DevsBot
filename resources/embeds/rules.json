@@ -1,32 +1,32 @@
 {
-    "author": {
-        "name": null,
-        "url": null,
-        "icon_url": null
-    },
-    
-    "title": "Règlement",
-    
-    "color": "5670da",
-    
-    "description": null,
-    
-    "fields": [
-        {
-            "name": "Le règlement ci-dessous a été conçu dans le but d'entretenir une bonne ambiance\n \n*Toute personne qui ne respecte pas les règles sera sanctionné par l’équipe de modération*\n",
-            "value": "{rules}",
-            "inline": false
-        }
-    ],
-    
-    "footer": {
-        "text": null,
-        "icon_url": null
-    },
-    
-    "image": null,
-    
-    "thumbnail": {
-        "url" : "https://cdn4.iconfinder.com/data/icons/game-rounded-2-set/512/scroll-512.png"
+  "author": {
+    "name": null,
+    "url": null,
+    "icon_url": null
+  },
+
+  "title": "Règlement",
+
+  "color": "5670da",
+
+  "description": null,
+
+  "fields": [
+    {
+      "name": "Le règlement ci-dessous a été conçu dans le but d'entretenir une bonne ambiance\n \n*Toute personne qui ne respecte pas les règles sera sanctionné par l’équipe de modération*\n",
+      "value": "{rules}",
+      "inline": false
     }
+  ],
+
+  "footer": {
+    "text": null,
+    "icon_url": null
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": "https://cdn4.iconfinder.com/data/icons/game-rounded-2-set/512/scroll-512.png"
+  }
 }

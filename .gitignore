@@ -7,3 +7,6 @@ __pycache__/
 *__.png
 *.db
 .vscode/
+servers.json
+config.json
+server.template.json

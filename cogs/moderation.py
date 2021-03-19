@@ -107,8 +107,7 @@ class Moderation(commands.Cog):
 
     @commands.command(
         name="unban",
-        help=
-        "<member_id> : L'identifiant du membre a pardonné.\n[reason] : La raison du unban",
+        help="<member_id> : L'identifiant du membre a pardonné.\n[reason] : La raison du unban",
         description="Pardonner à un membre")
     @commands.has_permissions(ban_members=True)
     async def unban(self, context, member_id: int, *, reason=None):

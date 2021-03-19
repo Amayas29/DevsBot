@@ -20,8 +20,7 @@ class Help(commands.Cog):
 
     @commands.command(
         name="help",
-        help=
-        "[command] : Si elle est donnée c'est que l'aide de la commande qui serait afficher sinon le catalogue de toutes les commandes",
+        help="[command] : Si elle est donnée c'est que l'aide de la commande qui serait afficher sinon le catalogue de toutes les commandes",
         description="Affiche l'aide des commandes")
     async def help(self, context, command=None):
         """Shows this message."""

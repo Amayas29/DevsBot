@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import discord
-from   init.bot       import Bot
-from   discord.ext    import commands
-from   init.settings  import Settings
-from   utils.frontend import get_welcome_goodbye_embed, get_file_welcome
-from   utils.rolemenu import add_reaction_verification, delete_reactions
-from   utils.levels   import update_users
+from init.bot import Bot
+from discord.ext import commands
+from init.settings import Settings
+from utils.frontend import get_welcome_goodbye_embed, get_file_welcome
+from utils.rolemenu import add_reaction_verification, delete_reactions
+from utils.levels import update_users
 
 
 class Events(commands.Cog):
@@ -19,7 +19,6 @@ class Events(commands.Cog):
 
         self.bot = bot
         self.settings = Settings()
-    
 
     @commands.Cog.listener()
     async def on_command_error(self, context: commands.Context, error):
@@ -33,14 +32,12 @@ class Events(commands.Cog):
         await help(context, context.command.name)
         print("Erreur ... TODO", error)
 
-    
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
         """
         When the bot join a guild
         """
         print("Join ... TODO")
-
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
@@ -50,22 +47,23 @@ class Events(commands.Cog):
                 return
 
         update_users(False, member)
-        
-        server : discord.Guild = member.guild
+
+        server: discord.Guild = member.guild
 
         try:
-            embed = get_welcome_goodbye_embed(self.settings.embeds["welcome"], member, server.name, server.member_count, self.bot.user.avatar_url)
+            embed = get_welcome_goodbye_embed(
+                self.settings.embeds["welcome"], member, server.name, server.member_count, self.bot.user.avatar_url)
         except:
             embed = None
 
         if embed != None:
             try:
-                welcome_channel = self.bot.get_channel(self.settings.channels["welcome"]) 
+                welcome_channel = self.bot.get_channel(
+                    self.settings.channels["welcome"])
                 file = await get_file_welcome(member)
-                await welcome_channel.send(embed = embed, file=file)
-            except:   
-               pass  
-
+                await welcome_channel.send(embed=embed, file=file)
+            except:
+                pass
 
     @commands.Cog.listener()
     async def on_member_remove(self, member: discord.Member):
@@ -76,33 +74,32 @@ class Events(commands.Cog):
 
         update_users(True, member)
 
-        server : discord.Guild = member.guild
+        server: discord.Guild = member.guild
 
         await delete_reactions(member)
 
         try:
-            embed = get_welcome_goodbye_embed(self.settings.embeds["good_bye"], member, server.name, server.member_count, self.bot.user.avatar_url)
+            embed = get_welcome_goodbye_embed(
+                self.settings.embeds["good_bye"], member, server.name, server.member_count, self.bot.user.avatar_url)
         except:
             embed = None
 
         if embed != None:
             try:
-                welcome_channel = self.bot.get_channel(self.settings.channels["good_bye"]) 
-                await welcome_channel.send(embed = embed)
-            except:   
-               pass 
-
+                welcome_channel = self.bot.get_channel(
+                    self.settings.channels["good_bye"])
+                await welcome_channel.send(embed=embed)
+            except:
+                pass
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
 
         await add_reaction_verification(self.bot, payload)
-        
-    
+
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload: discord.RawReactionActionEvent):
         pass
-        
 
     # @commands.Cog.listener()
     # async def on_command(self, context):

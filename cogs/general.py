@@ -19,11 +19,10 @@ class General(commands.Cog):
         self.numbers = ("1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣",
                         "🔟")
 
-
     @commands.command(
         name="poll",
-        help="<question> : La question du sondage.\n<options> : La liste des options pour le sondage"\
-                " (limitation à 10 options).\n\n *Si un des éléments est une phrase il faut mettre des \" \" autour*",
+        help="<question> : La question du sondage.\n<options> : La liste des options pour le sondage"
+        " (limitation à 10 options).\n\n *Si un des éléments est une phrase il faut mettre des \" \" autour*",
         description="Crée un sondage avec plusieurs options"
     )
     async def poll(self, context, question: str, *options):

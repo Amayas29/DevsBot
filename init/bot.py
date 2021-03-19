@@ -7,7 +7,7 @@ from init.settings import Settings
 from copy import deepcopy as dp
 from utils.levels import update_users, set_exp, level_up, get_users_birthday
 from utils.frontend import get_birthday_embed
-
+from database.servers import get_servers, create_server
 
 class Bot(commands.Bot):
     def __init__(self, *args, prefix=None, **kwargs):
@@ -22,6 +22,7 @@ class Bot(commands.Bot):
                          prefix=prefix,
                          intents=intents,
                          **kwargs)
+        self.servers = get_servers()
 
     async def on_message(self, message: discord.Message):
 
@@ -55,7 +56,7 @@ class Bot(commands.Bot):
 
         await self.process_commands(message)
 
-    async def on_message_edit(self, after, befor):
+    async def on_message_edit(self, after, before):
         return
 
     @tasks.loop(hours=5)

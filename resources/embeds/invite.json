@@ -14,7 +14,7 @@
   "fields": [
     {
       "name": "Lien",
-      "value": null,
+      "value": "{link_server}",
       "inline": true
     }
   ],

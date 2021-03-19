@@ -1,8 +1,8 @@
 {
   "author": {
-    "name": "{name}",
+    "name": "{user_name}",
     "url": null,
-    "icon_url": "{icon_url}"
+    "icon_url": "{user_icon}"
   },
 
   "title": "Niveau de l'utilsateur",

@@ -9,7 +9,7 @@
 
   "fields": [
     {
-      "name": "{rank} - {user}",
+      "name": "{rank} - {user_name}",
       "value": "Niveau {level}, Exp {exp}",
       "inline": false
     }

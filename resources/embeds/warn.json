@@ -5,7 +5,7 @@
 
   "color": "ebda08",
 
-  "description": "{warn_user} a re\u00e7u un avertissement !",
+  "description": "{user} a re\u00e7u un avertissement !",
 
   "fields": [
     {

@@ -5,7 +5,7 @@
 
   "color": "dd3713",
 
-  "description": "{banned_user} a \u00e9t\u00e9 banni",
+  "description": "{user} a \u00e9t\u00e9 banni",
 
   "fields": [
     {

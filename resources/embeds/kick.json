@@ -5,7 +5,7 @@
 
   "color": "dd3713",
 
-  "description": "{kicked_user} a \u00e9t\u00e9 expuls\u00e9",
+  "description": "{user} a \u00e9t\u00e9 expuls\u00e9",
 
   "fields": [
     {

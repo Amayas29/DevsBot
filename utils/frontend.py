@@ -71,6 +71,7 @@ def get_warn_embed(user, moderator, reason, text, icon):
 def get_kick_embed(user, moderator, reason, text, icon):
     return get_moderation_embed("kick", user, moderator, reason, text, icon)
 
+
 def get_message(message, user, level=None, guild_id=None):
 
     global messages
@@ -93,8 +94,10 @@ def get_message(message, user, level=None, guild_id=None):
     except:
         return None
 
+
 def get_warns_message(user, guild_id):
     return get_message("warns_message", user, guild_id=guild_id)
+
 
 def get_muted_message(user):
     return get_message("muted_message", user)
@@ -107,6 +110,49 @@ def get_unmuted_message(user):
 def get_nickname_message(user):
     return get_message("nickname_message", user)
 
+
+def get_poll_embed(user, question, options, text, icon):
+
+    global cache
+    global footer
+
+    try:
+        if "poll" not in cache:
+            with open(f"{PATH}poll.json", "r") as f:
+                dict_embed = json.load(f)
+
+            cache["poll"] = dict_embed
+
+        dict_embed = dp(cache["poll"])
+
+        dict_embed["author"]["name"] = dict_embed["author"]["name"].replace(
+            "{user_name}", user.name)
+        dict_embed["author"]["icon_url"] = dict_embed["author"]["icon_url"].replace(
+            "{user_icon}", str(user.avatar_url))
+
+        if type(dict_embed["color"]) != int:
+            dict_embed["color"] = int(dict_embed["color"], 16)
+
+        dict_embed["description"] = dict_embed["description"].replace(
+            "{question}", question)
+
+        fields = dict_embed["fields"]
+
+        for field in fields:
+            field["value"] = field["value"].replace(
+                "{options}", options)
+
+        dict_embed["fields"] = fields
+
+        if footer == {}:
+            footer = {"text": text, "icon_url": icon}
+
+        dict_embed["footer"] = footer
+
+        return discord.Embed.from_dict(dict_embed)
+
+    except:
+        return None
 
 # def get_rules_embed(dict, rules, server, server_icon, bot_icon):
 #     try:
@@ -482,36 +528,6 @@ def get_nickname_message(user):
 #     except Exception as e:
 #         print(e)
 #         return None
-
-
-# def get_poll_embed(dict, user, question, options, bot_icon):
-#     try:
-#         dict = dp(dict)
-
-#         icon_url = user.avatar_url
-#         author = dict["author"]
-#         author["name"] = author["name"].replace("{name}", user.name)
-#         author["icon_url"] = author["icon_url"].replace(
-#             "{icon_url}", str(icon_url))
-#         dict["author"] = author
-
-#         if type(dict["color"]) != int:
-#             dict["color"] = int(dict["color"], 16)
-
-#         dict["description"] = dict["description"].replace(
-#             "{question}", question)
-
-#         dict["fields"][0]["value"] = options
-
-#         dict["footer"]["text"] = settings.config["footer"]
-#         dict["footer"]["icon_url"] = str(bot_icon)
-
-#         return discord.Embed.from_dict(dict)
-
-#     except Exception as e:
-#         print(e)
-#         return None
-
 
 # def get_help_all_embed(dict, bot):
 

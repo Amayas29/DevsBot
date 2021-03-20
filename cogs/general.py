@@ -2,6 +2,8 @@
 
 from init.bot import Bot
 from discord.ext import commands
+from utils.frontend import get_poll_embed
+
 
 class General(commands.Cog):
     def __init__(self, bot):
@@ -15,42 +17,47 @@ class General(commands.Cog):
         self.numbers = ("1⃣", "2⃣", "3⃣", "4⃣", "5⃣", "6⃣", "7⃣", "8⃣", "9⃣",
                         "🔟")
 
-    # @commands.command(
-    #     name="poll",
-    #     help="<question> : La question du sondage.\n<options> : La liste des options pour le sondage"
-    #     " (limitation à 10 options).\n\n *Si un des éléments est une phrase il faut mettre des \" \" autour*",
-    #     description="Crée un sondage avec plusieurs options"
-    # )
-    # async def poll(self, context, question: str, *options):
-    #     """
-    #     Create a poll where members can vote
-    #     """
-    #     print("Poll ... TODO")
-    #     try:
-    #         if question == "" or question is None:
-    #             return
+    @commands.command(
+        name="poll",
+        help="<question> : La question du sondage.\n<options> : La liste des options pour le sondage"
+        " (limitation à 10 options).\n\n *Si un des éléments est une phrase il faut mettre des \" \" autour*",
+        description="Crée un sondage avec plusieurs options"
+    )
+    async def poll(self, context, question: str, *options):
+        """
+        Create a poll where members can vote
+        """
+        print("Poll ... TODO")
+        try:
+            if question == "" or question is None:
+                return
 
-    #         if len(options) < 1 or len(options) > 10:
-    #             return
+            if len(options) < 1 or len(options) > 10:
+                return
 
-    #         liste = "\n".join([
-    #             f"{self.numbers[i]} - {option}"
-    #             for i, option in enumerate(options)
-    #         ])
+            liste = "\n".join([
+                f"{self.numbers[i]} - {option}"
+                for i, option in enumerate(options)
+            ])
 
-    #         embed = get_poll_embed(self.settings.embeds["poll"],
-    #                                context.author, question, liste,
-    #                                self.bot.user.avatar_url)
+            try:
+                embed = get_poll_embed(context.author, question, liste,
+                                   self.bot.config["footer"], self.bot.config["icon"])
+            except:
+                embed = None
 
-    #         message_poll = await context.send(embed=embed)
+            if embed is None:
+                return
 
-    #         for emoji in self.numbers[:len(options)]:
-    #             await message_poll.add_reaction(emoji)
+            message_poll = await context.send(embed=embed)
 
-    #         await message_poll.add_reaction("🤷")
+            for emoji in self.numbers[:len(options)]:
+                await message_poll.add_reaction(emoji)
 
-    #     except Exception as e:
-    #         print(e)
+            await message_poll.add_reaction("🤷")
+
+        except Exception as e:
+            print(e)
 
 
 def setup(bot):

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import random
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from database.servers import get_servers, create_server
+from database.users import insert_unique
 import json
-
-
+from utils.games import load_games, dump_games
+from copy import deepcopy as dp
 class Bot(commands.Bot):
 
     def __init__(self, *args, prefix=None, **kwargs):
@@ -21,6 +23,7 @@ class Bot(commands.Bot):
                          intents=intents,
                          **kwargs)
         self.servers = get_servers()
+        self.games = load_games()
 
         try:
             with open("config.json", "r") as f:
@@ -76,20 +79,19 @@ class Bot(commands.Bot):
     async def on_message_edit(self, after, before):
         return
 
-    # @tasks.loop(hours=5)
-    # async def status(self):
+    @tasks.loop(hours=5)
+    async def status(self):
+        games = dp(self.games)
 
-    #     games = dp(self.settings.game_status)
+        if self.game == None:
+            self.game = random.choice(games)
 
-    #     if self.game == None:
-    #         self.game = games[0]
+        elif len(games) > 1:
+            games.remove(self.game)
+            self.game = random.choice(games)
 
-    #     elif len(games) > 1:
-    #         games.remove(self.game)
-    #         self.game = random.choice(games)
-
-    #     game = discord.Game(self.game)
-    #     await self.change_presence(status=discord.Status.online, activity=game)
+        game = discord.Game(self.game)
+        await self.change_presence(status=discord.Status.online, activity=game)
 
     # @tasks.loop(hours=24)
     # async def birthdays(self):
@@ -115,19 +117,12 @@ class Bot(commands.Bot):
         When the bot is activated
         """
         print("Ready ... TODO")
-        # self.status.start()
+        self.status.start()
         # self.birthdays.start()
 
-        # liste = []
-        # for member in self.get_all_members():
-
-        #     add = True
-        #     for role in member.roles:
-        #         if role.is_integration() or role.is_bot_managed():
-        #             add = False
-        #             break
-
-        #     if add:
-        #         liste.append(member)
-
-        # update_users(False, liste)
+        for guild in self.guilds:
+            for member in guild.members:
+                bot = list(filter(lambda role: role.is_integration() or role.is_bot_managed(), member.roles))
+                if bot != []:
+                    continue
+                insert_unique(member.id, guild.id)

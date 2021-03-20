@@ -195,49 +195,9 @@ def get_source_embed(bot_name, source_link, author_name, author_link, text, icon
     return get_embed("source", bot_name=bot_name, source_link=source_link, author_name=author_name,
                      author_link=author_link, text=text, icon_url=icon_url)
 
-# def get_rules_embed(dict, rules, server, server_icon, bot_icon):
-    #     try:
-    #         dict = dp(dict)
 
-    #         dict["author"]["name"] = server
-    #         dict["author"]["icon_url"] = str(server_icon)
-
-    #         if type(dict["color"]) != int:
-    #             dict["color"] = int(dict["color"], 16)
-
-    #         dict["fields"][0]["value"] = rules
-
-    #         dict["footer"]["text"] = settings.config["footer"]
-    #         dict["footer"]["icon_url"] = str(bot_icon)
-
-    #         return discord.Embed.from_dict(dict)
-
-    #     except:
-    #         return None
-
-# def get_invite_embed(dict: dict, server, server_icon, link,
-    #                      bot_icon) -> discord.Embed:
-    #     try:
-    #         dict = dp(dict)
-
-    #         dict["author"]["name"] = server
-    #         dict["author"]["url"] = link
-    #         dict["author"]["icon_url"] = str(server_icon)
-
-    #         if type(dict["color"]) != int:
-    #             dict["color"] = int(dict["color"], 16)
-
-    #         dict["description"] = dict["description"].replace("{server}", server)
-
-    #         dict["fields"][0]["value"] = link
-
-    #         dict["footer"]["text"] = settings.config["footer"]
-    #         dict["footer"]["icon_url"] = str(bot_icon)
-
-    #         return discord.Embed.from_dict(dict)
-
-    #     except:
-    #         return None
+def get_rules_embed(rules, text, icon_url):
+    return get_embed("rules", rules=rules, text=text, icon_url=icon_url)
 
     # def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str,
     #                               member_count: int, bot_icon):

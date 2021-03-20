@@ -14,7 +14,7 @@
   "fields": [
     {
       "name": "Le règlement ci-dessous a été conçu dans le but d'entretenir une bonne ambiance\n \n*Toute personne qui ne respecte pas les règles sera sanctionné par l’équipe de modération*\n",
-      "value": "{rules}",
+      "value": "\n⁣ ⁣\n{rules}",
       "inline": false
     }
   ],

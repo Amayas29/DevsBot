@@ -1,2 +1,3 @@
 Loup garou
-Amoung Us
+Among Us
+Minecraft

@@ -3,7 +3,7 @@
 import discord
 from init.bot import Bot
 from discord.ext import commands
-from utils.frontend import get_ban_embed, get_unban_embed, get_warn_embed, get_kick_embed, get_warns_message, get_muted_message, get_unmuted_message, get_nickname_message
+from utils.frontend import get_ban_embed, get_unban_embed, get_warn_embed, get_kick_embed, get_warns_message, get_muted_message, get_unmuted_message, get_nickname_message, get_rules_embed
 from database.users import add_warn
 
 
@@ -167,12 +167,12 @@ class Moderation(commands.Cog):
 
         add_warn(member.id, member.guild.id)
 
-        # try:
-        embed = get_warn_embed(member,
+        try:
+            embed = get_warn_embed(member,
                                context.author, reason,
                                self.bot.config["footer"], self.bot.config["icon"])
-        # except:
-        #     embed = None
+        except:
+            embed = None
 
         if embed != None:
             try:
@@ -262,32 +262,29 @@ class Moderation(commands.Cog):
         except:
             pass
 
-    # @commands.command(name="rules",
-    #                   help="",
-    #                   description="Affiche dans le salon les régles du serveur"
-    #                   )
-    # @commands.has_permissions(manage_channels=True)
-    # async def rules(self, context):
-    #     """
-    #     Send the rules
-    #     """
-    #     print("Rules ... TODO")
-    #     try:
-    #         try:
-    #             with open("rules.txt") as file:
-    #                 rules = file.read()
-    #         except:
-    #             rules = "NaN"
+    @commands.command(name="rules",
+                      help="",
+                      description="Affiche dans le salon les régles du serveur"
+                      )
+    @commands.has_permissions(manage_channels=True)
+    async def rules(self, context):
+        """
+        Send the rules
+        """
+        print("Rules ... TODO")
+        try:
+            rules = self.bot.servers[str(context.guild.id)]["rules"]
+            if rules is None:
+                rules = "NaN"
 
-    #         embed = get_rules_embed(self.settings.embeds["rules"], rules,
-    #                                 context.guild.name, context.guild.icon_url,
-    #                                 self.bot.user.avatar_url)
-    #     except Exception as e:
-    #         print(e)
-    #         embed = None
+            embed = get_rules_embed(self.bot.servers[str(
+                context.guild.id)]["rules"], self.bot.config["footer"], self.bot.config["icon"])
 
-    #     if embed != None:
-    #         await context.send(embed=embed)
+        except:
+            embed = None
+
+        if embed != None:
+            await context.send(embed=embed)
 
 
 def setup(bot):

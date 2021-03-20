@@ -24,3 +24,6 @@ def get_level_exp(user_id, guild_id):
 
 def get_birth_date(user_id, guild_id):
     return field("SELECT BirthDay FROM Users WHERE UserID = ? AND ServerID = ?", user_id, guild_id)
+
+def insert_unique(user_id, guild_id):
+    execute("INSERT OR IGNORE INTO Users (UserID, ServerID) Values (?, ?)", user_id, guild_id)

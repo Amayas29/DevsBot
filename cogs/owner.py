@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import discord
 from init.bot import Bot
 from discord.ext import commands
+from utils.games import dump_games
 
 
 class Owner(commands.Cog):
@@ -41,24 +43,24 @@ class Owner(commands.Cog):
         await context.send("Good bye !")
         await self.bot.close()
 
-    # @commands.command(name="setgame",
-    #                   help="<game> : La nouvelle activité",
-    #                   description="Change l'activité du bot")
-    # async def set_game(self, context, *, game):
-    #     """
-    #     Change the game of the bot
-    #     """
-    #     print("Change game ... TODO")
-    #     try:
-    #         game = "".join(game)
-    #         self.settings.game_status.append(game)
-    #         self.settings.refresh_data()
-    #         self.bot.game = game
-    #         game = discord.Game(self.bot.game)
-    #         await self.bot.change_presence(status=discord.Status.online,
-    #                                        activity=game)
-    #     except:
-    #         pass
+    @commands.command(name="setgame",
+                      help="<game> : La nouvelle activité",
+                      description="Change l'activité du bot")
+    async def set_game(self, context, *, game):
+        """
+        Change the game of the bot
+        """
+        print("Change game ... TODO")
+        try:
+            game = "".join(game)
+            self.bot.games.append(game)
+            dump_games(self.bot.games)
+            self.bot.game = game
+            game = discord.Game(self.bot.game)
+            await self.bot.change_presence(status=discord.Status.online,
+                                           activity=game)
+        except:
+            pass
 
     # @commands.command(name="verif",
     #                   help="<message_id> : L'identifiant du message",

@@ -5,11 +5,11 @@
     "icon_url": "{user_icon}"
   },
 
-  "title": "Informations de l'utilisateur",
+  "title": null,
 
   "color": "8a23d4",
 
-  "description": "{user} voici tes informations",
+  "description": "**Les informations de {user}**",
 
   "fields": [
     {
@@ -24,7 +24,7 @@
     },
     {
       "name": "R\u00f4le le plus \u00e9lev\u00e9",
-      "value": "{roles}",
+      "value": "{max_role}",
       "inline": true
     },
     {
@@ -50,13 +50,13 @@
   ],
 
   "footer": {
-    "text": null,
-    "icon_url": null
+    "text": "{text}",
+    "icon_url": "{icon_url}"
   },
 
   "image": null,
 
   "thumbnail": {
-    "url": "https://cdn4.iconfinder.com/data/icons/technical-support/256/97-512.png"
+    "url": "{user_icon}"
   }
 }

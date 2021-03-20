@@ -9,7 +9,7 @@
 
   "color": "1cdee4",
 
-  "description": "{question} \n\n *Veuillez r\u00e9agir avec les \u00e9mojis correspondant \u00e0 vos choix* \n",
+  "description": "**>> {question}** \n\n *Veuillez r\u00e9agir avec les \u00e9mojis correspondant \u00e0 vos choix* \n",
 
   "fields": [
     {
@@ -20,8 +20,8 @@
   ],
 
   "footer": {
-    "text": null,
-    "icon_url": null
+    "text": "{text}",
+    "icon_url": "{icon_url}"
   },
 
   "image": null,

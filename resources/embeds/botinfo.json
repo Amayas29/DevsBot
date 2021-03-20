@@ -30,6 +30,6 @@
   "image": null,
 
   "thumbnail": {
-    "url": null
+    "url": "{icon_url}"
   }
 }

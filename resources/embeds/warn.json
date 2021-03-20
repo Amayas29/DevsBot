@@ -20,7 +20,10 @@
     }
   ],
 
-  "footer": null,
+  "footer": {
+    "text": "{text}",
+    "icon_url": "{icon_url}"
+  },
 
   "image": null,
 

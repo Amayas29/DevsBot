@@ -16,8 +16,8 @@
   ],
 
   "footer": {
-    "text": null,
-    "icon_url": null
+    "text": "{text}",
+    "icon_url": "{icon_url}"
   },
 
   "image": null,

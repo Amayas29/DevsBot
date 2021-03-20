@@ -1,10 +1,6 @@
 {
-  "author": {
-    "name": null,
-    "url": null,
-    "icon_url": null
-  },
-
+  "author": null,
+  
   "title": "Informations du serveur",
 
   "color": "1d4851",
@@ -40,13 +36,13 @@
   ],
 
   "footer": {
-    "text": null,
-    "icon_url": null
+    "text": "{text}",
+    "icon_url": "{icon_url}"
   },
 
   "image": null,
 
   "thumbnail": {
-    "url": "https://cdn1.iconfinder.com/data/icons/shopping-and-ecommerce-2/64/E-commerce_and_Shopping-81-512.png"
+    "url": "{server_icon}"
   }
 }

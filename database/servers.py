@@ -1,7 +1,7 @@
 import json
 
-TEMPLATE = "server.template.json"
-SERVERS_DATA_BASE = "servers.json"
+TEMPLATE = "database/server.template.json"
+SERVERS_DATA_BASE = "database/servers.json"
 
 
 def create_server():

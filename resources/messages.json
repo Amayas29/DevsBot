@@ -3,5 +3,5 @@
   "warns_message": "**>> {user}** a *{warns}* warns",
   "muted_message": "**>> {user}** a \u00e9t\u00e9 mute",
   "unmuted_message": "**>> {user}** a \u00e9t\u00e9 unmute",
-  "nickname": "**>>** le surnom de **{user}** a été changé"
+  "nickname_message": "**>>** le surnom de **{user}** a été changé"
 }

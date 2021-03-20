@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import json
-from init.settings import Settings
 from datetime import datetime
 from math import floor
 
-setting = Settings()
 all_users = {}
 
 

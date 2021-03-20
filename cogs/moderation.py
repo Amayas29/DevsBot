@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import discord
-import json
 from init.bot import Bot
 from discord.ext import commands
-from init.settings import Settings
-from utils.frontend import get_ban_unban_embed, get_warn_embed, get_kick_embed, get_rules_embed
+from utils.frontend import get_ban_embed, get_unban_embed, get_warn_embed, get_kick_embed, get_warns_message, get_muted_message, get_unmuted_message, get_nickname_message
+from database.users import add_warn
 
 
 class Moderation(commands.Cog):
@@ -17,13 +16,15 @@ class Moderation(commands.Cog):
 
         self.description = "Les commandes de modération, elles fonctionnent si seulement si vous êtes modérateur"
         self.bot = bot
-        self.settings = Settings()
 
     async def cog_check(self, context):
-        for role in context.author.roles:
-            if role.id in self.settings.moderators_roles:
-                return True
-        return False
+        try:
+            for role in context.author.roles:
+                if role.id in self.bot.servers[str(context.guild.id)]["moderators_roles"]:
+                    return True
+            return False
+        except:
+            return False
 
     @commands.command(
         name='kick',
@@ -36,21 +37,23 @@ class Moderation(commands.Cog):
         """
         print("kick ... TODO")
         if reason != None:
-            reason = " ".join(reason)
+            reason = "".join(reason)
 
         await context.guild.kick(member, reason=reason)
 
         try:
-            embed = get_kick_embed(self.settings.embeds["kick"], member,
+            embed = get_kick_embed(member,
                                    context.author, reason,
-                                   self.bot.user.avatar_url)
-        except:
+                                   self.bot.config["footer"], self.bot.config["icon"])
+        except Exception as e:
+            print(e)
             embed = None
 
         if embed != None:
             try:
                 ban_channel = self.bot.get_channel(
-                    self.settings.channels["kick"])
+                    self.bot.servers[str(context.guild.id)]["channels"]["kick"])
+
                 await ban_channel.send(embed=embed)
 
             except:
@@ -66,14 +69,15 @@ class Moderation(commands.Cog):
         Change the nickname of a user on a server.
         """
         print("nick ... TODO")
-        try:
-            name = "".join(name)
-            await member.edit(nick=name)
-            muted_message = self.settings.messages["nickname"]
-            muted_message = muted_message.replace("{user}", member.mention)
-            await context.send(muted_message)
-        except:
-            pass
+        name = "".join(name)
+        await member.edit(nick=name)
+
+        nickname_message = get_nickname_message(member)
+
+        if nickname_message == None:
+            return
+
+        await context.send(nickname_message)
 
     @commands.command(
         name="ban",
@@ -85,21 +89,22 @@ class Moderation(commands.Cog):
         Bans a user from the server.
         """
         if reason != None:
-            reason = " ".join(reason)
+            reason = "".join(reason)
 
         await context.guild.ban(member, reason=reason)
 
         try:
-            embed = get_ban_unban_embed(self.settings.embeds["ban"], member,
-                                        context.author, reason,
-                                        self.bot.user.avatar_url)
+            embed = get_ban_embed(member,
+                                  context.author, reason,
+                                  self.bot.config["footer"], self.bot.config["icon"])
         except:
             embed = None
 
         if embed != None:
             try:
                 ban_channel = self.bot.get_channel(
-                    self.settings.channels["ban_warn"])
+                    self.bot.servers[str(context.guild.id)]["channels"]["ban_warn"])
+
                 await ban_channel.send(embed=embed)
 
             except:
@@ -116,7 +121,7 @@ class Moderation(commands.Cog):
         """
         print("Yes unban ...")
         if reason != None:
-            reason = " ".join(reason)
+            reason = "".join(reason)
 
         banned_users = await context.guild.bans()
         find = False
@@ -130,13 +135,18 @@ class Moderation(commands.Cog):
 
         await context.guild.unban(ban.user, reason=reason)
 
-        embed = get_ban_unban_embed(self.settings.embeds["unban"], ban.user,
+        try:
+            embed = get_unban_embed(ban.user,
                                     context.author, reason,
-                                    self.bot.user.avatar_url)
+                                    self.bot.config["footer"], self.bot.config["icon"])
+        except:
+            embed = None
+
         if embed != None:
             try:
                 ban_channel = self.bot.get_channel(
-                    self.settings.channels["ban_warn"])
+                    self.bot.servers[str(context.guild.id)]["channels"]["ban_warn"])
+
                 await ban_channel.send(embed=embed)
 
             except:
@@ -153,34 +163,26 @@ class Moderation(commands.Cog):
         """
         print("Warn ... TODO")
         if reason != None:
-            reason = " ".join(reason)
+            reason = "".join(reason)
+
+        add_warn(member.id, member.guild.id)
 
         try:
-            with open("resources/users.json") as data:
-                users: dict = json.load(data)
-
-            warn_user = users[str(member.id)]
-            warn_user["warns"] += 1
-
-            with open("resources/users.json", "w") as file:
-                json.dump(users, file, indent=4)
-        except:
-            pass
-
-        try:
-            embed = get_warn_embed(self.settings.embeds["warn"], member,
+            embed = get_warn_embed(member,
                                    context.author, reason,
-                                   self.bot.user.avatar_url)
+                                   self.bot.config["footer"], self.bot.config["icon"])
         except:
             embed = None
 
         if embed != None:
             try:
                 ban_channel = self.bot.get_channel(
-                    self.settings.channels["ban_warn"])
+                    self.bot.servers[str(context.guild.id)]["channels"]["ban_warn"])
+
                 await ban_channel.send(embed=embed)
 
-            except:
+            except Exception as e:
+                print(e)
                 await context.send(embed=embed)
 
     @commands.command(
@@ -192,23 +194,11 @@ class Moderation(commands.Cog):
         """
         Shows the number of warns a user has
         """
-        print("Warns ... TODO")
-        try:
+        warns_message = get_warns_message(member, context.guild.id)
+        if warns_message == None:
+            return
 
-            with open("resources/users.json") as data:
-                users: dict = json.load(data)
-
-            user = users[str(member.id)]
-
-            warns_message = self.settings.messages["warns_message"]
-
-            warns_message = warns_message.replace("{user}", member.name)
-            warns_message = warns_message.replace("{warns}",
-                                                  str(user["warns"]))
-            await context.send(warns_message)
-
-        except:
-            pass
+        await context.send(warns_message)
 
     @commands.command(
         name="clear",
@@ -235,10 +225,15 @@ class Moderation(commands.Cog):
         """
         print("Mute ... TODO")
         try:
-            muted_role = context.guild.get_role(self.settings.muted_role)
+            muted_role = context.guild.get_role(
+                self.bot.servers[str(context.guild.id)]["muted_role"])
+
             await member.add_roles(muted_role)
-            muted_message = self.settings.messages["muted_message"]
-            muted_message = muted_message.replace("{user}", member.mention)
+            muted_message = get_muted_message(member)
+
+            if muted_message == None:
+                return
+
             await context.send(muted_message)
         except:
             pass
@@ -252,41 +247,47 @@ class Moderation(commands.Cog):
         Unmutes a user from the current server
         """
         print("Unmute ... TODO")
+
         try:
-            muted_role = context.guild.get_role(self.settings.muted_role)
+            muted_role = context.guild.get_role(
+                self.bot.servers[str(context.guild.id)]["muted_role"])
+
             await member.remove_roles(muted_role)
-            muted_message = self.settings.messages["unmuted_message"]
-            muted_message = muted_message.replace("{user}", member.mention)
-            await context.send(muted_message)
+            unmuted_message = get_unmuted_message(member)
+
+            if unmuted_message == None:
+                return
+
+            await context.send(unmuted_message)
         except:
             pass
 
-    @commands.command(name="rules",
-                      help="",
-                      description="Affiche dans le salon les régles du serveur"
-                      )
-    @commands.has_permissions(manage_channels=True)
-    async def rules(self, context):
-        """
-        Send the rules
-        """
-        print("Rules ... TODO")
-        try:
-            try:
-                with open("rules.txt") as file:
-                    rules = file.read()
-            except:
-                rules = "NaN"
+    # @commands.command(name="rules",
+    #                   help="",
+    #                   description="Affiche dans le salon les régles du serveur"
+    #                   )
+    # @commands.has_permissions(manage_channels=True)
+    # async def rules(self, context):
+    #     """
+    #     Send the rules
+    #     """
+    #     print("Rules ... TODO")
+    #     try:
+    #         try:
+    #             with open("rules.txt") as file:
+    #                 rules = file.read()
+    #         except:
+    #             rules = "NaN"
 
-            embed = get_rules_embed(self.settings.embeds["rules"], rules,
-                                    context.guild.name, context.guild.icon_url,
-                                    self.bot.user.avatar_url)
-        except Exception as e:
-            print(e)
-            embed = None
+    #         embed = get_rules_embed(self.settings.embeds["rules"], rules,
+    #                                 context.guild.name, context.guild.icon_url,
+    #                                 self.bot.user.avatar_url)
+    #     except Exception as e:
+    #         print(e)
+    #         embed = None
 
-        if embed != None:
-            await context.send(embed=embed)
+    #     if embed != None:
+    #         await context.send(embed=embed)
 
 
 def setup(bot):

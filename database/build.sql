@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Rank (
+CREATE TABLE IF NOT EXISTS Users (
     UserID integer NOT NULL,
     ServerID integer NOT NULL,
     UserXP integer DEFAULT 0,

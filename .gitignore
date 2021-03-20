@@ -8,5 +8,5 @@ __pycache__/
 *.db
 .vscode/
 servers.json
-config.json
 server.template.json
+config.json

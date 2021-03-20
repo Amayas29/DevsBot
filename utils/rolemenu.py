@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from init.settings import Settings
-
-settings = Settings()
-
-
 async def add_reaction_verification(bot, payload):
 
     guild = bot.get_guild(payload.guild_id)

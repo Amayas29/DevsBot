@@ -167,12 +167,12 @@ class Moderation(commands.Cog):
 
         add_warn(member.id, member.guild.id)
 
-        try:
-            embed = get_warn_embed(member,
-                                   context.author, reason,
-                                   self.bot.config["footer"], self.bot.config["icon"])
-        except:
-            embed = None
+        # try:
+        embed = get_warn_embed(member,
+                               context.author, reason,
+                               self.bot.config["footer"], self.bot.config["icon"])
+        # except:
+        #     embed = None
 
         if embed != None:
             try:

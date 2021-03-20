@@ -12,7 +12,7 @@ class Help(commands.Cog):
 
         self.description = "Les commandes d'aides"
         self.bot = bot
-        self.bot.remove_command("help")
+        # self.bot.remove_command("help")
 
     # @commands.command(
     #     name="help",

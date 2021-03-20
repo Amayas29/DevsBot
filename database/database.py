@@ -22,6 +22,7 @@ def build():
         return scriptexec(BUILD_PATH)
     return False
 
+
 def commit():
     cnx.commit()
 

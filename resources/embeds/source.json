@@ -1,0 +1,34 @@
+{
+    "author": null,
+  
+    "title": "Code source du bot {bot_name}",
+  
+    "color": "56da59",
+  
+    "description": null,
+  
+    "fields": [
+      {
+        "name": "Lien",
+        "value": "{source_link}",
+        "inline": true
+      },
+      {
+        "name": "Développer {author_name}",
+        "value": "{author_link}",
+        "inline": true
+      }
+    ],
+  
+    "footer": {
+      "text": "{text}",
+      "icon_url": "{icon_url}"
+    },
+  
+    "image": null,
+  
+    "thumbnail": {
+      "url": "{icon_url}"
+    }
+  }
+  

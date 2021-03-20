@@ -185,6 +185,16 @@ def get_user_info_embed(user, ignored_roles_display, ignored_roles_levels, text,
                      warns=str(warns), level=str(level), exp=str(exp), birth_date=birth_date,
                      text=text, icon_url=icon_url)
 
+
+def get_invite_embed(server, invite_link, text, icon_url):
+    return get_embed("invite", server=server.name, invite_link=invite_link,
+                     server_icon=str(server.icon_url), text=text, icon_url=icon_url)
+
+
+def get_source_embed(bot_name, source_link, author_name, author_link, text, icon_url):
+    return get_embed("source", bot_name=bot_name, source_link=source_link, author_name=author_name,
+                     author_link=author_link, text=text, icon_url=icon_url)
+
 # def get_rules_embed(dict, rules, server, server_icon, bot_icon):
     #     try:
     #         dict = dp(dict)

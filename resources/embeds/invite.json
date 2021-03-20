@@ -1,9 +1,5 @@
 {
-  "author": {
-    "name": null,
-    "url": null,
-    "icon_url": null
-  },
+  "author": null,
 
   "title": "Invitation au serveur",
 
@@ -14,7 +10,7 @@
   "fields": [
     {
       "name": "Lien",
-      "value": "{link_server}",
+      "value": "{invite_link}",
       "inline": true
     }
   ],
@@ -27,6 +23,6 @@
   "image": null,
 
   "thumbnail": {
-    "url": "https://cdn2.iconfinder.com/data/icons/scenarium-vol-2-1/128/043_add_new_plus_create-512.png"
+    "url": "{server_icon}"
   }
 }

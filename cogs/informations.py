@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import discord
-import json
 from init.bot import Bot
 from discord.ext import commands
-from utils.frontend import get_bot_info_embed, get_server_info_embed, get_user_info_embed
+from utils.frontend import get_bot_info_embed, get_server_info_embed, get_user_info_embed, get_invite_embed, get_source_embed
+from database.servers import refresh_data
 
 
 class Informations(commands.Cog):
@@ -75,38 +75,55 @@ class Informations(commands.Cog):
         if embed != None:
             await context.send(embed=embed)
 
-    # @commands.command(
-    #     name="invite",
-    #     help="",
-    #     description="Donne le lien d'invitation pour rejoindre le serveur")
-    # async def invite(self, context):
-    #     """
-    #     Get the invite link of the discord server
-    #     """
-    #     print("Invite ... TODO")
-    #     try:
-    #         embed = get_invite_embed(self.settings.embeds["invite"],
-    #                                  context.guild.name,
-    #                                  context.guild.icon_url,
-    #                                  self.settings.invite_link,
-    #                                  self.bot.user.avatar_url)
-    #     except Exception as e:
-    #         print(e)
-    #         embed = None
+    @commands.command(
+        name="invite",
+        help="",
+        description="Donne le lien d'invitation pour rejoindre le serveur")
+    async def invite(self, context):
+        """
+        Get the invite link of the discord server
+        """
+        print("Invite ... TODO")
+        try:
+            invite_link = self.bot.servers[str(
+                context.guild.id)]["invite_link"]
 
-    #     if embed != None:
-    #         await context.send(embed=embed)
+            if invite_link is None:
+                invite_link = await context.channel.create_invite()
+                self.bot.servers[str(context.guild.id)
+                                 ]["invite_link"] = str(invite_link)
+                refresh_data(self.bot.servers)
 
-    # @commands.command(
-    #     name="source",
-    #     help="",
-    #     description="Donne le lien pour accéder au code source du bot"
-    # )
-    # async def source(self, context):
-    #     """
-    #     Get the link to source code of the bot
-    #     """
-    #     print("Source ... TODO")
+            embed = get_invite_embed(
+                context.guild, str(invite_link), self.bot.config["footer"], self.bot.config["icon"])
+
+        except Exception as e:
+            print(e)
+            embed = None
+
+        if embed != None:
+            await context.send(embed=embed)
+
+    @commands.command(
+        name="source",
+        help="",
+        description="Donne le lien pour accéder au code source du bot"
+    )
+    async def source(self, context):
+        """
+        Get the link to source code of the bot
+        """
+        print("Source ... TODO")
+        try:
+            embed = get_source_embed(
+                self.bot.config["name"], self.bot.config["source"], self.bot.config["author"]["name"],
+                self.bot.config["author"]["github"], self.bot.config["footer"], self.bot.config["icon"])
+
+        except:
+            embed = None
+
+        if embed != None:
+            await context.send(embed=embed)
 
 
 def setup(bot):

@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import traceback
+
+
 async def add_reaction_verification(bot, payload):
 
+    # todo :
+    settings = None
     guild = bot.get_guild(payload.guild_id)
     try:
         if payload.message_id == settings.verification_message and payload.emoji.name == settings.verification_emoji:
@@ -18,12 +23,14 @@ async def add_reaction_verification(bot, payload):
             await payload.member.add_roles(role_discord)
 
     except:
-        pass
+        traceback.print_exc()
 
 
 async def delete_reactions(member):
 
     try:
+        # todo :
+        settings = None
         server = member.guild
         verification = settings.channels["verification"]
         verification = server.get_channel(verification)
@@ -31,5 +38,5 @@ async def delete_reactions(member):
             settings.verification_message)
         await verification_message.remove_reaction(settings.verification_emoji,
                                                    member)
-    except Exception as e:
-        print(e)
+    except:
+        traceback.print_exc()

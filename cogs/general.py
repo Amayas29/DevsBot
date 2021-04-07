@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import traceback
 from init.bot import Bot
 from discord.ext import commands
 from utils.frontend import get_poll_embed
@@ -42,7 +43,7 @@ class General(commands.Cog):
 
             try:
                 embed = get_poll_embed(context.author, question, liste,
-                                   self.bot.config["footer"], self.bot.config["icon"])
+                                       self.bot.config["footer"], self.bot.config["icon"])
             except:
                 embed = None
 
@@ -56,8 +57,8 @@ class General(commands.Cog):
 
             await message_poll.add_reaction("🤷")
 
-        except Exception as e:
-            print(e)
+        except:
+            traceback.print_exc()
 
 
 def setup(bot):

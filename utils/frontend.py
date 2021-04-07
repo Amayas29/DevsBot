@@ -4,6 +4,7 @@ import json
 import discord
 from copy import deepcopy as dp
 from database.users import get_warns, get_level_exp, get_birth_date
+import traceback
 
 cache = {}
 footer = {}
@@ -55,6 +56,7 @@ def get_embed(embed_name, **kwargs):
 
         return discord.Embed.from_dict(dict_embed)
     except:
+        traceback.print_exc()
         return None
 
 
@@ -81,6 +83,7 @@ def get_message(message, user, level=None, guild_id=None):
 
         return msg
     except:
+        traceback.print_exc()
         return None
 
 

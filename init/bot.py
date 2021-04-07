@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from operator import imod
 import random
 import discord
 from discord.ext import commands, tasks
@@ -8,6 +9,9 @@ from database.users import insert_unique
 import json
 from utils.games import load_games, dump_games
 from copy import deepcopy as dp
+import traceback
+
+
 class Bot(commands.Bot):
 
     def __init__(self, *args, prefix=None, **kwargs):
@@ -34,7 +38,7 @@ class Bot(commands.Bot):
             with open("config.json", "w") as f:
                 json.dump(self.config, f)
         except:
-            pass
+            traceback.print_exc()
 
     async def on_message(self, message: discord.Message):
 
@@ -42,7 +46,7 @@ class Bot(commands.Bot):
             self.prefix = self.servers[str(message.guild.id)]["prefix"]
             self.command_prefix = self.prefix
         except:
-            pass
+            traceback.print_exc()
 
         if message.author != self.user and isinstance(message.channel,
                                                       discord.DMChannel):
@@ -58,7 +62,7 @@ class Bot(commands.Bot):
                     await message.delete()
                     return
         except:
-            pass
+            traceback.print_exc()
 
         # try:
         #     set_exp(message.author, 5)
@@ -122,7 +126,8 @@ class Bot(commands.Bot):
 
         for guild in self.guilds:
             for member in guild.members:
-                bot = list(filter(lambda role: role.is_integration() or role.is_bot_managed(), member.roles))
+                bot = list(filter(lambda role: role.is_integration()
+                           or role.is_bot_managed(), member.roles))
                 if bot != []:
                     continue
                 insert_unique(member.id, guild.id)

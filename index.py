@@ -2,6 +2,7 @@ import os
 import dotenv
 from init.bot import Bot
 from database.database import build, close
+import traceback
 
 dotenv.load_dotenv()
 TOKEN = os.getenv("TOKEN")
@@ -18,7 +19,8 @@ if build() == False:
 
 try:
     bot.run(TOKEN)
-except Exception as e:
-    print(f'Error when logging in: {e}')
+except:
+    traceback.print_exc()
+
 
 close()

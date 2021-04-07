@@ -5,6 +5,7 @@ from init.bot import Bot
 from discord.ext import commands
 from utils.frontend import get_ban_embed, get_unban_embed, get_warn_embed, get_kick_embed, get_warns_message, get_muted_message, get_unmuted_message, get_nickname_message, get_rules_embed
 from database.users import add_warn
+import traceback
 
 
 class Moderation(commands.Cog):
@@ -45,8 +46,8 @@ class Moderation(commands.Cog):
             embed = get_kick_embed(member,
                                    context.author, reason,
                                    self.bot.config["footer"], self.bot.config["icon"])
-        except Exception as e:
-            print(e)
+        except:
+            traceback.print_exc()
             embed = None
 
         if embed != None:
@@ -169,8 +170,8 @@ class Moderation(commands.Cog):
 
         try:
             embed = get_warn_embed(member,
-                               context.author, reason,
-                               self.bot.config["footer"], self.bot.config["icon"])
+                                   context.author, reason,
+                                   self.bot.config["footer"], self.bot.config["icon"])
         except:
             embed = None
 
@@ -181,8 +182,8 @@ class Moderation(commands.Cog):
 
                 await ban_channel.send(embed=embed)
 
-            except Exception as e:
-                print(e)
+            except:
+                traceback.print_exc()
                 await context.send(embed=embed)
 
     @commands.command(
@@ -236,7 +237,7 @@ class Moderation(commands.Cog):
 
             await context.send(muted_message)
         except:
-            pass
+            traceback.print_exc()
 
     @commands.command(name="unmute",
                       help="<member> : Le membre cible",
@@ -260,7 +261,7 @@ class Moderation(commands.Cog):
 
             await context.send(unmuted_message)
         except:
-            pass
+            traceback.print_exc()
 
     @commands.command(name="rules",
                       help="",
@@ -281,6 +282,7 @@ class Moderation(commands.Cog):
                 context.guild.id)]["rules"], self.bot.config["footer"], self.bot.config["icon"])
 
         except:
+            traceback.print_exc()
             embed = None
 
         if embed != None:

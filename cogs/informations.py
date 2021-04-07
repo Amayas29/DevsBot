@@ -5,6 +5,7 @@ from init.bot import Bot
 from discord.ext import commands
 from utils.frontend import get_bot_info_embed, get_server_info_embed, get_user_info_embed, get_invite_embed, get_source_embed
 from database.servers import refresh_data
+import traceback
 
 
 class Informations(commands.Cog):
@@ -97,8 +98,9 @@ class Informations(commands.Cog):
             embed = get_invite_embed(
                 context.guild, str(invite_link), self.bot.config["footer"], self.bot.config["icon"])
 
-        except Exception as e:
-            print(e)
+        except:
+            traceback.print_exc()
+
             embed = None
 
         if embed != None:

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import discord
+import traceback
 from init.bot import Bot
 from discord.ext import commands
 from database.servers import create_server, refresh_data
@@ -38,7 +38,7 @@ class Events(commands.Cog):
         """
         When the bot join a guild
         """
-        print("GUild Join ... TODO")
+        print("Guild Join ... TODO")
         server = create_server()
 
         if server is None:
@@ -48,7 +48,7 @@ class Events(commands.Cog):
             self.bot.servers[str(guild.id)] = server
             refresh_data(self.bot.servers)
         except:
-            pass
+            traceback.print_exc()
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
@@ -60,7 +60,7 @@ class Events(commands.Cog):
             self.bot.servers.pop(str(guild.id))
             refresh_data(self.bot.servers)
         except:
-            pass
+            traceback.print_exc()
 
     @commands.Cog.listener()
     async def on_member_join(self, member):

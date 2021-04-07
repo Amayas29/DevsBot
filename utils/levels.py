@@ -3,6 +3,7 @@
 import json
 from datetime import datetime
 from math import floor
+import traceback
 
 all_users = {}
 
@@ -35,13 +36,15 @@ def update_users(remove, *users):
             json.dump(users_dict, file, indent=4)
 
     except:
-        pass
+        traceback.print_exc()
 
 
 def set_exp(user, exp):
 
+    # todo :
+    settings = None
     for role in user.roles:
-        if role.id in setting.ignored_roles_levels or role.is_integration(
+        if role.id in settings.ignored_roles_levels or role.is_integration(
         ) or role.is_bot_managed():
             return
 
@@ -74,7 +77,7 @@ def set_exp(user, exp):
 
             diff = floor(((now - old_message).total_seconds() / 60))
 
-            if diff >= setting.min_time:
+            if diff >= settings.min_time:
                 all_users[str(user.id)]["exp"] += exp
 
             all_users[str(
@@ -83,14 +86,16 @@ def set_exp(user, exp):
         with open("resources/users.json", "w") as file:
             json.dump(all_users, file, indent=4)
 
-    except Exception as e:
-        pass
+    except:
+        traceback.print_exc()
 
 
 def level_up(user):
 
+    # todo :
+    settings = None
     for role in user.roles:
-        if role.id in setting.ignored_roles_levels or role.is_integration(
+        if role.id in settings.ignored_roles_levels or role.is_integration(
         ) or role.is_bot_managed():
             return False, -1
 
@@ -126,6 +131,7 @@ def level_up(user):
         return False, user["level"]
 
     except:
+        traceback.print_exc()
         return False, -1
 
 
@@ -150,8 +156,8 @@ def get_top_users():
             sorted(tops.items(), key=lambda item: item[1], reverse=True))
         return tops
 
-    except Exception as e:
-        print(e)
+    except:
+        traceback.print_exc()
         return []
 
 
@@ -174,7 +180,8 @@ def get_price(user):
 
         return 50000 * level
     except:
-        pass
+        traceback.print_exc()
+        return 0
 
 
 def get_users_birthday():
@@ -200,4 +207,5 @@ def get_users_birthday():
 
         return liste
     except:
+        traceback.print_exc()
         return []

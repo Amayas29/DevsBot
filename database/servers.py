@@ -1,4 +1,5 @@
 import json
+import traceback
 
 TEMPLATE = "database/server.template.json"
 SERVERS_DATA_BASE = "database/servers.json"
@@ -10,6 +11,7 @@ def create_server():
             server = json.load(f)
         return server
     except:
+        traceback.print_exc()
         return None
 
 
@@ -19,6 +21,7 @@ def get_servers():
             servers = json.load(f)
         return servers
     except:
+        traceback.print_exc()
         return {}
 
 
@@ -27,4 +30,4 @@ def refresh_data(data):
         with open(SERVERS_DATA_BASE, "w") as f:
             json.dump(data, f)
     except:
-        pass
+        traceback.print_exc()

@@ -29,17 +29,6 @@ class Bot(commands.Bot):
         self.servers = get_servers()
         self.games = load_games()
 
-        try:
-            with open("config.json", "r") as f:
-                self.config = json.load(f)
-
-            self.config["icon"] = str(self.user.avatar_url)
-
-            with open("config.json", "w") as f:
-                json.dump(self.config, f)
-        except:
-            traceback.print_exc()
-
     async def on_message(self, message: discord.Message):
 
         try:
@@ -121,6 +110,18 @@ class Bot(commands.Bot):
         When the bot is activated
         """
         print("Ready ... TODO")
+
+        try:
+            with open("config.json", "r") as f:
+                self.config = json.load(f)
+
+            self.config["icon"] = str(self.user.avatar_url)
+
+            with open("config.json", "w") as f:
+                json.dump(self.config, f)
+        except:
+            traceback.print_exc()
+
         self.status.start()
         # self.birthdays.start()
 

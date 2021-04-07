@@ -5,12 +5,16 @@ import discord
 from copy import deepcopy as dp
 from database.users import get_warns, get_level_exp, get_birth_date
 import traceback
+from pathlib import Path
 
 cache = {}
 footer = {}
 messages = {}
-PATH = "resources/embeds/"
-MESSAGES = "resources/messages.json"
+
+root_dir = str(Path(__file__).parent.parent)
+
+EMBEDS_PATH = f"{root_dir}/resources/embeds/"
+MESSAGES_PATH = f"{root_dir}/resources/messages.json"
 
 
 def get_embed(embed_name, **kwargs):
@@ -20,7 +24,7 @@ def get_embed(embed_name, **kwargs):
     try:
 
         if embed_name not in cache:
-            with open(f"{PATH}{embed_name}.json", "r") as f:
+            with open(f"{EMBEDS_PATH}{embed_name}.json", "r") as f:
                 dict_embed = json.load(f)
 
             cache[embed_name] = dict_embed
@@ -66,7 +70,7 @@ def get_message(message, user, level=None, guild_id=None):
 
     try:
         if messages == {}:
-            with open(MESSAGES, "r") as f:
+            with open(MESSAGES_PATH, "r") as f:
                 messages = json.load(f)
 
         msg = dp(messages[message])

@@ -10,6 +10,10 @@ import json
 from utils.games import load_games, dump_games
 from copy import deepcopy as dp
 import traceback
+from pathlib import Path
+
+
+CONFIG_PATH = f"{str(Path(__file__).parent.parent)}/config.json"
 
 
 class Bot(commands.Bot):
@@ -112,12 +116,12 @@ class Bot(commands.Bot):
         print("Ready ... TODO")
 
         try:
-            with open("config.json", "r") as f:
+            with open(CONFIG_PATH, "r") as f:
                 self.config = json.load(f)
 
             self.config["icon"] = str(self.user.avatar_url)
 
-            with open("config.json", "w") as f:
+            with open(CONFIG_PATH, "w") as f:
                 json.dump(self.config, f)
         except:
             traceback.print_exc()

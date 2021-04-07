@@ -4,8 +4,13 @@ import json
 from datetime import datetime
 from math import floor
 import traceback
+from pathlib import Path
 
 all_users = {}
+
+root_dir = str(Path(__file__).parent.parent)
+
+USERS_PATH = f"{root_dir}/resources/users.json"
 
 
 def update_users(remove, *users):
@@ -13,7 +18,7 @@ def update_users(remove, *users):
 
         global all_users
 
-        with open("resources/users.json") as data:
+        with open(USERS_PATH) as data:
             users_dict = json.load(data)
 
         for user in users:
@@ -32,7 +37,7 @@ def update_users(remove, *users):
 
         all_users = users_dict
 
-        with open("resources/users.json", "w") as file:
+        with open(USERS_PATH, "w") as file:
             json.dump(users_dict, file, indent=4)
 
     except:
@@ -52,7 +57,7 @@ def set_exp(user, exp):
 
     try:
         if all_users == {} or str(user.id) not in all_users:
-            with open("resources/users.json") as data:
+            with open(USERS_PATH) as data:
                 all_users = json.load(data)
 
         if str(user.id) not in all_users:
@@ -83,7 +88,7 @@ def set_exp(user, exp):
             all_users[str(
                 user.id)]["old_message"] = now.strftime("%d-%m-%Y %H:%M:%S")
 
-        with open("resources/users.json", "w") as file:
+        with open(USERS_PATH, "w") as file:
             json.dump(all_users, file, indent=4)
 
     except:
@@ -103,7 +108,7 @@ def level_up(user):
 
     try:
         if all_users == {} or str(user.id) not in all_users:
-            with open("resources/users.json") as data:
+            with open(USERS_PATH) as data:
                 all_users = json.load(data)
 
         if str(user.id) not in all_users:
@@ -123,7 +128,7 @@ def level_up(user):
             all_users[id] = user
 
             # TODO set level role ...
-            with open("resources/users.json", "w") as file:
+            with open(USERS_PATH, "w") as file:
                 json.dump(all_users, file, indent=4)
 
             return True, user["level"]
@@ -141,7 +146,7 @@ def get_top_users():
 
     try:
 
-        with open("resources/users.json") as data:
+        with open(USERS_PATH) as data:
             all_users = json.load(data)
 
         tops = {}
@@ -167,7 +172,7 @@ def get_price(user):
 
     try:
         if all_users == {} or str(user.id) not in all_users:
-            with open("resources/users.json") as data:
+            with open(USERS_PATH) as data:
                 all_users = json.load(data)
 
         if str(user.id) not in all_users:
@@ -190,7 +195,7 @@ def get_users_birthday():
 
     liste = []
     try:
-        with open("resources/users.json") as data:
+        with open(USERS_PATH) as data:
             all_users = json.load(data)
 
         now = datetime.strftime(datetime.now(), "%d-%m-%Y")

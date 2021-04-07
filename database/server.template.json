@@ -1,0 +1,25 @@
+{
+  "description": null,
+  "rules": null,
+  "prefix": "!",
+  "moderators_roles": null,
+  "muted_role": null,
+  "verified_role": null,
+  "ignored_roles_levels": null,
+  "ignored_roles_display": null,
+  "forbidden_words": null,
+  "invite_link": null,
+  "verification_message": null,
+  "verification_emoji": null,
+  "channels": {
+    "welcome": null,
+    "good_bye": null,
+    "logs": null,
+    "levels": null,
+    "birthdays": null,
+    "ban_warn": null,
+    "kick": null
+  },
+  "initial_roles": null,
+  "ranks": null
+}

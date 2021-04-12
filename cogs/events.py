@@ -70,11 +70,14 @@ class Events(commands.Cog):
             if role.is_integration() or role.is_bot_managed():
                 return
 
-        file = await generate_file_welcome(member)
         server = self.bot.servers[str(member.guild.id)]
-        welcome_chan = self.bot.get_channel(server["channels"]["welcome"])
-        if welcome_chan is not None:
+
+        try:
+            file = await generate_file_welcome(member)
+            welcome_chan = self.bot.get_channel(server["channels"]["welcome"])
             await welcome_chan.send(embed=get_welcome_embed(member, member.guild, self.bot.config["footer"], self.bot.config["icon"]), file=file)
+        except:
+            pass
 
         add_user(member.id, member.guild.id)
         print("Member Join ... TODO")
@@ -89,10 +92,13 @@ class Events(commands.Cog):
         remove_user(member.id, member.guild.id)
 
         server = self.bot.servers[str(member.guild.id)]
-        goodbye_chan = self.bot.get_channel(server["channels"]["good_bye"])
-        if goodbye_chan is not None:
+
+        try:
+            goodbye_chan = self.bot.get_channel(server["channels"]["good_bye"])
             await goodbye_chan.send(embed=get_goodbye_embed(member, member.guild,
                                                             self.bot.config["footer"], self.bot.config["icon"]))
+        except:
+            pass
 
         print("Removing Member ... TODO")
 

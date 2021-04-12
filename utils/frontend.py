@@ -10,10 +10,9 @@ import traceback
 from pathlib import Path
 from PIL import Image, ImageDraw
 
-cache = {}
-footer = {}
-messages = {}
-images = {}
+embeds_cache = {}
+messages_cache = {}
+images_cache = {}
 
 root_dir = str(Path(__file__).parent.parent)
 
@@ -23,18 +22,17 @@ IMAGES_PATH = f"{root_dir}/resources/images"
 
 
 def get_embed(embed_name, **kwargs):
-    global cache
-    global footer
+    global embeds_cache
 
     try:
 
-        if embed_name not in cache:
+        if embed_name not in embeds_cache:
             with open(f"{EMBEDS_PATH}{embed_name}.json", "r") as f:
                 dict_embed = json.load(f)
 
-            cache[embed_name] = dict_embed
+            embeds_cache[embed_name] = dict_embed
 
-        dict_embed = dp(cache[embed_name])
+        dict_embed = dp(embeds_cache[embed_name])
 
         if dict_embed["color"] is not None and type(dict_embed["color"]) != int:
             dict_embed["color"] = int(dict_embed["color"], 16)
@@ -71,14 +69,14 @@ def get_embed(embed_name, **kwargs):
 
 def get_message(message, user, level=None, guild_id=None):
 
-    global messages
+    global messages_cache
 
     try:
-        if messages == {}:
+        if messages_cache == {}:
             with open(MESSAGES_PATH, "r") as f:
-                messages = json.load(f)
+                messages_cache = json.load(f)
 
-        msg = dp(messages[message])
+        msg = dp(messages_cache[message])
         msg = msg.replace("{user}", user.mention)
 
         if level is not None:
@@ -98,19 +96,17 @@ def get_message(message, user, level=None, guild_id=None):
 
 def get_images_settings(name):
 
-    if images == {} or name not in images:
+    if images_cache == {} or name not in images_cache:
 
         with open(f"{IMAGES_PATH}/{name}.yaml", "r") as f:
             welcome_settings = yaml.load(f, Loader=yaml.FullLoader)
 
-        images[name] = welcome_settings
+        images_cache[name] = welcome_settings
 
-    return images[name]
+    return images_cache[name]
 
 
 async def generate_file_welcome(user: discord.User):
-
-    global images
 
     try:
 
@@ -279,166 +275,3 @@ def get_unmuted_message(user):
 
 def get_nickname_message(user):
     return get_message("nickname_message", user)
-
-
-# def get_level_embed(dict, user, bot_icon):
-    #     try:
-    #         dict = dp(dict)
-
-    #         with open("resources/users.json") as data:
-    #             users = json.load(data)
-
-    #         user_dict = users[str(user.id)]
-
-    #         if type(dict["color"]) != int:
-    #             dict["color"] = int(dict["color"], 16)
-
-    #         dict["description"] = dict["description"].replace(
-    #             "{user}", user.mention)
-
-    #         icon_url = user.avatar_url
-    #         author = dict["author"]
-    #         author["name"] = author["name"].replace("{name}", user.name)
-    #         author["icon_url"] = author["icon_url"].replace(
-    #             "{icon_url}", str(icon_url))
-    #         dict["author"] = author
-
-    #         level = user_dict["level"]
-    #         exp = user_dict["exp"]
-
-    #         if level == None or exp == None:
-    #             level = "Max"
-    #             exp = "Max"
-    #             max_exp = ""
-
-    #         else:
-    #             max_exp = 50 * level**2 - 50 * level + 200
-    #             max_exp = " / " + str(max_exp)
-
-    #         fields = dict["fields"]
-    #         for field in fields:
-    #             field["value"] = field["value"].replace("{level}", str(level))
-    #             field["value"] = field["value"].replace("{exp}",
-    #                                                     str(exp) + str(max_exp))
-
-    #         dict["fields"] = fields
-    #         dict["footer"]["text"] = settings.config["footer"]
-    #         dict["footer"]["icon_url"] = str(bot_icon)
-
-    #         return discord.Embed.from_dict(dict)
-
-    #     except:
-    #         return None
-
-# def get_file_rank(user):
-
-    #     try:
-
-    #         with open("resources/users.json") as data:
-    #             users = json.load(data)
-
-    #         user_info = users[str(user.id)]
-
-    #         level = user_info["level"]
-    #         exp = user_info["exp"]
-
-    #         rank = settings.images_generator["rank"]
-
-    #         background = Image.open(rank["path"])
-
-    #         draw = ImageDraw.Draw(background)
-
-    #         max = background.size[0]
-
-    #         if exp == None:
-    #             exp = background.size[0]
-
-    #         else:
-    #             max_exp = 50 * level**2 - 50 * level + 200
-    #             exp = 100 * (exp / max_exp)
-
-    #         exp = max * exp / 100
-
-    #         if rank["color"] == []:
-    #             rank["color"] = ["28, 149, 228"]
-
-    #         color = random.choice(rank["color"])
-    #         color = tuple(map(int, color.split(",")))
-    #         draw.rectangle(((0, 0), (exp, background.size[1])),
-    #                        fill=color,
-    #                        width=background.size[1])
-
-    #         background.save("__rank__.png")
-
-    #         return discord.File("__rank__.png")
-
-    #     except Exception as e:
-    #         return None
-
-# async def get_top_embed(dict, bot: commands.Bot):
-    #     try:
-    #         tops = get_top_users()
-    #         dict = dp(dict)
-
-    #         if type(dict["color"]) != int:
-    #             dict["color"] = int(dict["color"], 16)
-
-    #         field = dict["fields"][0]
-
-    #         dict["fields"] = []
-
-    #         nb = 0
-    #         for elem in tops:
-    #             nb += 1
-
-    #             if nb > 10:
-    #                 break
-
-    #             user = await bot.fetch_user(elem[0])
-    #             new = dp(field)
-    #             new["name"] = new["name"].replace("{rank}", str(nb))
-    #             new["name"] = new["name"].replace("{user}", user.name)
-
-    #             level = elem[1][0]
-    #             exp = elem[1][1]
-
-    #             max_exp = 50 * level**2 - 50 * level + 200
-
-    #             new["value"] = new["value"].replace("{level}", str(level))
-    #             new["value"] = new["value"].replace(
-    #                 "{exp}",
-    #                 str(exp) + " / " + str(max_exp))
-
-    #             dict["fields"].append(new)
-
-    #         dict["footer"]["text"] = settings.config["footer"]
-    #         dict["footer"]["icon_url"] = str(bot.user.avatar_url)
-
-    #         return discord.Embed.from_dict(dict)
-    #     except Exception as e:
-    #         print(e)
-    #         return None
-
-# def get_birthday_embed(dict, user, age, bot_icon):
-    #     try:
-    #         dict = dp(dict)
-
-    #         dict["author"]["name"] = user.name
-    #         dict["author"]["icon_url"] = str(user.avatar_url)
-
-    #         if type(dict["color"]) != int:
-    #             dict["color"] = int(dict["color"], 16)
-
-    #         dict["description"] = dict["description"].replace(
-    #             "{user}", user.mention)
-
-    #         for field in dict["fields"]:
-    #             field["value"] = field["value"].replace("{age}", str(age))
-
-    #         dict["footer"]["text"] = settings.config["footer"]
-    #         dict["footer"]["icon_url"] = str(bot_icon)
-
-    #         return discord.Embed.from_dict(dict)
-
-    #     except:
-    #         return None

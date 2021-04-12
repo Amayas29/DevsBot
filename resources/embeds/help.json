@@ -7,13 +7,7 @@
 
   "description": "Bienvenue dans la page d'aide de {bot_name}\n\n *Pour avoir plus de d\u00e9tails sur une commande, utilisez help <cmd>, o\u00f9 <cmd> est la commande en question* \n",
 
-  "fields": [
-    {
-      "name": "**{cog}**",
-      "value": "{list_commands}",
-      "inline": false
-    }
-  ],
+  "fields": [],
 
   "footer": {
     "text": "{text}",

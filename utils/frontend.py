@@ -252,6 +252,19 @@ def get_rules_embed(rules, text, icon_url):
     return get_embed("rules", rules=rules, text=text, icon_url=icon_url)
 
 
+def get_help_cmd_embed(cmd, bot_name, name_aliases, syntaxe, help, text, icon_url):
+    return get_embed("helpcmd", cmd=cmd, bot_name=bot_name, name_aliases=name_aliases, syntaxe=syntaxe, help=help, text=text, icon_url=icon_url)
+
+
+def get_help_all_embed(bot_name, cogs_dict, text, icon_url):
+    embed = get_embed("help", bot_name=bot_name, text=text, icon_url=icon_url)
+
+    for name, value in cogs_dict.items():
+        embed.add_field(name=f"**{name}**", value=value, inline=False)
+
+    return embed
+
+
 def get_warns_message(user, guild_id):
     return get_message("warns_message", user, guild_id=guild_id)
 
@@ -267,33 +280,8 @@ def get_unmuted_message(user):
 def get_nickname_message(user):
     return get_message("nickname_message", user)
 
-    # def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str,
-    #                               member_count: int, bot_icon):
 
-    #     try:
-    #         dict = dp(dict)
-
-    #         if type(dict["color"]) != int:
-    #             dict["color"] = int(dict["color"], 16)
-
-    #         dict["description"] = dict["description"].replace(
-    #             "{user}", user.mention)
-    #         dict["description"] = dict["description"].replace("{server}", server)
-
-    #         fields = dict["fields"]
-    #         for field in fields:
-    #             field["value"] = field["value"].replace("{member_count}",
-    #                                                     str(member_count))
-
-    #         dict["footer"]["text"] = settings.config["footer"]
-    #         dict["footer"]["icon_url"] = str(bot_icon)
-
-    #         return discord.Embed.from_dict(dict)
-
-    #     except:
-    #         return None
-
-    # def get_level_embed(dict, user, bot_icon):
+# def get_level_embed(dict, user, bot_icon):
     #     try:
     #         dict = dp(dict)
 
@@ -342,7 +330,7 @@ def get_nickname_message(user):
     #     except:
     #         return None
 
-    # def get_file_rank(user):
+# def get_file_rank(user):
 
     #     try:
 
@@ -387,7 +375,7 @@ def get_nickname_message(user):
     #     except Exception as e:
     #         return None
 
-    # async def get_top_embed(dict, bot: commands.Bot):
+# async def get_top_embed(dict, bot: commands.Bot):
     #     try:
     #         tops = get_top_users()
     #         dict = dp(dict)
@@ -431,107 +419,7 @@ def get_nickname_message(user):
     #         print(e)
     #         return None
 
-    # def get_help_all_embed(dict, bot):
-
-    #     try:
-
-    #         dict = dp(dict)
-
-    #         dict["description"] = dict["description"].replace(
-    #             "{bot_name}", settings.config["name"])
-
-    #         if type(dict["color"]) != int:
-    #             dict["color"] = int(dict["color"], 16)
-
-    #         field = dict["fields"][0]
-
-    #         dict["fields"] = []
-
-    #         cogs = [c for c in bot.cogs.keys()]
-    #         cogs.remove("Events")
-
-    #         for cog in cogs:
-
-    #             cogbot = bot.get_cog(cog)
-    #             list_commands = f"\n*Description générale : {cogbot.description}*\n\n"
-
-    #             for cmd in cogbot.walk_commands():
-
-    #                 if cmd.hidden or cmd.parent != None:
-    #                     continue
-
-    #                 list_commands += f"**{cmd.name}** - *{cmd.description}* \n"
-
-    #             if cog != cogs[-1]:
-    #                 list_commands += "\n  \n**   **\n"
-
-    #             cog_name = cog
-    #             new = dp(field)
-    #             new["name"] = new["name"].replace("{cog}", cog_name)
-    #             new["value"] = new["value"].replace("{list_commands}",
-    #                                                 list_commands)
-
-    #             dict["fields"].append(new)
-
-    #         dict["thumbnail"]["url"] = str(bot.user.avatar_url)
-
-    #         dict["footer"]["text"] = settings.config["footer"]
-    #         dict["footer"]["icon_url"] = str(bot.user.avatar_url)
-
-    #         return discord.Embed.from_dict(dict)
-
-    #     except Exception as e:
-    #         print(e)
-    #         return None
-
-    # def get_help_cmd_embed(dict, cmd, bot_icon):
-    #     try:
-    #         dict = dp(dict)
-
-    #         name_aliases = "|".join([str(cmd), *cmd.aliases])
-
-    #         params = []
-
-    #         for key, value in cmd.params.items():
-    #             if key not in ("self", "context"):
-    #                 params.append(f"[{key}]" if "None" in
-    #                               str(value) else f"<{key}>")
-
-    #         params = " ".join(params)
-
-    #         dict["title"] = dict["title"].replace("{cmd}", cmd.name)
-    #         dict["description"] = dict["description"].replace(
-    #             "{bot_name}", settings.config["name"])
-
-    #         if type(dict["color"]) != int:
-    #             dict["color"] = int(dict["color"], 16)
-
-    #         syntaxe = f"`{settings.prefix}{name_aliases}"
-    #         if params != "":
-    #             syntaxe += f" {params}"
-    #         syntaxe += "`"
-
-    #         fields = dict["fields"]
-    #         for field in fields:
-    #             field["value"] = field["value"].replace("{name_aliases}",
-    #                                                     f"`{name_aliases}`")
-    #             field["value"] = field["value"].replace("{syntaxe}", syntaxe)
-    #             field["value"] = field["value"].replace(
-    #                 "{help}", f"{cmd.description}\n\n{cmd.help}")
-
-    #         dict["fields"] = fields
-
-    #         dict["thumbnail"]["url"] = str(bot_icon)
-
-    #         dict["footer"]["text"] = settings.config["footer"]
-    #         dict["footer"]["icon_url"] = str(bot_icon)
-
-    #         return discord.Embed.from_dict(dict)
-
-    #     except Exception as e:
-    #         return None
-
-    # def get_birthday_embed(dict, user, age, bot_icon):
+# def get_birthday_embed(dict, user, age, bot_icon):
     #     try:
     #         dict = dp(dict)
 

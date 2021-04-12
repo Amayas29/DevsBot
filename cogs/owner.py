@@ -62,42 +62,6 @@ class Owner(commands.Cog):
         except:
             pass
 
-    # @commands.command(name="verif",
-    #                   help="<message_id> : L'identifiant du message",
-    #                   description="Crée le message de vérificarion du serveur")
-    # async def verif(self, context, message_id: int):
-
-    #     try:
-    #         message_verif = await context.fetch_message(message_id)
-
-    #         verification = self.bot.get_channel(
-    #             self.settings.channels["verification"])
-    #         bot_message = await verification.send(
-    #             "The verification system is in configuration ...\n **Added reaction emoji : ** \n - Please react with the emoji of your choice.\n\n *If no emoji is added after 5 min the command will be canceled*"
-    #         )
-
-    #         def check(reaction, user):
-    #             return user == context.message.author and reaction.message == bot_message
-
-    #         try:
-    #             reaction, _ = await self.bot.wait_for("reaction_add",
-    #                                                   timeout=300.0,
-    #                                                   check=check)
-    #             await message_verif.add_reaction(reaction)
-    #             self.settings.verification_message = message_verif.id
-    #             self.settings.verification_emoji = str(reaction.emoji)
-    #             self.settings.refresh_data()
-    #         except Exception as e:
-    #             print(e)
-    #             pass
-    #         finally:
-    #             await bot_message.delete()
-
-    #     except Exception as e:
-    #         print(e)
-    #     finally:
-    #         await context.message.delete()
-
 
 def setup(bot):
     bot.add_cog(Owner(bot))

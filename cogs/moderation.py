@@ -5,6 +5,7 @@ from init.bot import Bot
 from discord.ext import commands
 from utils.frontend import get_ban_embed, get_unban_embed, get_warn_embed, get_kick_embed, get_warns_message, get_muted_message, get_unmuted_message, get_nickname_message, get_rules_embed
 from database.users import add_warn
+from database.servers import refresh_data
 import traceback
 
 
@@ -26,6 +27,20 @@ class Moderation(commands.Cog):
             return False
         except:
             return False
+
+    @commands.command(
+        name="prefix",
+        help="<prefix> : Le nouveau prefix du bot",
+        description="Changer le prefix du bot"
+    )
+    async def prefix(self, context, prefix):
+        """
+            Change the bot prefix
+        """
+        print("prefix ... TODO")
+        server = self.bot.servers[str(context.guild.id)]
+        server["prefix"] = prefix
+        refresh_data(self.bot.servers)
 
     @commands.command(
         name='kick',

@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
 
+from io import BytesIO
 import json
+import yaml
 import discord
 from copy import deepcopy as dp
 from database.users import get_warns, get_level_exp, get_birth_date
 import traceback
 from pathlib import Path
+from PIL import Image, ImageDraw
 
 cache = {}
 footer = {}
 messages = {}
+images = {}
 
 root_dir = str(Path(__file__).parent.parent)
 
 EMBEDS_PATH = f"{root_dir}/resources/embeds/"
 MESSAGES_PATH = f"{root_dir}/resources/messages.json"
+IMAGES_PATH = f"{root_dir}/resources/images"
 
 
 def get_embed(embed_name, **kwargs):
@@ -91,6 +96,62 @@ def get_message(message, user, level=None, guild_id=None):
         return None
 
 
+def get_images_settings(name):
+
+    if images == {} or name not in images:
+
+        with open(f"{IMAGES_PATH}/{name}.yaml", "r") as f:
+            welcome_settings = yaml.load(f, Loader=yaml.FullLoader)
+
+        images[name] = welcome_settings
+
+    return images[name]
+
+
+async def generate_file_welcome(user: discord.User):
+
+    global images
+
+    try:
+
+        welcome_settings = get_images_settings("welcome_settings")
+
+        asset = user.avatar_url_as(size=welcome_settings["size"])
+
+        data = BytesIO(await asset.read())
+        im = Image.open(data)
+
+        im = im.resize(
+            (welcome_settings["width"], welcome_settings["height"]))
+        bigsize = (im.size[0] * 3, im.size[1] * 3)
+        mask = Image.new('L', bigsize, 0)
+        draw = ImageDraw.Draw(mask)
+        draw.ellipse((0, 0) + bigsize, fill=255)
+
+        mask = mask.resize(im.size, Image.ANTIALIAS)
+        im.putalpha(mask)
+
+        background = Image.open(welcome_settings["path"])
+        background.paste(
+            im, (welcome_settings["x"], welcome_settings["y"]), im)
+
+        background.save('__welcome__.png')
+
+        return discord.File("__welcome__.png")
+
+    except:
+        traceback.print_exc()
+        return None
+
+
+def get_welcome_embed(user, server, text, icon_url):
+    return get_embed("welcome", user=user.mention, server=server.name, member_count=str(server.member_count), text=text, icon_url=icon_url)
+
+
+def get_goodbye_embed(user, server, text, icon_url):
+    return get_embed("goodbye", user=user.mention, member_count=str(server.member_count), text=text, icon_url=icon_url)
+
+
 def get_ban_embed(user, moderator, reason, text, icon_url):
     if reason == "" or reason is None:
         reason = "NaN"
@@ -113,22 +174,6 @@ def get_kick_embed(user, moderator, reason, text, icon_url):
     if reason == "" or reason is None:
         reason = "NaN"
     return get_embed("kick", user=user.mention, moderator=moderator.mention, reason=reason, text=text, icon_url=icon_url)
-
-
-def get_warns_message(user, guild_id):
-    return get_message("warns_message", user, guild_id=guild_id)
-
-
-def get_muted_message(user):
-    return get_message("muted_message", user)
-
-
-def get_unmuted_message(user):
-    return get_message("unmuted_message", user)
-
-
-def get_nickname_message(user):
-    return get_message("nickname_message", user)
 
 
 def get_poll_embed(user, question, options, text, icon_url):
@@ -206,6 +251,22 @@ def get_source_embed(bot_name, source_link, author_name, author_link, text, icon
 def get_rules_embed(rules, text, icon_url):
     return get_embed("rules", rules=rules, text=text, icon_url=icon_url)
 
+
+def get_warns_message(user, guild_id):
+    return get_message("warns_message", user, guild_id=guild_id)
+
+
+def get_muted_message(user):
+    return get_message("muted_message", user)
+
+
+def get_unmuted_message(user):
+    return get_message("unmuted_message", user)
+
+
+def get_nickname_message(user):
+    return get_message("nickname_message", user)
+
     # def get_welcome_goodbye_embed(dict: dict, user: discord.User, server: str,
     #                               member_count: int, bot_icon):
 
@@ -228,36 +289,6 @@ def get_rules_embed(rules, text, icon_url):
     #         dict["footer"]["icon_url"] = str(bot_icon)
 
     #         return discord.Embed.from_dict(dict)
-
-    #     except:
-    #         return None
-
-    # async def get_file_welcome(user: discord.User):
-
-    #     try:
-    #         welcome_settings = settings.images_generator["welcome"]
-
-    #         asset = user.avatar_url_as(size=welcome_settings["size"])
-
-    #         data = BytesIO(await asset.read())
-    #         im = Image.open(data)
-
-    #         im = im.resize((welcome_settings["width"], welcome_settings["height"]))
-    #         bigsize = (im.size[0] * 3, im.size[1] * 3)
-    #         mask = Image.new('L', bigsize, 0)
-    #         draw = ImageDraw.Draw(mask)
-    #         draw.ellipse((0, 0) + bigsize, fill=255)
-
-    #         mask = mask.resize(im.size, Image.ANTIALIAS)
-    #         im.putalpha(mask)
-
-    #         background = Image.open(welcome_settings["path"])
-    #         background.paste(im, (welcome_settings["x"], welcome_settings["y"]),
-    #                          im)
-
-    #         background.save('__image_generator__.png')
-
-    #         return discord.File("__image_generator__.png")
 
     #     except:
     #         return None

@@ -5,6 +5,7 @@ from init.bot import Bot
 from discord.ext import commands
 from database.servers import create_server, refresh_data
 from database.users import add_user, remove_user
+from utils.frontend import generate_file_welcome, get_welcome_embed, get_goodbye_embed
 
 
 class Events(commands.Cog):
@@ -69,25 +70,14 @@ class Events(commands.Cog):
             if role.is_integration() or role.is_bot_managed():
                 return
 
+        file = await generate_file_welcome(member)
+        server = self.bot.servers[str(member.guild.id)]
+        welcome_chan = self.bot.get_channel(server["channels"]["welcome"])
+        if welcome_chan is not None:
+            await welcome_chan.send(embed=get_welcome_embed(member, member.guild, self.bot.config["footer"], self.bot.config["icon"]), file=file)
+
         add_user(member.id, member.guild.id)
         print("Member Join ... TODO")
-
-        # server: discord.Guild = member.guild
-
-        # try:
-        #     embed = get_welcome_goodbye_embed(
-        #         self.settings.embeds["welcome"], member, server.name, server.member_count, self.bot.user.avatar_url)
-        # except:
-        #     embed = None
-
-        # if embed != None:
-        #     try:
-        #         welcome_channel = self.bot.get_channel(
-        #             self.settings.channels["welcome"])
-        #         file = await get_file_welcome(member)
-        #         await welcome_channel.send(embed=embed, file=file)
-        #     except:
-        #         pass
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
@@ -98,24 +88,13 @@ class Events(commands.Cog):
 
         remove_user(member.id, member.guild.id)
 
+        server = self.bot.servers[str(member.guild.id)]
+        goodbye_chan = self.bot.get_channel(server["channels"]["good_bye"])
+        if goodbye_chan is not None:
+            await goodbye_chan.send(embed=get_goodbye_embed(member, member.guild,
+                                                            self.bot.config["footer"], self.bot.config["icon"]))
+
         print("Removing Member ... TODO")
-        # server: discord.Guild = member.guild
-
-        # await delete_reactions(member)
-
-        # try:
-        #     embed = get_welcome_goodbye_embed(
-        #         self.settings.embeds["good_bye"], member, server.name, server.member_count, self.bot.user.avatar_url)
-        # except:
-        #     embed = None
-
-        # if embed != None:
-        #     try:
-        #         welcome_channel = self.bot.get_channel(
-        #             self.settings.channels["good_bye"])
-        #         await welcome_channel.send(embed=embed)
-        #     except:
-        #         pass
 
     # @commands.Cog.listener()
     # async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):

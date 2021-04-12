@@ -4,10 +4,10 @@ from operator import imod
 import random
 import discord
 from discord.ext import commands, tasks
-from database.servers import get_servers, create_server
-from database.users import insert_unique
+from database.servers import get_servers
+from database.users import add_user
 import json
-from utils.games import load_games, dump_games
+from utils.games import load_games
 from copy import deepcopy as dp
 import traceback
 from pathlib import Path
@@ -135,4 +135,4 @@ class Bot(commands.Bot):
                            or role.is_bot_managed(), member.roles))
                 if bot != []:
                     continue
-                insert_unique(member.id, guild.id)
+                add_user(member.id, guild.id)

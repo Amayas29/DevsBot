@@ -8,7 +8,8 @@ def add_user(user_id, guild_id):
     except:
         return
 
-    execute("INSERT INTO Users (UserID, ServerID) Values (?, ?)", user_id, guild_id)
+    execute("INSERT OR IGNORE INTO Users (UserID, ServerID) Values (?, ?)",
+            user_id, guild_id)
 
 
 def remove_user(user_id, guild_id):
@@ -60,14 +61,3 @@ def get_birth_date(user_id, guild_id):
         return
 
     return field("SELECT BirthDay FROM Users WHERE UserID = ? AND ServerID = ?", user_id, guild_id)
-
-
-def insert_unique(user_id, guild_id):
-    try:
-        user_id = int(user_id)
-        guild_id = int(guild_id)
-    except:
-        return
-
-    execute("INSERT OR IGNORE INTO Users (UserID, ServerID) Values (?, ?)",
-            user_id, guild_id)

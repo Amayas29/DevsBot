@@ -1,4 +1,4 @@
-from .database import execute, field, record
+from .database import execute, field, record, records
 
 
 def add_user(user_id, guild_id):
@@ -94,3 +94,12 @@ def remove_users_guild(guild_id):
         return
 
     execute("DELETE FROM Users WHERE ServerID = ?", guild_id)
+
+
+def get_exp_level_guild(guild_id):
+    try:
+        guild_id = int(guild_id)
+    except:
+        return
+
+    return records("SELECT UserID, UserLevel, UserXP FROM Users WHERE ServerID = ?", guild_id)

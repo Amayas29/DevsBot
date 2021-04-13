@@ -316,6 +316,19 @@ def get_rank_embed(user, level, exp, text, icon_url):
     return get_embed("rank", user_name=user.name, user_icon=str(user.avatar_url), user=user.mention, level=str(level), exp=exp, text=text, icon_url=icon_url)
 
 
+def get_top_embed(users_dict, text, icon_url):
+
+    embed = get_embed("top", text=text, icon_url=icon_url)
+
+    rank = 1
+    for user, l_xp in users_dict.items():
+        embed.add_field(name=f"{rank} - {user}",
+                        value=f"Niveau {l_xp[0]}, Exp {l_xp[1]}", inline=False)
+        rank += 1
+
+    return embed
+
+
 def get_warns_message(user, guild_id):
     return get_message("warns_message", user, guild_id=guild_id)
 

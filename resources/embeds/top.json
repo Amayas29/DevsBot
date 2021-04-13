@@ -7,13 +7,7 @@
 
   "description": "Voici le classement des membres selon leurs niveaux \n\n *(Les mod\u00e9rateurs et le fondateur ne sont pas pris en compte dans le classement)*\n",
 
-  "fields": [
-    {
-      "name": "{rank} - {user_name}",
-      "value": "Niveau {level}, Exp {exp}",
-      "inline": false
-    }
-  ],
+  "fields": [],
 
   "footer": {
     "text": "{text}",

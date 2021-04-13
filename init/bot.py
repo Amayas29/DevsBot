@@ -5,7 +5,7 @@ import random
 import discord
 from discord.ext import commands, tasks
 from database.servers import get_servers
-from database.users import add_user
+from database.users import add_user, set_exp, set_level
 import json
 from utils.games import load_games
 from copy import deepcopy as dp
@@ -129,10 +129,30 @@ class Bot(commands.Bot):
         self.status.start()
         # self.birthdays.start()
 
+        owners = self.config["owners"]
+
         for guild in self.guilds:
             for member in guild.members:
-                bot = list(filter(lambda role: role.is_integration()
-                           or role.is_bot_managed(), member.roles))
-                if bot != []:
+
+                bot = False
+                admin = False
+
+                moderators_roles = self.servers[str(
+                    guild.id)]["moderators_roles"]
+
+                for role in member.roles:
+
+                    if role.is_integration() or role.is_bot_managed():
+                        bot = True
+
+                    if role.id in moderators_roles:
+                        admin = True
+
+                if bot:
                     continue
+
                 add_user(member.id, guild.id)
+
+                if admin or member.id in owners:
+                    set_exp(member.id, guild.id, -1)
+                    set_level(member.id, guild.id, -1)

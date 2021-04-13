@@ -85,3 +85,12 @@ def get_birth_date(user_id, guild_id):
         return
 
     return field("SELECT BirthDay FROM Users WHERE UserID = ? AND ServerID = ?", user_id, guild_id)
+
+
+def remove_users_guild(guild_id):
+    try:
+        guild_id = int(guild_id)
+    except:
+        return
+
+    execute("DELETE FROM Users WHERE ServerID = ?", guild_id)

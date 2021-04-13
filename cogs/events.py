@@ -4,7 +4,7 @@ import traceback
 from init.bot import Bot
 from discord.ext import commands
 from database.servers import create_server, refresh_data
-from database.users import add_user, remove_user, set_exp, set_level, get_level_exp
+from database.users import add_user, remove_user, set_exp, set_level, get_level_exp, remove_users_guild
 from utils.frontend import generate_file_welcome, get_welcome_embed, get_goodbye_embed
 
 
@@ -60,6 +60,7 @@ class Events(commands.Cog):
         try:
             self.bot.servers.pop(str(guild.id))
             refresh_data(self.bot.servers)
+            remove_users_guild(guild.id)
         except:
             traceback.print_exc()
 

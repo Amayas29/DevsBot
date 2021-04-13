@@ -4,7 +4,7 @@ import traceback
 from init.bot import Bot
 from discord.ext import commands
 from database.servers import create_server, refresh_data
-from database.users import add_user, remove_user, set_exp, set_level
+from database.users import add_user, remove_user, set_exp, set_level, get_level_exp
 from utils.frontend import generate_file_welcome, get_welcome_embed, get_goodbye_embed
 
 
@@ -66,6 +66,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
 
+        print("Member Join ... TODO")
+
         ignored_roles_levels = self.bot.servers[str(
             member.guild.id)]["ignored_roles_levels"]
 
@@ -90,8 +92,12 @@ class Events(commands.Cog):
         if member.id in ignored_roles_levels or member.id in owners:
             set_exp(member.id, member.guild.id, -1)
             set_level(member.id, member.guild.id, -1)
+            return
 
-        print("Member Join ... TODO")
+        level, _ = get_level_exp(member.id, member.guild.id)
+        if level == -1:
+            set_exp(member.id, member.guild.id, 0)
+            set_level(member.id, member.guild.id, 1)
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):

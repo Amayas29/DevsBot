@@ -4,7 +4,7 @@ import random
 import discord
 from discord.ext import commands, tasks
 from database.servers import get_servers
-from database.users import add_user, set_exp, set_level
+from database.users import add_user, set_exp, set_level, get_level_exp
 import json
 from utils.games import load_games
 from copy import deepcopy
@@ -147,3 +147,9 @@ class Bot(commands.Bot):
                 if member.id in ignored_roles_levels or member.id in owners:
                     set_exp(member.id, guild.id, -1)
                     set_level(member.id, guild.id, -1)
+                    continue
+
+                level, _ = get_level_exp(member.id, guild.id)
+                if level == -1:
+                    set_exp(member.id, guild.id, 0)
+                    set_level(member.id, guild.id, 1)

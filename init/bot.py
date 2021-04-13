@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from operator import imod
 import random
 import discord
 from discord.ext import commands, tasks
@@ -8,7 +7,7 @@ from database.servers import get_servers
 from database.users import add_user, set_exp, set_level
 import json
 from utils.games import load_games
-from copy import deepcopy as dp
+from copy import deepcopy
 import traceback
 from pathlib import Path
 
@@ -78,7 +77,7 @@ class Bot(commands.Bot):
 
     @tasks.loop(hours=5)
     async def status(self):
-        games = dp(self.games)
+        games = deepcopy(self.games)
 
         if self.game == None:
             self.game = random.choice(games)
@@ -132,27 +131,19 @@ class Bot(commands.Bot):
         owners = self.config["owners"]
 
         for guild in self.guilds:
+
+            ignored_roles_levels = self.servers[str(
+                guild.id)]["ignored_roles_levels"]
+
             for member in guild.members:
 
-                bot = False
-                admin = False
-
-                moderators_roles = self.servers[str(
-                    guild.id)]["moderators_roles"]
-
-                for role in member.roles:
-
-                    if role.is_integration() or role.is_bot_managed():
-                        bot = True
-
-                    if role.id in moderators_roles:
-                        admin = True
-
+                bot = list(filter(lambda role: role.is_integration()
+                           or role.is_bot_managed(), member.roles))
                 if bot:
                     continue
 
                 add_user(member.id, guild.id)
 
-                if admin or member.id in owners:
+                if member.id in ignored_roles_levels or member.id in owners:
                     set_exp(member.id, guild.id, -1)
                     set_level(member.id, guild.id, -1)

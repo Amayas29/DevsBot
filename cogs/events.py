@@ -66,16 +66,15 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
 
-        admin = False
+        ignored_roles_levels = self.bot.servers[str(
+            member.guild.id)]["ignored_roles_levels"]
+
         owners = self.bot.config["owners"]
 
         for role in member.roles:
 
             if role.is_integration() or role.is_bot_managed():
                 return
-
-            if role.id in self.bot.servers[str(member.guild.id)]["moderators_roles"]:
-                admin = True
 
         server = self.bot.servers[str(member.guild.id)]
 
@@ -88,7 +87,7 @@ class Events(commands.Cog):
 
         add_user(member.id, member.guild.id)
 
-        if admin or member.id in owners:
+        if member.id in ignored_roles_levels or member.id in owners:
             set_exp(member.id, member.guild.id, -1)
             set_level(member.id, member.guild.id, -1)
 

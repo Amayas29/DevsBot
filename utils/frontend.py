@@ -9,6 +9,7 @@ from database.users import get_warns, get_level_exp, get_birth_date
 import traceback
 from pathlib import Path
 from PIL import Image, ImageDraw
+import random
 
 embeds_cache = {}
 messages_cache = {}
@@ -140,6 +141,44 @@ async def generate_file_welcome(user: discord.User):
         return None
 
 
+def generate_file_rank(user, server):
+
+    try:
+        rank_settings = get_images_settings("rank_settings")
+
+        background = Image.open(rank_settings["path"])
+        draw = ImageDraw.Draw(background)
+        max = background.size[0]
+
+        level, exp = get_level_exp(user.id, server.id)
+
+        if level == -1:
+            exp = max
+
+        else:
+            max_exp = 50 * level**2 - 50 * level + 200
+            exp = 100 * (exp / max_exp)
+
+        exp = max * exp / 100
+
+        if rank_settings["color"] == []:
+            rank_settings["color"] = ["28, 149, 228"]
+
+        color = random.choice(rank_settings["color"])
+        color = tuple(map(int, color.split(",")))
+        draw.rectangle(((0, 0), (exp, background.size[1])),
+                       fill=color,
+                       width=background.size[1])
+
+        background.save("__rank__.png")
+
+        return discord.File("__rank__.png")
+
+    except:
+        traceback.print_exc()
+        return None
+
+
 def get_welcome_embed(user, server, text, icon_url):
     return get_embed("welcome", user=user.mention, server=server.name, member_count=str(server.member_count), text=text, icon_url=icon_url)
 
@@ -259,6 +298,22 @@ def get_help_all_embed(bot_name, cogs_dict, text, icon_url):
         embed.add_field(name=f"**{name}**", value=value, inline=False)
 
     return embed
+
+
+def get_rank_embed(user, level, exp, text, icon_url):
+
+    if level == -1:
+        level = "Max"
+        exp = "Max"
+        max_exp = ""
+
+    else:
+        max_exp = 50 * level**2 - 50 * level + 200
+        max_exp = " / " + str(max_exp)
+
+    exp = f"{str(exp)}{str(max_exp)}"
+
+    return get_embed("rank", user_name=user.name, user_icon=str(user.avatar_url), user=user.mention, level=str(level), exp=exp, text=text, icon_url=icon_url)
 
 
 def get_warns_message(user, guild_id):

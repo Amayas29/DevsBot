@@ -2,6 +2,10 @@
 
 from init.bot import Bot
 from discord.ext import commands
+from utils.frontend import get_rank_embed, generate_file_rank
+from database.users import get_level_exp
+import traceback
+
 
 class LevelSystem(commands.Cog):
     def __init__(self, bot):
@@ -13,21 +17,24 @@ class LevelSystem(commands.Cog):
         self.description = "Les commandes de niveaux"
         self.bot = bot
 
-    # @commands.command(name="rank",
-    #                   help="",
-    #                   description="Affiche la carte niveau de l'utilisateur")
-    # async def rank(self, context):
-    #     try:
-    #         file = get_file_rank(context.author)
-    #         embed = get_level_embed(self.settings.embeds["rank"],
-    #                                 context.author, self.bot.user.avatar_url)
+    @commands.command(name="rank",
+                      help="",
+                      description="Affiche la carte niveau de l'utilisateur")
+    async def rank(self, context):
 
-    #         if file == None or embed == None:
-    #             return
+        level, exp = get_level_exp(context.author.id, context.guild.id)
 
-    #         await context.send(embed=embed, file=file)
-    #     except:
-    #         pass
+        try:
+            file = generate_file_rank(context.author, context.guild)
+
+            embed = get_rank_embed(
+                context.author, level, exp, self.bot.config["footer"], self.bot.config["icon"])
+
+            await context.send(embed=embed, file=file)
+        except:
+            traceback.print_exc()
+
+            pass
 
     # @commands.command(
     #     name="top",

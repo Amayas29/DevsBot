@@ -7,6 +7,7 @@ import traceback
 
 
 class Help(commands.Cog):
+
     def __init__(self, bot):
 
         if not isinstance(bot, Bot):

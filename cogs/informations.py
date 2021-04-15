@@ -9,6 +9,7 @@ import traceback
 
 
 class Informations(commands.Cog):
+
     def __init__(self, bot):
 
         if not isinstance(bot, Bot):

@@ -7,6 +7,7 @@ from utils.games import dump_games
 
 
 class Owner(commands.Cog):
+
     def __init__(self, bot):
 
         if not isinstance(bot, Bot):

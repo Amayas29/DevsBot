@@ -7,6 +7,7 @@ from utils.frontend import get_poll_embed
 
 
 class General(commands.Cog):
+
     def __init__(self, bot):
 
         if not isinstance(bot, Bot):

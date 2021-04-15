@@ -10,6 +10,8 @@ from utils.games import load_games
 from copy import deepcopy
 import traceback
 from pathlib import Path
+from utils.levels import update_user
+from utils.frontend import get_levelup_message
 
 
 CONFIG_PATH = f"{str(Path(__file__).parent.parent)}/config.json"
@@ -56,19 +58,26 @@ class Bot(commands.Bot):
         except:
             traceback.print_exc()
 
-        # try:
-        #     set_exp(message.author, 5)
-        #     lvup, level = level_up(message.author)
-        #     if lvup:
-        #         levels_channel = self.get_channel(
-        #             self.settings.channels["levels"])
-        #         message_up = dp(self.settings.messages["level_up_message"])
-        #         message_up = message_up.replace("{user}",
-        #                                         message.author.mention)
-        #         message_up = message_up.replace("{level}", str(level))
-        #         await levels_channel.send(message_up)
-        # except Exception as e:
-        #     pass
+        for role in message.author.roles:
+            if role.is_integration() or role.is_bot_managed():
+                await self.process_commands(message)
+                return
+
+        if update_user(message.author.id, message.guild.id):
+
+            level, _ = get_level_exp(message.author.id, message.guild.id)
+            lvlup = get_levelup_message(message.author, str(level))
+
+            if lvlup is not None:
+                try:
+                    lvlup_channel = self.get_channel(
+                        self.servers[str(message.guild.id)]["channels"]["levels"])
+
+                    await lvlup_channel.send(lvlup)
+
+                except:
+                    traceback.print_exc()
+                    await message.channel.send(lvlup)
 
         await self.process_commands(message)
 

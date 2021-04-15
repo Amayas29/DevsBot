@@ -10,6 +10,7 @@ import traceback
 
 
 class Moderation(commands.Cog):
+
     def __init__(self, bot):
 
         if not isinstance(bot, Bot):

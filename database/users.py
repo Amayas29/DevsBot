@@ -1,4 +1,5 @@
 from .database import execute, field, record, records
+from datetime import datetime
 
 
 def add_user(user_id, guild_id):
@@ -103,3 +104,34 @@ def get_exp_level_guild(guild_id):
         return
 
     return records("SELECT UserID, UserLevel, UserXP FROM Users WHERE ServerID = ?", guild_id)
+
+
+def get_old_message(user_id, guild_id):
+    try:
+        user_id = int(user_id)
+        guild_id = int(guild_id)
+    except:
+        return
+
+    old_message = field(
+        "SELECT OldMessage FROM Users WHERE UserID = ? AND ServerID = ?", user_id, guild_id)
+
+    if old_message is not None:
+        old_message = datetime.strptime(old_message, "%d-%m-%Y %H:%M:%S")
+
+    return old_message
+
+
+def set_old_message(user_id, guild_id, old_message):
+    try:
+        user_id = int(user_id)
+        guild_id = int(guild_id)
+    except:
+        return
+
+    if type(old_message) != datetime:
+        return
+
+    old_message = old_message.strftime("%d-%m-%Y %H:%M:%S")
+    execute("UPDATE Users SET OldMessage = ? WHERE UserID = ? AND ServerID = ?",
+            old_message, user_id, guild_id)

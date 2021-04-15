@@ -18,21 +18,22 @@ class Events(commands.Cog):
 
         self.bot = bot
 
-    # @commands.Cog.listener()
-    # async def on_command_error(self, context, error):
-    #     """
-    #     Treatment for commands errors
-    #     """
-    #     if context.command == None:
-    #         return
+    @commands.Cog.listener()
+    async def on_command_error(self, context, error):
+        """
+        Treatment for commands errors
+        """
+        print("Erreur ... TODO", error)
 
-    #     # help = self.bot.get_command("help")
+        if context.command == None:
+            return
 
-    #     # if help is None:
-    #     #     return
+        help = self.bot.get_command("help")
 
-    #     # await help(context, context.command.name)
-    #     print("Erreur ... TODO", error)
+        if help is None:
+            return
+
+        await help(context, context.command.name)
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):

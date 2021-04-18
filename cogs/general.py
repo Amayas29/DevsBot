@@ -3,10 +3,10 @@
 import traceback
 from init.bot import Bot
 from discord.ext import commands
-from utils.frontend import get_poll_embed
+from utils.frontend import get_poll_embed, get_head_image, get_tail_image, get_gifs
 import random
 from datetime import datetime
-from utils.frontend import get_head_image, get_tail_image
+import asyncio
 
 
 class General(commands.Cog):
@@ -83,6 +83,50 @@ class General(commands.Cog):
             result = "Face | Tail"
 
         await context.send(f" --  **{result}**  --", file=file)
+
+    @commands.command(
+        name="bottle",
+        help="",
+        description="Tire un membre au sort depuis une liste (Le jeu de la bouteille)"
+    )
+    async def bottle(self, context):
+        print("Bottle ... TODO")
+
+        await context.send("Le tirage commence dans 10 secondes | The draw will start in 10 seconds\n ⁣  ⁣⁣")
+        await context.send("Envoyez **Moi** pour participer au tirage au sort | Send **Me** to enter in the draw\n ⁣  ⁣⁣")
+
+        players = []
+
+        def check(message):
+            message_content = message.content.lower()
+            return message.channel == context.message.channel and message.author not in players \
+                and (message_content == "me" or message_content == "moi")
+
+        try:
+            while True:
+                participation = await self.bot.wait_for("message", timeout=10, check=check)
+                players.append(participation.author)
+                await participation.delete()
+                await context.send(f"**{participation.author.name}** : participe au tirage | participate in the draw\n ⁣  ")
+        except:
+            end = await context.send("Fin de la sélection des joueurs | End of the selection of players\n ⁣  ⁣⁣")
+            await asyncio.sleep(1)
+
+        if len(players) < 2:
+            await context.send("ATTENTION ! Minimum 2 membres pour jouer | Minimum 2 members to play")
+            return
+
+        start = await context.send("Le tirage commence | The draw start ...")
+        await end.delete()
+
+        bottle = get_gifs("bottle_game")
+        bottle_msg = await context.send(bottle)
+        await asyncio.sleep(3)
+        await bottle_msg.delete()
+        await start.delete()
+
+        user_selected = random.choice(players)
+        await context.send(f">> Le perdant | The looser : **{user_selected.mention}**")
 
 
 def setup(bot):

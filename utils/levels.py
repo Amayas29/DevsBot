@@ -8,6 +8,7 @@ DEFAULT_INCREMENT = 5
 
 
 def update_user(user_id, guild_id, increment=None):
+
     old_message = get_old_message(user_id, guild_id)
 
     now = datetime.now()
@@ -18,22 +19,37 @@ def update_user(user_id, guild_id, increment=None):
 
     set_old_message(user_id, guild_id, now)
 
-    if diff <= COOLDOWN:
-        return False
-
     level, exp = get_level_exp(user_id, guild_id)
 
     if level == -1:
-        return False
+        return 0
 
-    exp += increment if increment is not None else DEFAULT_INCREMENT
+    increment = increment if increment is not None else DEFAULT_INCREMENT
+
+    if increment < 0:
+        exp += increment
+        set_exp(user_id, guild_id, exp)
+
+        if exp < 0:
+            if level <= 1:
+                return 0
+
+            set_level(user_id, guild_id, level - 1)
+            set_exp(user_id, guild_id, 0)
+            return -1
+
+        return 0
+
+    if diff <= COOLDOWN:
+        return 0
 
     max_exp = 50 * level**2 - 50 * level + 200
+    exp += increment
 
     if exp > max_exp:
         set_level(user_id, guild_id, level + 1)
         set_exp(user_id, guild_id, 0)
-        return True
+        return 1
 
     set_exp(user_id, guild_id, exp)
-    return False
+    return 0

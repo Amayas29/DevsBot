@@ -387,3 +387,7 @@ def get_nickname_message(user):
 
 def get_levelup_message(user, level):
     return get_message("level_up_message", user, level=level)
+
+
+def get_leveldown_message(user, level):
+    return get_message("level_down_message", user, level=level)

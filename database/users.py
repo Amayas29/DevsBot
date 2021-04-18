@@ -63,6 +63,9 @@ def set_exp(user_id, guild_id, new_exp):
     except:
         return
 
+    if new_exp < 0:
+        new_exp = 0
+
     execute("UPDATE Users SET UserXP = ? WHERE UserID = ? AND ServerID = ?",
             new_exp, user_id, guild_id)
 

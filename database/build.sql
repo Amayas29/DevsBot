@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS Users (
     UserXP integer DEFAULT 0,
     UserLevel integer DEFAULT 1,
     Warns integer DEFAULT 0,
-    BirthDay text DEFAULT NULL,
+    BirthDate text DEFAULT NULL,
     OldMessage text DEFAULT NULL,
     PRIMARY KEY (UserID, ServerID)
 );

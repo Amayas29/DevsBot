@@ -4,14 +4,14 @@ import random
 import discord
 from discord.ext import commands, tasks
 from database.servers import get_servers
-from database.users import add_user, set_exp, set_level, get_level_exp, get_users_birthday
+from database.users import add_user, set_exp, set_level, get_level_exp, get_users_birthdate
 import json
 from utils.games import load_games
 from copy import deepcopy
 import traceback
 from pathlib import Path
 from utils.levels import update_user
-from utils.frontend import get_levelup_message, get_birthday_embed
+from utils.frontend import get_levelup_message, get_birthdate_embed
 
 
 CONFIG_PATH = f"{str(Path(__file__).parent.parent)}/config.json"
@@ -104,22 +104,22 @@ class Bot(commands.Bot):
         print("Birthdays ...")
         for server in self.servers:
             try:
-                birthday_channel = self.servers[server]["channels"]["birthdays"]
+                birthdates_channel = self.servers[server]["channels"]["birthdays"]
 
-                if birthday_channel is None:
+                if birthdates_channel is None:
                     continue
 
-                birthday_channel = await self.fetch_channel(birthday_channel)
+                birthdates_channel = await self.fetch_channel(birthdates_channel)
 
-                users = get_users_birthday(server)
+                users = get_users_birthdate(server)
 
                 for user_id in users:
                     user = await self.fetch_user(user_id[0])
 
-                    embed = get_birthday_embed(
+                    embed = get_birthdate_embed(
                         user, user_id[1], self.config["footer"], self.config["icon"])
 
-                    await birthday_channel.send(embed=embed)
+                    await birthdates_channel.send(embed=embed)
             except:
                 continue
 

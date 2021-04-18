@@ -4,6 +4,7 @@ import traceback
 from init.bot import Bot
 from discord.ext import commands
 from utils.frontend import get_poll_embed, get_head_image, get_tail_image, get_gifs
+from database.users import set_birth_date
 import random
 from datetime import datetime
 import asyncio
@@ -127,6 +128,25 @@ class General(commands.Cog):
 
         user_selected = random.choice(players)
         await context.send(f">> Le perdant | The looser : **{user_selected.mention}**")
+
+    @commands.command(
+        name="birthdate",
+        aliases=["bd", "naiss", "birth"],
+        help="[date] : La date de naissance en format dd-mm-YYYY exemple : 29-05-2001",
+        description="Changer la date de naissance de l'utilisateur"
+    )
+    async def birthdate(self, context, *, date):
+        """
+        Change the birthdate of the user
+        """
+        date = "".join(date)
+        try:
+            date_birth = datetime.strptime(date, "%d-%m-%Y")
+        except:
+            await context.send(f"⚠️ **{date}** : n'est pas une date valide | is not a valid date")
+            return
+
+        set_birth_date(context.author.id, context.guild.id, date)
 
 
 def setup(bot):

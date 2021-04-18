@@ -365,7 +365,7 @@ def get_top_embed(users_dict, text, icon_url):
     return embed
 
 
-def get_birthday_embed(user, age, text, icon_url):
+def get_birthdate_embed(user, age, text, icon_url):
     return get_embed("birthday", user=user.mention, age=str(age), text=text, icon_url=icon_url)
 
 

@@ -79,6 +79,18 @@ def set_level(user_id, guild_id, new_level):
             new_level, user_id, guild_id)
 
 
+def set_birth_date(user_id, guild_id, birthdate):
+    try:
+        user_id = int(user_id)
+        guild_id = int(guild_id)
+        datetime.strptime(birthdate, "%d-%m-%Y")
+    except:
+        return
+
+    execute("UPDATE Users SET BirthDate = ? WHERE UserID = ? AND ServerID = ?",
+            birthdate, user_id, guild_id)
+
+
 def get_birth_date(user_id, guild_id):
     try:
         user_id = int(user_id)
@@ -86,7 +98,7 @@ def get_birth_date(user_id, guild_id):
     except:
         return
 
-    return field("SELECT BirthDay FROM Users WHERE UserID = ? AND ServerID = ?", user_id, guild_id)
+    return field("SELECT BirthDate FROM Users WHERE UserID = ? AND ServerID = ?", user_id, guild_id)
 
 
 def remove_users_guild(guild_id):
@@ -138,7 +150,7 @@ def set_old_message(user_id, guild_id, old_message):
             old_message, user_id, guild_id)
 
 
-def get_users_birthday(guild_id):
+def get_users_birthdate(guild_id):
     try:
         guild_id = int(guild_id)
     except:
@@ -148,9 +160,9 @@ def get_users_birthday(guild_id):
     now_day_month = now.strftime("%d-%m")
 
     users = records(
-        "SELECT UserID, BirthDay FROM Users WHERE ServerID = ?", guild_id)
+        "SELECT UserID, BirthDate FROM Users WHERE ServerID = ?", guild_id)
 
-    users_birthday = []
+    users_birthdate = []
 
     for user in users:
         if user[1] is None:
@@ -160,7 +172,7 @@ def get_users_birthday(guild_id):
         day_month = birthdate.strftime("%d-%m")
 
         if day_month == now_day_month:
-            users_birthday.append(
+            users_birthdate.append(
                 (user[0], relativedelta(now, birthdate).years))
 
-    return users_birthday
+    return users_birthdate

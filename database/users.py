@@ -1,5 +1,6 @@
 from .database import execute, field, record, records
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 
 def add_user(user_id, guild_id):
@@ -135,3 +136,31 @@ def set_old_message(user_id, guild_id, old_message):
     old_message = old_message.strftime("%d-%m-%Y %H:%M:%S")
     execute("UPDATE Users SET OldMessage = ? WHERE UserID = ? AND ServerID = ?",
             old_message, user_id, guild_id)
+
+
+def get_users_birthday(guild_id):
+    try:
+        guild_id = int(guild_id)
+    except:
+        return
+
+    now = datetime.now()
+    now_day_month = now.strftime("%d-%m")
+
+    users = records(
+        "SELECT UserID, BirthDay FROM Users WHERE ServerID = ?", guild_id)
+
+    users_birthday = []
+
+    for user in users:
+        if user[1] is None:
+            continue
+
+        birthdate = datetime.strptime(user[1], "%d-%m-%Y")
+        day_month = birthdate.strftime("%d-%m")
+
+        if day_month == now_day_month:
+            users_birthday.append(
+                (user[0], relativedelta(now, birthdate).years))
+
+    return users_birthday

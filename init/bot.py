@@ -4,14 +4,14 @@ import random
 import discord
 from discord.ext import commands, tasks
 from database.servers import get_servers
-from database.users import add_user, set_exp, set_level, get_level_exp
+from database.users import add_user, set_exp, set_level, get_level_exp, get_users_birthday
 import json
 from utils.games import load_games
 from copy import deepcopy
 import traceback
 from pathlib import Path
 from utils.levels import update_user
-from utils.frontend import get_levelup_message
+from utils.frontend import get_levelup_message, get_birthday_embed
 
 
 CONFIG_PATH = f"{str(Path(__file__).parent.parent)}/config.json"
@@ -86,6 +86,7 @@ class Bot(commands.Bot):
 
     @tasks.loop(hours=5)
     async def status(self):
+        print("Status ...")
         games = deepcopy(self.games)
 
         if self.game == None:
@@ -98,24 +99,29 @@ class Bot(commands.Bot):
         game = discord.Game(self.game)
         await self.change_presence(status=discord.Status.online, activity=game)
 
-    # @tasks.loop(hours=24)
-    # async def birthdays(self):
+    @tasks.loop(hours=24)
+    async def birthdays(self):
+        print("Birthdays ...")
+        for server in self.servers:
+            try:
+                birthday_channel = self.servers[server]["channels"]["birthdays"]
 
-    #     try:
-    #         birthday_channel = await self.fetch_channel(
-    #             self.settings.channels["birthdays"])
-    #         users = get_users_birthday()
-    #         for id_age in users:
-    #             try:
-    #                 user = await self.fetch_user(int(id_age[0]))
-    #                 embed = get_birthday_embed(
-    #                     self.settings.embeds["birthday"], user, id_age[1],
-    #                     self.user.avatar_url)
-    #                 await birthday_channel.send(embed=embed)
-    #             except:
-    #                 continue
-    #     except:
-    #         pass
+                if birthday_channel is None:
+                    continue
+
+                birthday_channel = await self.fetch_channel(birthday_channel)
+
+                users = get_users_birthday(server)
+
+                for user_id in users:
+                    user = await self.fetch_user(user_id[0])
+
+                    embed = get_birthday_embed(
+                        user, user_id[1], self.config["footer"], self.config["icon"])
+
+                    await birthday_channel.send(embed=embed)
+            except:
+                continue
 
     async def on_ready(self):
         """
@@ -135,7 +141,7 @@ class Bot(commands.Bot):
             traceback.print_exc()
 
         self.status.start()
-        # self.birthdays.start()
+        self.birthdays.start()
 
         owners = self.config["owners"]
 

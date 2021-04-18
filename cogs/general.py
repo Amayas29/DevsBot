@@ -132,7 +132,7 @@ class General(commands.Cog):
     @commands.command(
         name="birthdate",
         aliases=["bd", "naiss", "birth"],
-        help="[date] : La date de naissance en format dd-mm-YYYY exemple : 29-05-2001",
+        help="<date> : La date de naissance en format dd-mm-YYYY exemple : 29-05-2001",
         description="Changer la date de naissance de l'utilisateur"
     )
     async def birthdate(self, context, *, date):

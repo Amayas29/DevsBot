@@ -4,6 +4,9 @@ import traceback
 from init.bot import Bot
 from discord.ext import commands
 from utils.frontend import get_poll_embed
+import random
+from datetime import datetime
+from utils.frontend import get_head_image, get_tail_image
 
 
 class General(commands.Cog):
@@ -60,6 +63,26 @@ class General(commands.Cog):
 
         except:
             traceback.print_exc()
+
+    @commands.command(
+        name="flip",
+        aliases=["pf"],
+        help=None,
+        description="Jette une piece pour jouer à pile ou face"
+    )
+    async def flip(self, context):
+
+        random.seed(datetime.now())
+        coin = random.randint(1, 2)
+
+        if coin == 1:  # Pile
+            file = get_head_image()
+            result = "Pile | Head"
+        else:
+            file = get_tail_image()
+            result = "Face | Tail"
+
+        await context.send(f" --  **{result}**  --", file=file)
 
 
 def setup(bot):

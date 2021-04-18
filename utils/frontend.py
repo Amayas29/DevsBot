@@ -179,6 +179,16 @@ def generate_file_rank(user, server):
         return None
 
 
+def get_head_image():
+    coin_settings = get_images_settings("flip_coin_settings")
+    return discord.File(coin_settings["head"])
+
+
+def get_tail_image():
+    coin_settings = get_images_settings("flip_coin_settings")
+    return discord.File(coin_settings["tail"])
+
+
 def get_welcome_embed(user, server, text, icon_url):
     return get_embed("welcome", user=user.mention, server=server.name, member_count=str(server.member_count), text=text, icon_url=icon_url)
 

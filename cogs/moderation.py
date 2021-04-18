@@ -193,10 +193,10 @@ class Moderation(commands.Cog):
 
         if embed != None:
             try:
-                ban_channel = self.bot.get_channel(
+                warn_channel = self.bot.get_channel(
                     self.bot.servers[str(context.guild.id)]["channels"]["ban_warn"])
 
-                await ban_channel.send(embed=embed)
+                await warn_channel.send(embed=embed)
 
             except:
                 traceback.print_exc()

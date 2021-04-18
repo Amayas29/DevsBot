@@ -11,7 +11,7 @@ from copy import deepcopy
 import traceback
 from pathlib import Path
 from utils.levels import update_user
-from utils.frontend import get_levelup_message, get_birthdate_embed
+from utils.frontend import get_levelup_message, get_birthdate_embed, get_leveldown_message
 
 
 CONFIG_PATH = f"{str(Path(__file__).parent.parent)}/config.json"
@@ -52,8 +52,27 @@ class Bot(commands.Bot):
             message_lower = message.content.lower()
             for word in self.servers[str(message.guild.id)]["forbidden_words"]:
                 if word in message_lower:
-                    await message.channel.send("No bro .. TODO", delete_after=10)
+
+                    await message.channel.send("🚫 - You can't send this word | Vous ne pouvez pas envoyer ce mot", delete_after=10)
                     await message.delete()
+                    if update_user(message.author.id, message.guild.id, -20) == -1:
+                        level, _ = get_level_exp(
+                            message.author.id, message.guild.id)
+
+                        lvldwn = get_leveldown_message(
+                            message.author, str(level))
+
+                        if lvldwn is not None:
+                            try:
+                                lvlup_channel = self.get_channel(
+                                    self.servers[str(message.guild.id)]["channels"]["levels"])
+
+                                await lvlup_channel.send(lvldwn)
+
+                            except:
+                                traceback.print_exc()
+                                await message.channel.send(lvldwn)
+
                     return
         except:
             traceback.print_exc()
@@ -63,7 +82,7 @@ class Bot(commands.Bot):
                 await self.process_commands(message)
                 return
 
-        if update_user(message.author.id, message.guild.id):
+        if update_user(message.author.id, message.guild.id) == 1:
 
             level, _ = get_level_exp(message.author.id, message.guild.id)
             lvlup = get_levelup_message(message.author, str(level))
@@ -80,9 +99,6 @@ class Bot(commands.Bot):
                     await message.channel.send(lvlup)
 
         await self.process_commands(message)
-
-    async def on_message_edit(self, after, before):
-        return
 
     @tasks.loop(hours=5)
     async def status(self):

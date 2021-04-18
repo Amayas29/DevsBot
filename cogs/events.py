@@ -121,15 +121,6 @@ class Events(commands.Cog):
 
         print("Removing Member ... TODO")
 
-    # @commands.Cog.listener()
-    # async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
-
-    #     await add_reaction_verification(self.bot, payload)
-
-    # @commands.Cog.listener()
-    # async def on_raw_reaction_remove(self, payload: discord.RawReactionActionEvent):
-    #     pass
-
 
 def setup(bot):
     bot.add_cog(Events(bot))

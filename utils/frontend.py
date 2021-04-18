@@ -14,15 +14,18 @@ import random
 embeds_cache = {}
 messages_cache = {}
 images_cache = {}
+gifs_cache = {}
 
 root_dir = str(Path(__file__).parent.parent)
 
 EMBEDS_PATH = f"{root_dir}/resources/embeds/"
 MESSAGES_PATH = f"{root_dir}/resources/messages.json"
 IMAGES_PATH = f"{root_dir}/resources/images"
+GIFS_PATH = f"{root_dir}/resources/gifs.yaml"
 
 
 def get_embed(embed_name, **kwargs):
+
     global embeds_cache
 
     try:
@@ -73,7 +76,7 @@ def get_message(message, user, level=None, guild_id=None):
     global messages_cache
 
     try:
-        if messages_cache == {}:
+        if message not in messages_cache:
             with open(MESSAGES_PATH, "r") as f:
                 messages_cache = json.load(f)
 
@@ -97,14 +100,37 @@ def get_message(message, user, level=None, guild_id=None):
 
 def get_images_settings(name):
 
-    if images_cache == {} or name not in images_cache:
+    global images_cache
 
-        with open(f"{IMAGES_PATH}/{name}.yaml", "r") as f:
-            welcome_settings = yaml.load(f, Loader=yaml.FullLoader)
+    try:
+        if name not in images_cache:
 
-        images_cache[name] = welcome_settings
+            with open(f"{IMAGES_PATH}/{name}.yaml", "r") as f:
+                welcome_settings = yaml.load(f, Loader=yaml.FullLoader)
 
-    return images_cache[name]
+            images_cache[name] = welcome_settings
+
+        return images_cache[name]
+
+    except:
+        traceback.print_exc()
+        return None
+
+
+def get_gifs(name):
+
+    global gifs_cache
+
+    try:
+        if name not in gifs_cache:
+            with open(GIFS_PATH, "r") as f:
+                gifs_cache = yaml.load(f, Loader=yaml.FullLoader)
+
+        return gifs_cache[name]
+
+    except:
+        traceback.print_exc()
+        return None
 
 
 async def generate_file_welcome(user: discord.User):

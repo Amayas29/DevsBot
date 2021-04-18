@@ -67,7 +67,7 @@ class General(commands.Cog):
     @commands.command(
         name="flip",
         aliases=["pf"],
-        help=None,
+        help="",
         description="Jette une piece pour jouer à pile ou face"
     )
     async def flip(self, context):

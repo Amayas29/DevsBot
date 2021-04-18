@@ -40,15 +40,19 @@ class Informations(commands.Cog):
 
     @commands.command(
         name="info",
-        help="<user> : Le membre cible",
+        help="[member] : Le membre cible si il existe, sinon c'est l'utilisateur de la commande",
         description="Affiche les informations d'un membre du serveur")
-    async def info(self, context, user: discord.Member):
+    async def info(self, context, member: discord.Member = None):
         """
         Get the user info
         """
+
+        if member is None:
+            member = context.author
+
         print("My info ... TODO")
         try:
-            embed = get_user_info_embed(user, self.bot.servers[str(context.guild.id)]["ignored_roles_display"], self.bot.servers[str(
+            embed = get_user_info_embed(member, self.bot.servers[str(context.guild.id)]["ignored_roles_display"], self.bot.servers[str(
                 context.guild.id)]["ignored_roles_levels"], self.bot.config["footer"], self.bot.config["icon"])
 
         except:
@@ -127,6 +131,18 @@ class Informations(commands.Cog):
 
         if embed != None:
             await context.send(embed=embed)
+
+    @commands.command(
+        name="avatar",
+        help="[member] : Le membre cible si il existe, sinon c'est l'utilisateur de la commande",
+        description="Envoie la photo de profile (l'avatar) de l'un membre"
+    )
+    async def avatar(self, context, member: discord.Member = None):
+        if member is None:
+            member = context.author
+
+        user_avatar_url = member.avatar_url
+        await context.send(user_avatar_url)
 
 
 def setup(bot):

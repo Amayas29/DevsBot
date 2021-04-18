@@ -1,5 +1,6 @@
 {
   "level_up_message": "F\u00e9licitation {user} ! Tu as atteint le niveau **{level}** \ud83e\udd73",
+  "level_down_message": "Attention {user}, tu as chuté de niveau. T'es au niveau **{level}**",
   "warns_message": "**>> {user}** a *{warns}* warns",
   "muted_message": "**>> {user}** a \u00e9t\u00e9 mute",
   "unmuted_message": "**>> {user}** a \u00e9t\u00e9 unmute",

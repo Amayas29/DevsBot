@@ -67,7 +67,7 @@ class General(commands.Cog):
 
     @commands.command(
         name="flip",
-        aliases=["pf"],
+        aliases=["pf", "fp"],
         help="",
         description="Jette une piece pour jouer à pile ou face"
     )
@@ -131,7 +131,7 @@ class General(commands.Cog):
 
     @commands.command(
         name="birthdate",
-        aliases=["bd", "naiss", "birth"],
+        aliases=["naiss", "birth"],
         help="<date> : La date de naissance en format dd-mm-YYYY exemple : 29-05-2001",
         description="Changer la date de naissance de l'utilisateur"
     )
@@ -141,7 +141,7 @@ class General(commands.Cog):
         """
         date = "".join(date)
         try:
-            date_birth = datetime.strptime(date, "%d-%m-%Y")
+            _ = datetime.strptime(date, "%d-%m-%Y")
         except:
             await context.send(f"⚠️ **{date}** : n'est pas une date valide | is not a valid date")
             return

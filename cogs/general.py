@@ -38,8 +38,12 @@ class General(commands.Cog):
             if question == "" or question is None:
                 return
 
-            if len(options) < 1 or len(options) > 10:
+            if len(options) < 1:
+                await context.send("Not enough arguments")
                 return
+
+            if len(options) > 10:
+                options = options[0:10]
 
             liste = "\n".join([
                 f"{self.numbers[i]} - {option}"

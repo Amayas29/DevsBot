@@ -30,20 +30,6 @@ class Moderation(commands.Cog):
             return False
 
     @commands.command(
-        name="prefix",
-        help="<prefix> : Le nouveau prefix du bot",
-        description="Changer le prefix du bot"
-    )
-    async def prefix(self, context, prefix):
-        """
-            Change the bot prefix
-        """
-        print("prefix ... TODO")
-        server = self.bot.servers[str(context.guild.id)]
-        server["prefix"] = prefix
-        refresh_data(self.bot.servers)
-
-    @commands.command(
         name='kick',
         help="<member> : Le membre a expulsé.\n[reason] : La raison du kick",
         description="Expulser un membre du serveur")
@@ -305,33 +291,41 @@ class Moderation(commands.Cog):
             await context.send(embed=embed)
 
     @commands.command(
-        name="description",
-        help="<description> La description du serveur",
-        description="Permet de changer la description du serveur"
+        name="banword",
+        help="<word> Le mot à bannir",
+        description="Permet de bannir un mot du serveur"
     )
-    async def description(self, context, *, description):
-        """
-            Change the description of the server
-        """
-        print("Description ... TODO")
+    async def ban_word(self, context, *, word):
+        word = "".join(word)
 
-        description = "".join(description)
-        self.bot.servers[str(context.guild.id)]["description"] = description
+        if word == "":
+            return
+
+        word = word.lower()
+
+        if word in self.bot.servers[str(context.guild.id)]["forbidden_words"]:
+            return
+
+        self.bot.servers[str(context.guild.id)]["forbidden_words"].append(word)
         refresh_data(self.bot.servers)
 
     @commands.command(
-        name="setrules",
-        help="<rules> Les regles du serveur",
-        description="Permet de changer les regles du serveur"
+        name="unbanword",
+        help="<word> Le mot à dé-bannir",
+        description="Permet de dé-bannir un mot du serveur"
     )
-    async def set_rules(self, context, *, rules):
-        """
-            Change the rules of the server
-        """
-        print("Description ... TODO")
+    async def unban_word(self, context, *, word):
+        word = "".join(word)
 
-        rules = "".join(rules)
-        self.bot.servers[str(context.guild.id)]["rules"] = rules
+        if word == "":
+            return
+
+        word = word.lower()
+
+        if word not in self.bot.servers[str(context.guild.id)]["forbidden_words"]:
+            return
+
+        self.bot.servers[str(context.guild.id)]["forbidden_words"].remove(word)
         refresh_data(self.bot.servers)
 
 

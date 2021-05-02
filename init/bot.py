@@ -47,40 +47,49 @@ class Bot(commands.Bot):
             await message.channel.send("Hi ! I am a bot created by Amayas")
             return
 
-        print("message ... TODO")
-        try:
-            message_lower = message.content.lower()
-            for word in self.servers[str(message.guild.id)]["forbidden_words"]:
-                if word in message_lower:
+        moderators_roles = self.servers[str(
+            message.guild.id)]["moderators_roles"]
 
-                    await message.channel.send("🚫 - You can't send this word | Vous ne pouvez pas envoyer ce mot", delete_after=10)
-                    await message.delete()
-                    if update_user(message.author.id, message.guild.id, -20) == -1:
-                        level, _ = get_level_exp(
-                            message.author.id, message.guild.id)
-
-                        lvldwn = get_leveldown_message(
-                            message.author, str(level))
-
-                        if lvldwn is not None:
-                            try:
-                                lvlup_channel = self.get_channel(
-                                    self.servers[str(message.guild.id)]["channels"]["levels"])
-
-                                await lvlup_channel.send(lvldwn)
-
-                            except:
-                                traceback.print_exc()
-                                await message.channel.send(lvldwn)
-
-                    return
-        except:
-            traceback.print_exc()
+        admin = False
 
         for role in message.author.roles:
             if role.is_integration() or role.is_bot_managed():
                 await self.process_commands(message)
                 return
+
+            if role.id in moderators_roles:
+                admin = True
+
+        print("message ... TODO")
+        if not admin:
+            try:
+                message_lower = message.content.lower()
+                for word in self.servers[str(message.guild.id)]["forbidden_words"]:
+                    if word in message_lower:
+
+                        await message.channel.send("🚫 - You can't send this word | Vous ne pouvez pas envoyer ce mot", delete_after=10)
+                        await message.delete()
+                        if update_user(message.author.id, message.guild.id, -20) == -1:
+                            level, _ = get_level_exp(
+                                message.author.id, message.guild.id)
+
+                            lvldwn = get_leveldown_message(
+                                message.author, str(level))
+
+                            if lvldwn is not None:
+                                try:
+                                    lvlup_channel = self.get_channel(
+                                        self.servers[str(message.guild.id)]["channels"]["levels"])
+
+                                    await lvlup_channel.send(lvldwn)
+
+                                except:
+                                    traceback.print_exc()
+                                    await message.channel.send(lvldwn)
+
+                        return
+            except:
+                traceback.print_exc()
 
         if update_user(message.author.id, message.guild.id) == 1:
 

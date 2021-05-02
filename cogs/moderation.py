@@ -304,6 +304,36 @@ class Moderation(commands.Cog):
         if embed != None:
             await context.send(embed=embed)
 
+    @commands.command(
+        name="description",
+        help="<description> La description du serveur",
+        description="Permet de changer la description du serveur"
+    )
+    async def description(self, context, *, description):
+        """
+            Change the description of the server
+        """
+        print("Description ... TODO")
+
+        description = "".join(description)
+        self.bot.servers[str(context.guild.id)]["description"] = description
+        refresh_data(self.bot.servers)
+
+    @commands.command(
+        name="setrules",
+        help="<rules> Les regles du serveur",
+        description="Permet de changer les regles du serveur"
+    )
+    async def set_rules(self, context, *, rules):
+        """
+            Change the rules of the server
+        """
+        print("Description ... TODO")
+
+        rules = "".join(rules)
+        self.bot.servers[str(context.guild.id)]["rules"] = rules
+        refresh_data(self.bot.servers)
+
 
 def setup(bot):
     bot.add_cog(Moderation(bot))

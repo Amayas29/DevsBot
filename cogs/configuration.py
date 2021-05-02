@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from re import T
 import discord
 from init.bot import Bot
 from discord.ext import commands
-from utils.frontend import get_ban_embed, get_unban_embed, get_warn_embed, get_kick_embed, get_warns_message, get_muted_message, get_unmuted_message, get_nickname_message, get_rules_embed
-from database.users import add_warn
 from database.servers import refresh_data
-import traceback
 
 
 class Configuration(commands.Cog):

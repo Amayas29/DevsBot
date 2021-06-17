@@ -100,7 +100,7 @@ class Configuration(commands.Cog):
         await context.message.add_reaction("✅")
 
     @commands.command(
-        name="moderation_role",
+        name="mode_role",
         help="<role> Le rôle a ajouter au roles de moderations",
         description="Ajout un role à la liste des roles de moderations"
     )
@@ -115,7 +115,7 @@ class Configuration(commands.Cog):
         refresh_data(self.bot.servers)
 
     @commands.command(
-        name="muted_role",
+        name="mute_role",
         help="<role> Le rôle de muet",
         description="Selectionne le muted role du serveur"
     )
@@ -141,7 +141,7 @@ class Configuration(commands.Cog):
         refresh_data(self.bot.servers)
 
     @commands.command(
-        name="not_level_role",
+        name="not_level",
         help="<role> Le rôle a ajouter à la liste",
         description="Ajout un role à la liste des roles ignores du systeme de niveau"
     )
@@ -153,6 +153,22 @@ class Configuration(commands.Cog):
 
         self.bot.servers[str(context.guild.id)
                          ]["ignored_roles_levels"].append(role.id)
+        refresh_data(self.bot.servers)
+
+    @commands.command(
+        name="init_role",
+        help="<role> Le rôle a ajouter à la liste intiale",
+        description="Ajout un role à la liste des roles initiales"
+    )
+    async def init_role(self, context, role: discord.role):
+
+        if role.id in self.bot.servers[str(context.guild.id)
+                                       ]["initial_roles"]:
+            return
+
+        self.bot.servers[str(context.guild.id)
+                         ]["initial_roles"].append(role.id)
+
         refresh_data(self.bot.servers)
 
 

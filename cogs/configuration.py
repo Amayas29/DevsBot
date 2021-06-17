@@ -142,10 +142,11 @@ class Configuration(commands.Cog):
 
     @commands.command(
         name="not_level",
+        aliases=["nt"],
         help="<role> Le rôle a ajouter à la liste",
         description="Ajout un role à la liste des roles ignores du systeme de niveau"
     )
-    async def moderation_role(self, context, role: discord.Role):
+    async def not_level(self, context, role: discord.Role):
 
         if role.id in self.bot.servers[str(context.guild.id)
                                        ]["ignored_roles_levels"]:

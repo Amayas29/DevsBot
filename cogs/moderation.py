@@ -22,6 +22,10 @@ class Moderation(commands.Cog):
 
     async def cog_check(self, context):
         try:
+
+            if context.author == context.guild.owner:
+                return True
+
             for role in context.author.roles:
                 if role.id in self.bot.servers[str(context.guild.id)]["moderators_roles"]:
                     return True

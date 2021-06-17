@@ -2,11 +2,11 @@
   "description": null,
   "rules": null,
   "prefix": "!",
-  "moderators_roles": null,
+  "moderators_roles": [],
   "muted_role": null,
-  "ignored_roles_levels": null,
-  "ignored_roles_display": null,
-  "forbidden_words": null,
+  "ignored_roles_levels": [],
+  "ignored_roles_display": [],
+  "forbidden_words": [],
   "invite_link": null,
   "channels": {
     "welcome": null,
@@ -17,6 +17,6 @@
     "ban_warn": null,
     "kick": null
   },
-  "initial_roles": null,
+  "initial_roles": [],
   "ranks": null
 }

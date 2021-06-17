@@ -160,7 +160,7 @@ class Configuration(commands.Cog):
         help="<role> Le rôle a ajouter à la liste intiale",
         description="Ajout un role à la liste des roles initiales"
     )
-    async def init_role(self, context, role: discord.role):
+    async def init_role(self, context, role: discord.Role):
 
         if role.id in self.bot.servers[str(context.guild.id)
                                        ]["initial_roles"]:

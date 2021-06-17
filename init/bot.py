@@ -3,7 +3,7 @@
 import random
 import discord
 from discord.ext import commands, tasks
-from database.servers import get_servers
+from database.servers import get_servers, create_server, refresh_data
 from database.users import add_user, set_exp, set_level, get_level_exp, get_users_birthdate
 import json
 from utils.games import load_games
@@ -165,12 +165,22 @@ class Bot(commands.Bot):
         except:
             traceback.print_exc()
 
-        self.status.start()
-        self.birthdays.start()
-
         owners = self.config["owners"]
 
         for guild in self.guilds:
+
+            if str(guild.id) not in self.servers:
+
+                server = create_server()
+
+                if server is None:
+                    return
+
+                try:
+                    self.servers[str(guild.id)] = server
+                    refresh_data(self.servers)
+                except:
+                    pass
 
             ignored_roles_levels = self.servers[str(
                 guild.id)]["ignored_roles_levels"]
@@ -193,3 +203,6 @@ class Bot(commands.Bot):
                 if level == -1:
                     set_exp(member.id, guild.id, 0)
                     set_level(member.id, guild.id, 1)
+
+        self.status.start()
+        self.birthdays.start()

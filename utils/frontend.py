@@ -259,6 +259,9 @@ def get_bot_info_embed(bot_description, languages, prefix, version, text, icon_u
 
 def get_server_info_embed(server, description, text, icon_url):
 
+    if description is None:
+        description = "NaN"
+
     number_txt_channels = str(len(server.text_channels))
     number_voc_channels = str(len(server.voice_channels))
     created_at = server.created_at.strftime("%d-%m-%Y")
@@ -294,6 +297,10 @@ def get_user_info_embed(user, ignored_roles_display, ignored_roles_levels, text,
         level_exp = get_level_exp(user.id, user.guild.id)
         level = level_exp[0]
         exp = level_exp[1]
+
+        if level == -1:
+            level = "Max"
+            exp = "Max"
 
     warns = get_warns(user.id, user.guild.id)
     if warns is None:

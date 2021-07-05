@@ -1,0 +1,33 @@
+{
+  "author": null,
+
+  "title": "Perso",
+
+  "color": "53a6d4",
+
+  "description": "{name}",
+
+  "fields": [
+    {
+      "name": "id",
+      "value": "{id}",
+      "inline": true
+    },
+    {
+      "name": "Autres noms",
+      "value": "{alternative_names}",
+      "inline": true
+    }
+  ],
+
+  "footer": {
+    "text": "{text}",
+    "icon_url": "{icon_url}"
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": "{image_url}"
+  }
+}

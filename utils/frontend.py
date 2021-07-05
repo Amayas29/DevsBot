@@ -2,6 +2,7 @@
 
 from io import BytesIO
 import json
+import re
 import yaml
 import discord
 from copy import deepcopy as dp
@@ -374,6 +375,21 @@ def get_top_embed(users_dict, text, icon_url):
 
 def get_birthdate_embed(user, age, text, icon_url):
     return get_embed("birthday", user=user.mention, age=str(age), text=text, icon_url=icon_url)
+
+
+def get_anime_embed(result, text, icon_url):
+    pass
+
+
+def get_character_embed(result, text, icon_url):
+
+    alternative_names = result["alternative_names"]
+
+    alt_nam = "NaN"
+    if alternative_names != []:
+        alt_nam = "\n".join(alternative_names)
+
+    return get_embed("character", name=result["name"], id=str(result["mal_id"]), alternative_names=alt_nam, text=text, icon_url=icon_url, image_url=result["image_url"])
 
 
 def get_warns_message(user, guild_id):

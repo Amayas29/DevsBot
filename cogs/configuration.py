@@ -31,20 +31,6 @@ class Configuration(commands.Cog):
             return False
 
     @commands.command(
-        name="prefix",
-        help="<prefix> : Le nouveau prefix du bot",
-        description="Changer le prefix du bot"
-    )
-    async def prefix(self, context, prefix):
-        """
-            Change the bot prefix
-        """
-        print("prefix ... TODO")
-        server = self.bot.servers[str(context.guild.id)]
-        server["prefix"] = prefix
-        refresh_data(self.bot.servers)
-
-    @commands.command(
         name="description",
         help="<description> La description du serveur",
         description="Permet de changer la description du serveur"
@@ -75,29 +61,18 @@ class Configuration(commands.Cog):
         refresh_data(self.bot.servers)
 
     @commands.command(
-        name="chan",
-        help="<type> Le type de channel à enregistrer",
-        description="Enregistrer le salon avec son type"
+        name="prefix",
+        help="<prefix> : Le nouveau prefix du bot",
+        description="Changer le prefix du bot"
     )
-    async def chan(self, context, *, type):
-        type = "".join(type)
-
-        if type == "":
-            await context.message.add_reaction("❌")
-            return
-
-        channels = self.bot.servers[str(context.guild.id)]["channels"]
-
-        if type not in channels:
-            await context.message.add_reaction("❌")
-            return
-
-        self.bot.servers[str(context.guild.id)
-                         ]["channels"][type] = context.channel.id
-
+    async def prefix(self, context, prefix):
+        """
+            Change the bot prefix
+        """
+        print("prefix ... TODO")
+        server = self.bot.servers[str(context.guild.id)]
+        server["prefix"] = prefix
         refresh_data(self.bot.servers)
-
-        await context.message.add_reaction("✅")
 
     @commands.command(
         name="mode_role",
@@ -126,21 +101,6 @@ class Configuration(commands.Cog):
         refresh_data(self.bot.servers)
 
     @commands.command(
-        name="hide_role",
-        help="<role> Le rôle a ajouter à la liste",
-        description="Ajout un role à la liste des roles ignores à l'affichage"
-    )
-    async def hide_role(self, context, role: discord.Role):
-
-        if role.id in self.bot.servers[str(context.guild.id)
-                                       ]["ignored_roles_display"]:
-            return
-
-        self.bot.servers[str(context.guild.id)
-                         ]["ignored_roles_display"].append(role.id)
-        refresh_data(self.bot.servers)
-
-    @commands.command(
         name="not_level",
         aliases=["nt"],
         help="<role> Le rôle a ajouter à la liste",
@@ -157,20 +117,44 @@ class Configuration(commands.Cog):
         refresh_data(self.bot.servers)
 
     @commands.command(
-        name="init_role",
-        help="<role> Le rôle a ajouter à la liste intiale",
-        description="Ajout un role à la liste des roles initiales"
+        name="hide_role",
+        help="<role> Le rôle a ajouter à la liste",
+        description="Ajout un role à la liste des roles ignores à l'affichage"
     )
-    async def init_role(self, context, role: discord.Role):
+    async def hide_role(self, context, role: discord.Role):
 
         if role.id in self.bot.servers[str(context.guild.id)
-                                       ]["initial_roles"]:
+                                       ]["ignored_roles_display"]:
             return
 
         self.bot.servers[str(context.guild.id)
-                         ]["initial_roles"].append(role.id)
+                         ]["ignored_roles_display"].append(role.id)
+        refresh_data(self.bot.servers)
+
+    @commands.command(
+        name="chan",
+        help="<type> Le type de channel à enregistrer",
+        description="Enregistrer le salon avec son type"
+    )
+    async def chan(self, context, *, type):
+        type = "".join(type)
+
+        if type == "":
+            await context.message.add_reaction("❌")
+            return
+
+        channels = self.bot.servers[str(context.guild.id)]["channels"]
+
+        if type not in channels:
+            await context.message.add_reaction("❌")
+            return
+
+        self.bot.servers[str(context.guild.id)
+                         ]["channels"][type] = context.channel.id
 
         refresh_data(self.bot.servers)
+
+        await context.message.add_reaction("✅")
 
 
 def setup(bot):

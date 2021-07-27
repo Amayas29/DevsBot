@@ -1,0 +1,33 @@
+{
+  "author": null,
+
+  "title": "Anime",
+
+  "color": "dd3713",
+
+  "description": "",
+
+  "fields": [
+    {
+      "name": "",
+      "value": "",
+      "inline": true
+    },
+    {
+      "name": "",
+      "value": "",
+      "inline": true
+    }
+  ],
+
+  "footer": {
+    "text": "{text}",
+    "icon_url": "{icon_url}"
+  },
+
+  "image": null,
+
+  "thumbnail": {
+    "url": ""
+  }
+}
